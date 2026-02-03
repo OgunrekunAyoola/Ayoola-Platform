@@ -85,9 +85,14 @@ router.get('/:id/comments', async (req: Request, res: Response) => {
 });
 
 // POST /api/posts/:id/comments - Create comment & capture subscriber
-router.post('/:id/comments', async (req: Request, res: Response) => {
+router.post('/:id/comments', async (req: Request, res: Response): Promise<void> => {
   try {
     const { authorName, authorEmail, body } = req.body;
+
+    if (!authorName || !authorEmail || !body) {
+      res.status(400).json({ message: 'Name, email, and comment body are required' });
+      return;
+    }
 
     // 1. Create Comment
     const comment = new Comment({
@@ -99,7 +104,10 @@ router.post('/:id/comments', async (req: Request, res: Response) => {
     });
     await comment.save();
 
-    // 2. Capture Subscriber (Upsert)
+    // 2. Increment commentCount on Post
+    await Post.findByIdAndUpdate(req.params.id, { $inc: { commentCount: 1 } });
+
+    // 3. Capture Subscriber (Upsert)
     // We don't wait for this to fail the response, but good to await it.
     await Subscriber.findOneAndUpdate(
       { email: authorEmail },
