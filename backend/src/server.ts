@@ -38,6 +38,12 @@ app.use(
     origin: (origin, callback) => {
       // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
+
+      // Allow all Netlify deployments (preview and production)
+      if (origin.endsWith(".netlify.app")) {
+        return callback(null, true);
+      }
+
       if (allowedOrigins.indexOf(origin) === -1) {
         // Check if origin is a local network IP for development convenience
         // This allows 192.168.x.x and 172.x.x.x
