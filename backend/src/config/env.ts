@@ -10,4 +10,5 @@ export const config = {
   ADMIN_EMAIL: process.env.ADMIN_EMAIL || "admin@example.com",
   ADMIN_PASSWORD_HASH: process.env.ADMIN_PASSWORD_HASH || "",
   ADMIN_JWT_SECRET: process.env.ADMIN_JWT_SECRET || "secret",
+  FRONTEND_URL: process.env.FRONTEND_URL || "http://localhost:3000",
 };
