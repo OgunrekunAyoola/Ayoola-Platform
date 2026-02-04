@@ -18,6 +18,9 @@ import adminStatsRoutes from "./routes/adminStats";
 
 const app = express();
 
+// Trust Proxy for Render (Required for rate limiting behind a proxy)
+app.set("trust proxy", 1);
+
 // Security Middleware
 app.use(helmet()); // Secure HTTP headers
 // app.use(mongoSanitize()); // Prevent NoSQL Injection - Disabled due to Express 5 incompatibility
@@ -28,6 +31,7 @@ const allowedOrigins = [
   config.FRONTEND_URL,
   "http://localhost:3000",
   "http://172.20.10.3:3000",
+  "https://ayoola-platform.netlify.app",
 ];
 app.use(
   cors({
