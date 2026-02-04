@@ -13,6 +13,7 @@ export default function AdminLayout({
   const router = useRouter();
   const pathname = usePathname();
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const token = getAdminToken();
@@ -22,6 +23,11 @@ export default function AdminLayout({
       setIsAuthorized(true);
     }
   }, [router]);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   if (!isAuthorized) {
     return null; 
@@ -35,11 +41,59 @@ export default function AdminLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white flex">
+    <div className="min-h-screen bg-black text-white flex flex-col md:flex-row">
+      {/* Mobile Header */}
+      <header className="md:hidden border-b border-neutral-800 p-4 flex justify-between items-center bg-black sticky top-0 z-30">
+        <h1 className="text-lg font-bold text-yellow-500">Admin Panel</h1>
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="text-white p-2 hover:bg-neutral-800 rounded-lg transition"
+        >
+          {isMobileMenuOpen ? (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+          )}
+        </button>
+      </header>
+
+      {/* Sidebar Overlay (Mobile) */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-20 md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-64 border-r border-neutral-800 p-6 flex flex-col fixed h-full bg-black z-10">
-        <div className="mb-8">
+      <aside 
+        className={`
+          w-64 border-r border-neutral-800 p-6 flex flex-col 
+          fixed top-0 bottom-0 left-0 bg-black z-30
+          transition-transform duration-300 ease-in-out
+          ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
+          md:translate-x-0
+          ${/* Adjust top padding on mobile if needed, but since it covers full height, it's fine */ ""}
+        `}
+      >
+        <div className="mb-8 hidden md:block">
           <h1 className="text-xl font-bold text-yellow-500">Admin Panel</h1>
+        </div>
+        
+        <div className="md:hidden mb-8 flex justify-between items-center">
+          <h1 className="text-xl font-bold text-yellow-500">Menu</h1>
+          <button 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="p-1 text-neutral-400 hover:text-white"
+          >
+             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
         
         <nav className="flex-1 space-y-2">
@@ -75,8 +129,8 @@ export default function AdminLayout({
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 ml-64 min-h-screen">
-        <div className="p-8 max-w-6xl mx-auto">
+      <main className="flex-1 md:ml-64 min-h-screen">
+        <div className="p-4 md:p-8 max-w-6xl mx-auto">
           {children}
         </div>
       </main>

@@ -98,8 +98,10 @@ export default function NewPostPage() {
             name="content"
             value={formData.content}
             onChange={handleChange}
+            required
             rows={15}
-            className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 focus:ring-1 focus:ring-yellow-500 outline-none font-mono text-sm"
+            className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 focus:ring-1 focus:ring-yellow-500 outline-none font-mono text-sm leading-relaxed"
+            placeholder="# Write your post here..."
           />
         </div>
 

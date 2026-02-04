@@ -55,25 +55,25 @@ export default function NewsletterForm({
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="flex gap-2">
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="email@example.com"
-          className="flex-grow bg-gray-800 border border-gray-700 rounded px-4 py-2 text-sm text-white focus:outline-none focus:border-yellow-500 transition disabled:opacity-50"
+          className="w-full sm:flex-grow bg-gray-800 border border-gray-700 rounded px-4 py-3 sm:py-2 text-sm text-white focus:outline-none focus:border-yellow-500 transition disabled:opacity-50"
           disabled={status === "loading" || status === "success"}
           required
         />
         <button
           type="submit"
-          className="bg-yellow-500 text-black px-4 py-2 text-sm font-bold rounded hover:bg-yellow-400 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full sm:w-auto bg-yellow-500 text-black px-6 py-3 sm:py-2 text-sm font-bold rounded hover:bg-yellow-400 transition disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
           disabled={status === "loading" || status === "success"}
         >
           {status === "loading"
-            ? "..."
+            ? "Subscribing..."
             : status === "success"
-              ? "✓"
+              ? "Subscribed ✓"
               : "Subscribe"}
         </button>
       </form>

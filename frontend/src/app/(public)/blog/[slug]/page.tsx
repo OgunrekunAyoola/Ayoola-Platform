@@ -26,14 +26,14 @@ export async function generateMetadata({
       openGraph: {
         title: post.title,
         description: post.excerpt,
-        type: 'article',
+        type: "article",
         publishedTime: post.publishedAt,
-        authors: ['Ayoola Ogunrekun'],
+        authors: ["Ayoola Ogunrekun"],
         tags: post.tags,
         images: post.heroImage ? [post.heroImage] : undefined,
       },
       twitter: {
-        card: 'summary_large_image',
+        card: "summary_large_image",
         title: post.title,
         description: post.excerpt,
         images: post.heroImage ? [post.heroImage] : undefined,
@@ -66,33 +66,33 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <article className="min-h-screen bg-black text-white py-12 px-4 sm:px-6 lg:px-8">
+    <article className="min-h-screen bg-black text-white py-8 md:py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         {/* Back Link */}
         <Link
           href="/blog"
-          className="text-yellow-500 hover:text-yellow-400 mb-8 inline-block transition-colors"
+          className="text-yellow-500 hover:text-yellow-400 mb-6 md:mb-8 inline-block transition-colors text-sm md:text-base"
         >
           ← Back to Blog
         </Link>
 
         {/* Header */}
-        <header className="mb-12">
+        <header className="mb-8 md:mb-12">
           <div className="flex gap-2 mb-4 flex-wrap">
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="text-sm font-medium text-yellow-500 bg-yellow-500/10 px-3 py-1 rounded-full"
+                className="text-xs md:text-sm font-medium text-yellow-500 bg-yellow-500/10 px-3 py-1 rounded-full"
               >
                 #{tag}
               </span>
             ))}
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-neutral-100 leading-tight">
+          <h1 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6 text-neutral-100 leading-tight">
             {post.title}
           </h1>
-          <div className="flex items-center text-neutral-400 text-sm gap-6 border-b border-neutral-800 pb-8">
-            <time dateTime={post.publishedAt}>
+          <div className="flex items-center text-neutral-400 text-sm gap-4 md:gap-6 border-b border-neutral-800 pb-6 md:pb-8">
+            <time dateTime={post.publishedAt} suppressHydrationWarning>
               {new Date(post.publishedAt).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",
@@ -108,18 +108,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         {/* Hero Image */}
         {post.heroImage && (
-          <div className="mb-12 rounded-xl overflow-hidden border border-neutral-800">
+          <div className="mb-8 md:mb-12 rounded-xl overflow-hidden border border-neutral-800">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={post.heroImage}
               alt={post.title}
-              className="w-full h-auto object-cover max-h-[500px]"
+              className="w-full h-auto object-cover max-h-[300px] md:max-h-[500px]"
             />
           </div>
         )}
 
         {/* Content */}
-        <div className="prose prose-invert prose-yellow max-w-none prose-lg prose-headings:font-bold prose-a:text-yellow-500 hover:prose-a:text-yellow-400">
+        <div className="prose prose-invert prose-yellow max-w-none prose-base md:prose-lg prose-headings:font-bold prose-a:text-yellow-500 hover:prose-a:text-yellow-400 prose-img:rounded-xl prose-img:border prose-img:border-neutral-800">
           <ReactMarkdown>{post.content || ""}</ReactMarkdown>
         </div>
 

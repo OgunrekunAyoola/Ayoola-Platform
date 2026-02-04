@@ -89,7 +89,7 @@ export default function AdminCommentsPage() {
           comments.map((comment) => (
             <div
               key={comment._id}
-              className="bg-neutral-900 border border-neutral-800 p-6 rounded-xl flex justify-between items-start gap-6"
+              className="bg-neutral-900 border border-neutral-800 p-6 rounded-xl flex flex-col md:flex-row justify-between items-start gap-6"
             >
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">

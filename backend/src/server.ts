@@ -24,13 +24,27 @@ app.use(helmet()); // Secure HTTP headers
 app.use(express.json({ limit: "10kb" })); // Body size limit
 
 // CORS Configuration
-const allowedOrigins = [config.FRONTEND_URL];
+const allowedOrigins = [
+  config.FRONTEND_URL,
+  "http://localhost:3000",
+  "http://172.20.10.3:3000",
+];
 app.use(
   cors({
     origin: (origin, callback) => {
       // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
       if (allowedOrigins.indexOf(origin) === -1) {
+        // Check if origin is a local network IP for development convenience
+        // This allows 192.168.x.x and 172.x.x.x
+        if (
+          origin.startsWith("http://192.168.") ||
+          origin.startsWith("http://172.") ||
+          origin.startsWith("http://10.")
+        ) {
+          return callback(null, true);
+        }
+
         return callback(
           new Error(
             "The CORS policy for this site does not allow access from the specified Origin.",
@@ -47,7 +61,7 @@ app.use(
 // Rate Limiting
 const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
+  max: 1000, // Limit each IP to 1000 requests per windowMs (Increased for dev/testing)
   standardHeaders: true,
   legacyHeaders: false,
   message: "Too many requests from this IP, please try again after 15 minutes",

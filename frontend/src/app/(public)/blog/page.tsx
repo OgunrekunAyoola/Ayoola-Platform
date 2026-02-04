@@ -20,13 +20,13 @@ export default async function BlogPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-black text-white py-8 md:py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+        <div className="text-center mb-10 md:mb-16">
+          <h1 className="text-3xl md:text-5xl font-bold mb-3 md:mb-4">
             <span className="text-yellow-500">Blog</span> & Thoughts
           </h1>
-          <p className="text-neutral-400 max-w-2xl mx-auto">
+          <p className="text-neutral-400 max-w-2xl mx-auto text-sm md:text-base">
             Technical deep dives, tutorials, and updates on my latest projects.
           </p>
         </div>
@@ -42,7 +42,7 @@ export default async function BlogPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {posts.map((post) => (
               <PostCard key={post._id} post={post} />
             ))}

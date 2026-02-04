@@ -44,8 +44,8 @@ export default function AdminPostsPage() {
         </Link>
       </div>
 
-      <div className="bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden">
-        <table className="w-full text-left">
+      <div className="bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden overflow-x-auto">
+        <table className="w-full text-left min-w-[600px]">
           <thead className="bg-neutral-800 text-neutral-400 text-sm uppercase">
             <tr>
               <th className="px-6 py-4 font-medium">Title</th>
