@@ -7,7 +7,7 @@ interface PostCardProps {
 
 export default function PostCard({ post }: PostCardProps) {
   return (
-    <article className="flex flex-col bg-neutral-900 border border-neutral-800 rounded-lg overflow-hidden hover:border-yellow-500 transition-colors duration-300">
+    <article className="glass-card flex flex-col rounded-lg overflow-hidden group">
       {/* Image Placeholder - We can add real image support later if heroImage is present */}
       <div className="h-48 bg-neutral-800 w-full relative">
         {post.heroImage ? (
@@ -34,7 +34,7 @@ export default function PostCard({ post }: PostCardProps) {
         </div>
 
         <Link href={`/blog/${post.slug}`} className="group">
-          <h2 className="text-xl font-bold text-neutral-100 mb-2 group-hover:text-yellow-500 transition-colors">
+          <h2 className="text-xl font-serif font-bold text-neutral-100 mb-2 group-hover:text-yellow-500 transition-colors">
             {post.title}
           </h2>
         </Link>

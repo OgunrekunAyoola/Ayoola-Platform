@@ -519,8 +519,8 @@ On submit, call corresponding admin Post endpoints.
 /admin/projects and analogous routes for projects.
 Ensure all admin fetches include the Authorization: Bearer <token> header.
 
-Phase 8 – SEO, RSS, and Polish
-Task 8.1 – SEO meta and OG tags
+Phase 8 – SEO, RSS, and Polish [COMPLETED]
+Task 8.1 – SEO meta and OG tags [COMPLETED]
 Trae prompt:
 
 Implement basic SEO according to Next.js App Router best practices:
@@ -532,7 +532,7 @@ For post pages, derive title/description from Post data.
 For project pages, derive from Project data.
 Add sensible defaults for site title and description.
 
-Task 8.2 – RSS feed
+Task 8.2 – RSS feed [COMPLETED]
 Trae prompt:
 
 Add an RSS feed at /rss.xml:
@@ -548,7 +548,7 @@ Generate valid RSS XML (title, link, description, items).
 Return it with Content-Type: application/xml.
 Use URLs consistent with the spec.
 
-Task 8.3 – UI polish and mobile responsiveness
+Task 8.3 – UI polish and mobile responsiveness [COMPLETED]
 Trae prompt:
 
 Do a pass over the UI to ensure:
@@ -560,7 +560,10 @@ Headings and text follow a consistent typography scale.
 Buttons, cards, and links reuse the design system components.
 
 Colors stick to dark background + sunset yellow + neutrals.
+
 Make small layout refinements but do not change routes or data models.
+
+*Refactor Note:* Public and Admin layouts have been separated into route groups `(public)` and `(admin-protected)` to fix nesting issues.
 
 Phase 9 – Manual Content & Final Checks (You)
 Replace placeholder copy on:

@@ -9,9 +9,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Link
       href={`/portfolio/${project.slug}`}
-      className="group block bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden hover:border-yellow-500/50 transition-all duration-300"
+      className="group block glass-card rounded-xl overflow-hidden"
     >
-      <div className="aspect-video w-full bg-neutral-800 relative overflow-hidden flex items-center justify-center">
+      <div className="aspect-video w-full bg-neutral-800/50 relative overflow-hidden flex items-center justify-center">
         <div className="text-center p-6">
           <h3 className="text-2xl font-bold text-neutral-700 group-hover:text-yellow-500/50 transition-colors">
             {project.title.substring(0, 2).toUpperCase()}
@@ -33,7 +33,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           ))}
         </div>
 
-        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-yellow-500 transition-colors">
+        <h3 className="text-xl font-serif font-bold text-white mb-2 group-hover:text-yellow-500 transition-colors">
           {project.title}
         </h3>
 

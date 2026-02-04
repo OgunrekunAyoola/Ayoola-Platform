@@ -37,6 +37,7 @@ export interface Comment {
   authorName: string;
   body: string;
   createdAt: string;
+  approved: boolean;
 }
 
 export interface PaginatedResponse<T> {
@@ -49,16 +50,31 @@ export interface PaginatedResponse<T> {
   };
 }
 
+// Admin Auth Helper
+export const getAdminToken = () => {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("adminToken");
+  }
+  return null;
+};
+
 async function fetchAPI<T>(
   endpoint: string,
   options?: RequestInit,
 ): Promise<T> {
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    ...(options?.headers as Record<string, string>),
+  };
+
+  const token = getAdminToken();
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
   const res = await fetch(`${API_URL}${endpoint}`, {
-    headers: {
-      "Content-Type": "application/json",
-      ...options?.headers,
-    },
     ...options,
+    headers,
   });
 
   if (!res.ok) {
@@ -68,6 +84,14 @@ async function fetchAPI<T>(
 
   return res.json();
 }
+
+// Admin Auth
+export const loginAdmin = (data: { email: string; password: string }) => {
+  return fetchAPI<{ token: string }>("/admin/login", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+};
 
 // Blog Posts
 export const fetchPosts = (page = 1, limit = 10) => {
@@ -129,5 +153,91 @@ export const submitContact = (data: {
   return fetchAPI("/contact", {
     method: "POST",
     body: JSON.stringify(data),
+  });
+};
+
+// Admin Stats
+export const fetchAdminStats = () => {
+  return fetchAPI<{
+    postCount: number;
+    projectCount: number;
+    commentCount: number;
+  }>("/admin/stats");
+};
+
+// Admin Posts
+export const fetchAdminPosts = () => {
+  return fetchAPI<Post[]>("/admin/posts");
+};
+
+export const fetchAdminPost = (id: string) => {
+  return fetchAPI<Post>(`/admin/posts/${id}`);
+};
+
+export const createPost = (data: Partial<Post>) => {
+  return fetchAPI<Post>("/admin/posts", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+};
+
+export const updatePost = (id: string, data: Partial<Post>) => {
+  return fetchAPI<Post>(`/admin/posts/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
+};
+
+export const deletePost = (id: string) => {
+  return fetchAPI(`/admin/posts/${id}`, {
+    method: "DELETE",
+  });
+};
+
+// Admin Projects
+export const fetchAdminProjects = () => {
+  return fetchAPI<Project[]>("/admin/projects");
+};
+
+export const fetchAdminProject = (id: string) => {
+  return fetchAPI<Project>(`/admin/projects/${id}`);
+};
+
+export const createProject = (data: Partial<Project>) => {
+  return fetchAPI<Project>("/admin/projects", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+};
+
+export const updateProject = (id: string, data: Partial<Project>) => {
+  return fetchAPI<Project>(`/admin/projects/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
+};
+
+export const deleteProject = (id: string) => {
+  return fetchAPI(`/admin/projects/${id}`, {
+    method: "DELETE",
+  });
+};
+
+// Admin Comments
+export const fetchAdminComments = (pendingOnly = false) => {
+  return fetchAPI<Comment[]>(
+    `/admin/comments${pendingOnly ? "?pending=true" : ""}`,
+  );
+};
+
+export const approveComment = (id: string) => {
+  return fetchAPI<Comment>(`/admin/comments/${id}/approve`, {
+    method: "PUT",
+  });
+};
+
+export const deleteComment = (id: string) => {
+  return fetchAPI(`/admin/comments/${id}`, {
+    method: "DELETE",
   });
 };
