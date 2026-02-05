@@ -97,21 +97,23 @@ export const loginAdmin = (data: { email: string; password: string }) => {
 export const fetchPosts = (page = 1, limit = 10) => {
   return fetchAPI<PaginatedResponse<Post>>(
     `/posts?page=${page}&limit=${limit}`,
+    { cache: "no-store" },
   );
 };
 
 export const fetchPost = (slug: string) => {
-  return fetchAPI<Post>(`/posts/${slug}`);
+  return fetchAPI<Post>(`/posts/${slug}`, { cache: "no-store" });
 };
 
 export const likePost = (id: string) => {
   return fetchAPI<{ likeCount: number }>(`/posts/${id}/like`, {
     method: "POST",
+    cache: "no-store",
   });
 };
 
 export const fetchComments = (id: string) => {
-  return fetchAPI<Comment[]>(`/posts/${id}/comments`);
+  return fetchAPI<Comment[]>(`/posts/${id}/comments`, { cache: "no-store" });
 };
 
 export const createComment = (
@@ -129,11 +131,11 @@ export const createComment = (
 
 // Portfolio Projects
 export const fetchProjects = () => {
-  return fetchAPI<Project[]>("/projects");
+  return fetchAPI<Project[]>("/projects", { cache: "no-store" });
 };
 
 export const fetchProject = (slug: string) => {
-  return fetchAPI<Project>(`/projects/${slug}`);
+  return fetchAPI<Project>(`/projects/${slug}`, { cache: "no-store" });
 };
 
 // Subscribers & Contact
