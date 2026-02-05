@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document } from "mongoose";
 
 export interface IProject extends Document {
   slug: string;
@@ -12,7 +12,7 @@ export interface IProject extends Document {
     repoUrl?: string;
   };
   isFeatured: boolean;
-  visibility: 'public' | 'email_gated';
+  visibility: "public" | "email_gated";
   createdAt: Date;
   updatedAt: Date;
 }
@@ -32,11 +32,16 @@ const ProjectSchema: Schema = new Schema(
     isFeatured: { type: Boolean, default: false },
     visibility: {
       type: String,
-      enum: ['public', 'email_gated'],
-      default: 'public',
+      enum: ["public", "email_gated"],
+      default: "public",
+    },
+    category: {
+      type: String,
+      enum: ["systems", "tools", "experiments"],
+      default: "experiments",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-export default mongoose.model<IProject>('Project', ProjectSchema);
+export default mongoose.model<IProject>("Project", ProjectSchema);

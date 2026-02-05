@@ -29,6 +29,7 @@ export interface Project {
   };
   isFeatured: boolean;
   visibility: "public" | "email_gated";
+  category: "systems" | "tools" | "experiments";
 }
 
 export interface Comment {

@@ -5,38 +5,67 @@ export default function Home() {
   return (
     <div className="space-y-32">
       {/* Hero Section */}
-      <section className="py-32 text-center max-w-4xl mx-auto px-4 animate-fade-in-up">
-        <h1 className="text-5xl md:text-8xl font-serif font-bold mb-8 tracking-tight text-white leading-tight">
+      <section className="py-24 md:py-32 text-center max-w-5xl mx-auto px-4 animate-fade-in-up">
+        <p className="text-yellow-500 font-medium tracking-widest uppercase mb-6 text-sm md:text-base">
           Ayoola Ogunrekun
+        </p>
+        <h1 className="text-4xl md:text-7xl font-serif font-bold mb-8 tracking-tight text-white leading-tight">
+          I build AI-enhanced web systems that automate operations and help
+          small businesses grow.
         </h1>
         <p className="text-xl md:text-2xl text-neutral-400 mb-12 max-w-2xl mx-auto leading-relaxed font-light">
-          Writer, Software Engineer, Expert, Entrepreneur, Creator.
+          Full-stack engineer · Lagos → Global · Available for select projects.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-6">
-          <Link href="/portfolio">
+          <Link href="/portfolio#systems">
             <Button
               variant="primary"
               className="w-full sm:w-auto text-lg py-4 px-10"
             >
-              View Portfolio
+              View Systems
             </Button>
           </Link>
-          <Link href="/blog">
-            <Button
-              variant="secondary"
-              className="w-full sm:w-auto text-lg py-4 px-10"
-            >
-              Read the Blog
-            </Button>
-          </Link>
-          <Link href="/contact">
+          <Link href="/services">
             <Button
               variant="secondary"
               className="w-full sm:w-auto text-lg py-4 px-10 border-neutral-700 hover:border-yellow-500"
             >
-              Work With Me
+              Hire Me
             </Button>
           </Link>
+        </div>
+      </section>
+
+      {/* Proof Points Section */}
+      <section className="max-w-6xl mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-neutral-900/30 border border-neutral-800 p-8 rounded-xl text-center">
+            <h3 className="text-4xl font-bold text-white mb-2">70%</h3>
+            <p className="text-neutral-400 text-sm uppercase tracking-wider font-medium">
+              Reduction in Ops Time
+            </p>
+            <p className="text-neutral-500 text-sm mt-2">
+              With custom booking automation
+            </p>
+          </div>
+          <div className="bg-neutral-900/30 border border-neutral-800 p-8 rounded-xl text-center">
+            <h3 className="text-4xl font-bold text-white mb-2">200+</h3>
+            <p className="text-neutral-400 text-sm uppercase tracking-wider font-medium">
+              Monthly Users
+            </p>
+            <p className="text-neutral-500 text-sm mt-2">
+              On shipped AI-powered tools
+            </p>
+          </div>
+          <div className="bg-neutral-900/30 border border-neutral-800 p-8 rounded-xl text-center">
+            <h3 className="text-4xl font-bold text-white mb-2">4 Weeks</h3>
+            <p className="text-neutral-400 text-sm uppercase tracking-wider font-medium">
+              Time to Launch
+            </p>
+            <p className="text-neutral-500 text-sm mt-2">
+              For full custom platforms
+            </p>
+          </div>
         </div>
       </section>
 
@@ -44,7 +73,9 @@ export default function Home() {
       <section className="grid md:grid-cols-2 gap-12 md:gap-16 max-w-6xl mx-auto px-4 pb-32 animate-fade-in-up [animation-delay:200ms]">
         <div className="space-y-10">
           <div className="flex justify-between items-end border-b border-neutral-800 pb-6">
-            <h2 className="text-4xl font-serif font-bold text-white tracking-tight">Featured Thoughts</h2>
+            <h2 className="text-4xl font-serif font-bold text-white tracking-tight">
+              Featured Thoughts
+            </h2>
             <Link
               href="/blog"
               className="text-yellow-500 hover:text-yellow-400 text-sm font-bold tracking-widest uppercase mb-1"
@@ -82,7 +113,9 @@ export default function Home() {
 
         <div className="space-y-10">
           <div className="flex justify-between items-end border-b border-neutral-800 pb-6">
-            <h2 className="text-4xl font-serif font-bold text-white tracking-tight">Selected Work</h2>
+            <h2 className="text-4xl font-serif font-bold text-white tracking-tight">
+              Selected Work
+            </h2>
             <Link
               href="/portfolio"
               className="text-yellow-500 hover:text-yellow-400 text-sm font-bold tracking-widest uppercase mb-1"

@@ -1,142 +1,131 @@
+
+import Link from 'next/link';
+
 export default function Services() {
   return (
-    <div className="max-w-6xl mx-auto py-12 px-4">
-      <header className="mb-20 text-center max-w-3xl mx-auto">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white">
-          Services
+    <div className="max-w-6xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
+      {/* Hero Section */}
+      <header className="mb-24 text-center max-w-4xl mx-auto">
+        <h1 className="text-5xl md:text-7xl font-bold mb-8 text-white tracking-tight">
+          Work With Me
         </h1>
-        <p className="text-xl text-neutral-400 leading-relaxed">
-          High-value consulting and execution for founders, policymakers, and
-          tech leaders. I bridge the gap between complex technology and
-          strategic vision.
+        <p className="text-2xl md:text-3xl text-neutral-400 mb-8 leading-relaxed font-light">
+          I build <span className="text-yellow-500 font-medium">AI-enhanced web systems</span> that automate operations and help small businesses grow.
         </p>
+        <p className="text-neutral-500 mb-12 uppercase tracking-widest text-sm font-semibold">
+          Lagos-based · Serving Global Clients · 2–4 Week Delivery
+        </p>
+        <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          <Link
+            href="/contact"
+            className="px-8 py-4 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-400 transition-all text-lg"
+          >
+            Schedule Discovery Call
+          </Link>
+          <Link
+            href="/portfolio"
+            className="px-8 py-4 bg-transparent border border-neutral-700 text-white font-bold rounded-lg hover:border-yellow-500 hover:text-yellow-500 transition-all text-lg"
+          >
+            View Case Studies
+          </Link>
+        </div>
       </header>
 
-      <div className="grid md:grid-cols-3 gap-8">
-        {/* Consulting */}
-        <div className="bg-neutral-900/50 p-8 rounded-2xl border border-neutral-800 hover:border-yellow-500/30 transition-all flex flex-col">
-          <div className="h-12 w-12 bg-yellow-500/10 rounded-lg flex items-center justify-center mb-6 text-yellow-500">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-              />
-            </svg>
-          </div>
-          <h2 className="text-2xl font-bold mb-4 text-white">Consulting</h2>
-          <p className="text-neutral-400 mb-8 flex-grow">
-            Strategic advice on product development, technical architecture, and
-            team building.
+      {/* Service Tiers */}
+      <div className="grid md:grid-cols-3 gap-8 mb-32">
+        {/* Tier 1 */}
+        <div className="bg-neutral-900/50 p-8 rounded-2xl border border-neutral-800 hover:border-yellow-500/30 transition-all flex flex-col relative group">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500/0 via-yellow-500/50 to-yellow-500/0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <h2 className="text-2xl font-bold mb-2 text-white">Custom Web Platforms</h2>
+          <div className="text-3xl font-bold text-yellow-500 mb-6">From $1,500</div>
+          <p className="text-neutral-400 mb-8 text-sm uppercase tracking-wide font-semibold">
+            Timeline: 2-4 Weeks
           </p>
-          <ul className="space-y-3 text-neutral-300 mb-8">
-            <li className="flex items-start">
-              <span className="text-yellow-500 mr-2">•</span> Tech Strategy &
-              Roadmap
-            </li>
-            <li className="flex items-start">
-              <span className="text-yellow-500 mr-2">•</span> Digital
-              Transformation
-            </li>
-            <li className="flex items-start">
-              <span className="text-yellow-500 mr-2">•</span> Team Scaling &
-              Culture
-            </li>
-            <li className="flex items-start">
-              <span className="text-yellow-500 mr-2">•</span> Technical Audits
-            </li>
+          <p className="text-neutral-300 mb-8 flex-grow">
+            Best for small businesses drowning in admin work or founders needing a robust MVP to validate their idea.
+          </p>
+          <ul className="space-y-4 text-neutral-400 mb-8 text-sm">
+            <li className="flex items-start"><span className="text-yellow-500 mr-2">✓</span> Full-stack Next.js App</li>
+            <li className="flex items-start"><span className="text-yellow-500 mr-2">✓</span> Custom Admin Dashboard</li>
+            <li className="flex items-start"><span className="text-yellow-500 mr-2">✓</span> Database & Auth Setup</li>
+            <li className="flex items-start"><span className="text-yellow-500 mr-2">✓</span> Deployment & Hosting</li>
           </ul>
         </div>
 
-        {/* Engineering */}
-        <div className="bg-neutral-900/50 p-8 rounded-2xl border border-neutral-800 hover:border-yellow-500/30 transition-all flex flex-col">
-          <div className="h-12 w-12 bg-yellow-500/10 rounded-lg flex items-center justify-center mb-6 text-yellow-500">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-              />
-            </svg>
+        {/* Tier 2 */}
+        <div className="bg-neutral-900/50 p-8 rounded-2xl border border-yellow-500/20 hover:border-yellow-500/50 transition-all flex flex-col relative group shadow-2xl shadow-yellow-900/10">
+           <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-yellow-500 text-black px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+            Most Popular
           </div>
-          <h2 className="text-2xl font-bold mb-4 text-white">Engineering</h2>
-          <p className="text-neutral-400 mb-8 flex-grow">
-            Hands-on development of MVPs, prototypes, and complex web
-            applications.
+          <h2 className="text-2xl font-bold mb-2 text-white">AI-Assisted Features</h2>
+          <div className="text-3xl font-bold text-yellow-500 mb-6">From $800</div>
+          <p className="text-neutral-400 mb-8 text-sm uppercase tracking-wide font-semibold">
+            Timeline: 1-2 Weeks
           </p>
-          <ul className="space-y-3 text-neutral-300 mb-8">
-            <li className="flex items-start">
-              <span className="text-yellow-500 mr-2">•</span> Full Stack
-              Development
-            </li>
-            <li className="flex items-start">
-              <span className="text-yellow-500 mr-2">•</span> MVP Prototyping
-            </li>
-            <li className="flex items-start">
-              <span className="text-yellow-500 mr-2">•</span> Performance
-              Optimization
-            </li>
-            <li className="flex items-start">
-              <span className="text-yellow-500 mr-2">•</span> API Design &
-              Integration
-            </li>
+          <p className="text-neutral-300 mb-8 flex-grow">
+            Add intelligence to existing platforms. Search, chatbots, auto-summaries, and RAG pipelines.
+          </p>
+          <ul className="space-y-4 text-neutral-400 mb-8 text-sm">
+            <li className="flex items-start"><span className="text-yellow-500 mr-2">✓</span> LLM Integration (OpenAI/Gemini)</li>
+            <li className="flex items-start"><span className="text-yellow-500 mr-2">✓</span> RAG Pipelines</li>
+            <li className="flex items-start"><span className="text-yellow-500 mr-2">✓</span> Custom AI Agents</li>
+            <li className="flex items-start"><span className="text-yellow-500 mr-2">✓</span> Vector Database Setup</li>
           </ul>
         </div>
 
-        {/* Writing */}
-        <div className="bg-neutral-900/50 p-8 rounded-2xl border border-neutral-800 hover:border-yellow-500/30 transition-all flex flex-col">
-          <div className="h-12 w-12 bg-yellow-500/10 rounded-lg flex items-center justify-center mb-6 text-yellow-500">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-              />
-            </svg>
-          </div>
-          <h2 className="text-2xl font-bold mb-4 text-white">Writing</h2>
-          <p className="text-neutral-400 mb-8 flex-grow">
-            Clear, compelling technical and strategic writing that communicates
-            value.
+        {/* Tier 3 */}
+        <div className="bg-neutral-900/50 p-8 rounded-2xl border border-neutral-800 hover:border-yellow-500/30 transition-all flex flex-col relative group">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500/0 via-yellow-500/50 to-yellow-500/0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <h2 className="text-2xl font-bold mb-2 text-white">Technical Writing</h2>
+          <div className="text-3xl font-bold text-yellow-500 mb-6">From $300</div>
+          <p className="text-neutral-400 mb-8 text-sm uppercase tracking-wide font-semibold">
+            Timeline: 3-5 Days
           </p>
-          <ul className="space-y-3 text-neutral-300 mb-8">
-            <li className="flex items-start">
-              <span className="text-yellow-500 mr-2">•</span> Technical
-              Documentation
-            </li>
-            <li className="flex items-start">
-              <span className="text-yellow-500 mr-2">•</span> Thought Leadership
-            </li>
-            <li className="flex items-start">
-              <span className="text-yellow-500 mr-2">•</span> Policy Analysis
-            </li>
-            <li className="flex items-start">
-              <span className="text-yellow-500 mr-2">•</span> Content Strategy
-            </li>
+          <p className="text-neutral-300 mb-8 flex-grow">
+            Clear, developer-focused documentation, tutorials, and engineering case studies that build authority.
+          </p>
+          <ul className="space-y-4 text-neutral-400 mb-8 text-sm">
+            <li className="flex items-start"><span className="text-yellow-500 mr-2">✓</span> In-depth Tutorials</li>
+            <li className="flex items-start"><span className="text-yellow-500 mr-2">✓</span> API Documentation</li>
+            <li className="flex items-start"><span className="text-yellow-500 mr-2">✓</span> Engineering Case Studies</li>
+            <li className="flex items-start"><span className="text-yellow-500 mr-2">✓</span> Architecture Diagrams</li>
           </ul>
         </div>
       </div>
+
+      {/* Process Section */}
+      <section className="mb-32">
+        <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center text-white">How We Work</h2>
+        <div className="grid md:grid-cols-4 gap-8">
+            {[
+                { step: "01", title: "Discovery", desc: "30-min call. No jargon. Just business problems." },
+                { step: "02", title: "Proposal", desc: "Fixed-price quote. Clear deliverables. No surprises." },
+                { step: "03", title: "Build", desc: "Weekly check-ins. Live progress link from Day 7." },
+                { step: "04", title: "Launch", desc: "Deployment, training videos, and full code handoff." }
+            ].map((item) => (
+                <div key={item.step} className="bg-neutral-900/30 p-6 rounded-xl border border-neutral-800">
+                    <div className="text-5xl font-bold text-neutral-800 mb-4">{item.step}</div>
+                    <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                    <p className="text-neutral-400 text-sm">{item.desc}</p>
+                </div>
+            ))}
+        </div>
+      </section>
+
+      {/* Availability Footer */}
+      <section className="bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-12 text-center">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">Ready to start?</h2>
+        <p className="text-neutral-400 mb-8 max-w-2xl mx-auto">
+          I am currently available for <span className="text-yellow-500 font-bold">1 new project</span>. 
+          I typically respond to inquiries within 24 hours.
+        </p>
+        <a
+          href="mailto:hello@ayoola.io"
+          className="inline-block px-8 py-4 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-400 transition-all text-lg"
+        >
+          Email Me: hello@ayoola.io
+        </a>
+      </section>
     </div>
   );
 }
