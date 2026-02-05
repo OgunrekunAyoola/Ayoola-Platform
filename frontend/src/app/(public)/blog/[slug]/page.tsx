@@ -7,6 +7,7 @@ import LikeButton from "@/components/blog/LikeButton";
 import CommentList from "@/components/blog/CommentList";
 import CommentForm from "@/components/blog/CommentForm";
 import NewsletterForm from "@/components/newsletter/NewsletterForm";
+import AskAyoolaWidget from "@/components/blog/AskAyoolaWidget";
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -66,32 +67,32 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <article className="min-h-screen bg-black text-white py-8 md:py-12 px-4 sm:px-6 lg:px-8">
+    <article className="min-h-screen bg-black text-white py-24 md:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         {/* Back Link */}
         <Link
           href="/blog"
-          className="text-yellow-500 hover:text-yellow-400 mb-6 md:mb-8 inline-block transition-colors text-sm md:text-base"
+          className="text-yellow-500 hover:text-yellow-400 mb-8 md:mb-12 inline-block transition-colors text-base font-medium"
         >
           ← Back to Blog
         </Link>
 
         {/* Header */}
-        <header className="mb-8 md:mb-12">
-          <div className="flex gap-2 mb-4 flex-wrap">
+        <header className="mb-20 border-b border-neutral-800 pb-16">
+          <div className="flex gap-2 mb-8 flex-wrap">
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="text-xs md:text-sm font-medium text-yellow-500 bg-yellow-500/10 px-3 py-1 rounded-full"
+                className="text-sm font-medium text-yellow-500 bg-yellow-500/10 px-3 py-1 rounded-full"
               >
                 #{tag}
               </span>
             ))}
           </div>
-          <h1 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6 text-neutral-100 leading-tight">
+          <h1 className="text-5xl md:text-7xl font-bold mb-8 text-neutral-100 leading-tight tracking-tight">
             {post.title}
           </h1>
-          <div className="flex items-center text-neutral-400 text-sm gap-4 md:gap-6 border-b border-neutral-800 pb-6 md:pb-8">
+          <div className="flex items-center text-neutral-400 text-base gap-6">
             <time dateTime={post.publishedAt} suppressHydrationWarning>
               {new Date(post.publishedAt).toLocaleDateString("en-US", {
                 year: "numeric",
@@ -122,6 +123,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="prose prose-invert prose-yellow max-w-none prose-base md:prose-lg prose-headings:font-bold prose-a:text-yellow-500 hover:prose-a:text-yellow-400 prose-img:rounded-xl prose-img:border prose-img:border-neutral-800">
           <ReactMarkdown>{post.content || ""}</ReactMarkdown>
         </div>
+
+        {/* AI Widget */}
+        <AskAyoolaWidget postId={post._id} />
 
         {/* Newsletter Signup */}
         <div className="my-16 p-8 bg-neutral-900/50 border border-neutral-800 rounded-xl">

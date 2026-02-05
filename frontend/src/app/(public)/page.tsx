@@ -41,38 +41,38 @@ export default function Home() {
       </section>
 
       {/* Highlight Section */}
-      <section className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto px-4 pb-24 animate-fade-in-up [animation-delay:200ms]">
-        <div className="space-y-8">
-          <div className="flex justify-between items-end border-b border-neutral-800 pb-4">
-            <h2 className="text-3xl font-serif font-bold text-white">Featured Thoughts</h2>
+      <section className="grid md:grid-cols-2 gap-12 md:gap-16 max-w-6xl mx-auto px-4 pb-32 animate-fade-in-up [animation-delay:200ms]">
+        <div className="space-y-10">
+          <div className="flex justify-between items-end border-b border-neutral-800 pb-6">
+            <h2 className="text-4xl font-serif font-bold text-white tracking-tight">Featured Thoughts</h2>
             <Link
               href="/blog"
-              className="text-yellow-500 hover:text-yellow-400 text-sm font-medium tracking-wide"
+              className="text-yellow-500 hover:text-yellow-400 text-sm font-bold tracking-widest uppercase mb-1"
             >
-              VIEW ALL →
+              View All →
             </Link>
           </div>
-          <div className="space-y-6">
-            <div className="group block glass-card p-8 rounded-xl">
-              <span className="text-yellow-500 text-xs font-bold uppercase tracking-wider mb-3 block">
+          <div className="space-y-8">
+            <div className="group block glass-card p-10 rounded-2xl hover:bg-neutral-900/40 transition-all duration-300">
+              <span className="text-yellow-500 text-xs font-bold uppercase tracking-widest mb-4 block">
                 Tech & Policy
               </span>
-              <h3 className="text-xl font-bold text-neutral-200 group-hover:text-yellow-500 transition-colors mb-3 font-serif">
+              <h3 className="text-2xl font-bold text-neutral-200 group-hover:text-yellow-500 transition-colors mb-4 font-serif leading-tight">
                 The Future of Digital Governance
               </h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">
+              <p className="text-neutral-400 text-base leading-relaxed">
                 Exploring how emerging technologies are reshaping the landscape
                 of policy and governance in the 21st century.
               </p>
             </div>
-            <div className="group block glass-card p-8 rounded-xl">
-              <span className="text-yellow-500 text-xs font-bold uppercase tracking-wider mb-3 block">
+            <div className="group block glass-card p-10 rounded-2xl hover:bg-neutral-900/40 transition-all duration-300">
+              <span className="text-yellow-500 text-xs font-bold uppercase tracking-widest mb-4 block">
                 Engineering
               </span>
-              <h3 className="text-xl font-bold text-neutral-200 group-hover:text-yellow-500 transition-colors mb-3 font-serif">
+              <h3 className="text-2xl font-bold text-neutral-200 group-hover:text-yellow-500 transition-colors mb-4 font-serif leading-tight">
                 Building Scalable Systems
               </h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">
+              <p className="text-neutral-400 text-base leading-relaxed">
                 Lessons learned from architecting high-performance applications
                 for thousands of users.
               </p>
@@ -80,23 +80,23 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="space-y-8">
-          <div className="flex justify-between items-end border-b border-neutral-800 pb-4">
-            <h2 className="text-3xl font-serif font-bold text-white">Selected Work</h2>
+        <div className="space-y-10">
+          <div className="flex justify-between items-end border-b border-neutral-800 pb-6">
+            <h2 className="text-4xl font-serif font-bold text-white tracking-tight">Selected Work</h2>
             <Link
               href="/portfolio"
-              className="text-yellow-500 hover:text-yellow-400 text-sm font-medium tracking-wide"
+              className="text-yellow-500 hover:text-yellow-400 text-sm font-bold tracking-widest uppercase mb-1"
             >
-              VIEW ALL →
+              View All →
             </Link>
           </div>
-          <div className="space-y-6">
-            <div className="group block glass-card p-8 rounded-xl">
-              <div className="flex justify-between items-start mb-4">
-                <h3 className="text-xl font-bold text-neutral-200 group-hover:text-yellow-500 transition-colors font-serif">
+          <div className="space-y-8">
+            <div className="group block glass-card p-10 rounded-2xl hover:bg-neutral-900/40 transition-all duration-300">
+              <div className="flex justify-between items-start mb-6">
+                <h3 className="text-2xl font-bold text-neutral-200 group-hover:text-yellow-500 transition-colors font-serif leading-tight">
                   Ayoola Platform
                 </h3>
-                <span className="text-xs font-medium bg-neutral-800/80 text-neutral-300 px-3 py-1 rounded-full border border-neutral-700">
+                <span className="text-xs font-bold bg-neutral-800/80 text-neutral-300 px-4 py-1.5 rounded-full border border-neutral-700 tracking-wider uppercase">
                   Full Stack
                 </span>
               </div>

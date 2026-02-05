@@ -1,5 +1,6 @@
 import { fetchPosts, Post } from "@/lib/api-client";
 import PostCard from "@/components/blog/PostCard";
+import ReadingPathBuilder from "@/components/blog/ReadingPathBuilder";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -20,16 +21,18 @@ export default async function BlogPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white py-8 md:py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-10 md:mb-16">
-          <h1 className="text-3xl md:text-5xl font-bold mb-3 md:mb-4">
+    <div className="min-h-screen bg-black text-white py-24 md:py-32 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto animate-fade-in-up">
+        <div className="text-center mb-20 md:mb-24">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
             <span className="text-yellow-500">Blog</span> & Thoughts
           </h1>
-          <p className="text-neutral-400 max-w-2xl mx-auto text-sm md:text-base">
+          <p className="text-xl md:text-2xl text-neutral-400 max-w-3xl mx-auto leading-relaxed font-light">
             Technical deep dives, tutorials, and updates on my latest projects.
           </p>
         </div>
+
+        <ReadingPathBuilder postCount={posts.length} />
 
         {error ? (
           <div className="text-center py-20 bg-neutral-900/50 rounded-lg border border-red-500/20">

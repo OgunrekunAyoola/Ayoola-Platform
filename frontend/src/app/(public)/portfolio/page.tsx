@@ -18,13 +18,13 @@ export default async function PortfolioPage() {
   }
 
   return (
-    <main className="min-h-screen bg-black text-white py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
-        <header className="mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-neutral-100">
+    <main className="min-h-screen bg-black text-white py-24 md:py-32 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto">
+        <header className="mb-20 md:mb-24 text-center">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-neutral-100 tracking-tight">
             Selected Work
           </h1>
-          <p className="text-xl text-neutral-400 max-w-2xl">
+          <p className="text-xl md:text-2xl text-neutral-400 max-w-3xl mx-auto leading-relaxed font-light">
             A collection of projects exploring software engineering, product
             design, and creative problem solving.
           </p>

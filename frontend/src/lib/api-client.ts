@@ -158,6 +158,31 @@ export const submitContact = (data: {
   });
 };
 
+// AI Features
+export const askPostQuestion = (postId: string, question: string) => {
+  return fetchAPI<{ answer: string }>(`/ai/posts/${postId}/qa`, {
+    method: "POST",
+    body: JSON.stringify({ question }),
+  });
+};
+
+export const generateReadingPath = (goal: string) => {
+  return fetchAPI<{ intro: string; path: any[] }>("/ai/reading-path", {
+    method: "POST",
+    body: JSON.stringify({ goal }),
+  });
+};
+
+export const getPersonaSummary = (projectId: string, persona: string) => {
+  return fetchAPI<{ persona: string; summary: string }>(
+    `/ai/projects/${projectId}/persona-summary`,
+    {
+      method: "POST",
+      body: JSON.stringify({ persona }),
+    },
+  );
+};
+
 // Admin Stats
 export const fetchAdminStats = () => {
   return fetchAPI<{
