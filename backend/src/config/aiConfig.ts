@@ -11,8 +11,8 @@ export const aiConfig = {
 // Validate config in non-development environments
 if (process.env.NODE_ENV !== "development" && process.env.NODE_ENV !== "test") {
   if (!aiConfig.apiKey) {
-    throw new Error(
-      "Missing AI_PROVIDER_API_KEY environment variable. AI features require this key in production."
+    console.warn(
+      "⚠️ Warning: Missing AI_PROVIDER_API_KEY environment variable. AI features will be disabled in production.",
     );
   }
 }
