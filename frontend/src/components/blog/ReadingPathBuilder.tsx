@@ -55,9 +55,22 @@ export default function ReadingPathBuilder({
       const data = await generateReadingPath(goal);
       setResult(data as unknown as PathResult);
     } catch (err: any) {
-      setError(
-        err.message || "Failed to generate reading path. Please try again.",
-      );
+      const msg = err.message || "";
+      if (msg.includes("503") || msg.includes("overloaded")) {
+        setError(
+          "I'm currently overloaded with requests. Please give me a moment and try again.",
+        );
+      } else if (msg.includes("429") || msg.includes("Rate Limit")) {
+        setError(
+          "I've received too many requests recently. Please wait a moment.",
+        );
+      } else if (msg.includes("500") || msg.includes("Internal Server Error")) {
+        setError(
+          "I encountered a temporary glitch. Please try asking again in a few seconds.",
+        );
+      } else {
+        setError("Failed to generate reading path. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
