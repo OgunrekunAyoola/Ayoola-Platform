@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import Subscriber from '../models/Subscriber';
+import { emailService } from '../services/emailService';
 
 const router = Router();
 
@@ -27,6 +28,16 @@ router.post('/', async (req: Request, res: Response) => {
       },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
+
+    // If the subscriber was just created (createdAt is very close to now), send welcome email
+    const isNew = Math.abs(new Date().getTime() - new Date(subscriber.createdAt).getTime()) < 2000;
+
+    if (isNew) {
+      // Send welcome email (fire and forget)
+      emailService.sendWelcomeEmail(email);
+      // Notify admin
+      emailService.sendNewSubscriberNotification(email, source);
+    }
 
     res.status(200).json(subscriber);
   } catch (error) {

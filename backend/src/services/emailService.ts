@@ -56,5 +56,59 @@ export const emailService = {
       console.error('Failed to send outreach email:', error);
       throw error;
     }
+  },
+
+  /**
+   * Send a welcome email to a new subscriber.
+   */
+  async sendWelcomeEmail(email: string) {
+    if (!config.RESEND_API_KEY) {
+      console.warn('RESEND_API_KEY is not set. Welcome email skipped.');
+      return;
+    }
+
+    try {
+      await resend.emails.send({
+        from: 'Ayoola <onboarding@resend.dev>',
+        to: email,
+        subject: 'Welcome to the circle',
+        html: `
+          <h2>Thanks for subscribing!</h2>
+          <p>Hi there,</p>
+          <p>I'm excited to have you in my network. You'll be the first to know when I publish new articles, case studies, or experiments.</p>
+          <p>In the meantime, feel free to reply to this email if you want to chat about tech, design, or building products.</p>
+          <br>
+          <p>Best,</p>
+          <p><strong>Ayoola Ogunrekun</strong></p>
+        `,
+      });
+      console.log(`Welcome email sent to ${email}`);
+    } catch (error) {
+      console.error('Failed to send welcome email:', error);
+      // Don't throw, just log
+    }
+  },
+
+  /**
+   * Notify admin about a new subscriber.
+   */
+  async sendNewSubscriberNotification(email: string, source: string) {
+    if (!config.RESEND_API_KEY) return;
+
+    try {
+      await resend.emails.send({
+        from: 'Ayoola Platform <onboarding@resend.dev>',
+        to: config.ADMIN_EMAIL,
+        subject: `New Subscriber: ${email}`,
+        html: `
+          <h2>New Newsletter Subscriber</h2>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Source:</strong> ${source}</p>
+          <p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+        `,
+      });
+    } catch (error) {
+      console.error('Failed to send subscriber notification:', error);
+    }
   }
 };
