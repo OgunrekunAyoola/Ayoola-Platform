@@ -34,18 +34,68 @@ export default function AdminPostsPage() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Posts</h1>
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold">Posts</h1>
         <Link
           href="/admin/posts/new"
-          className="bg-yellow-500 text-black px-4 py-2 rounded-lg font-medium hover:bg-yellow-400"
+          className="w-full md:w-auto bg-yellow-500 text-black px-4 py-2 rounded-lg font-medium hover:bg-yellow-400 text-center transition-colors"
         >
           + New Post
         </Link>
       </div>
 
-      <div className="bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden overflow-x-auto">
-        <table className="w-full text-left min-w-[600px]">
+      {/* Mobile View (Cards) */}
+      <div className="md:hidden space-y-4">
+        {posts.map((post) => (
+          <div
+            key={post._id}
+            className="bg-neutral-900 border border-neutral-800 p-4 rounded-xl space-y-3"
+          >
+            <div className="flex justify-between items-start gap-4">
+              <h2 className="font-bold text-lg text-white line-clamp-2">
+                {post.title}
+              </h2>
+              <span
+                className={`shrink-0 px-2 py-1 rounded text-xs font-medium ${
+                  post.status === "published"
+                    ? "bg-green-500/10 text-green-500"
+                    : "bg-yellow-500/10 text-yellow-500"
+                }`}
+              >
+                {post.status}
+              </span>
+            </div>
+
+            <div className="text-sm text-neutral-400">
+              {new Date(post.publishedAt).toLocaleDateString()}
+            </div>
+
+            <div className="pt-4 border-t border-neutral-800 flex justify-end gap-4">
+              <Link
+                href={`/admin/posts/${post._id}`}
+                className="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors"
+              >
+                Edit
+              </Link>
+              <button
+                onClick={() => handleDelete(post._id)}
+                className="text-red-500 hover:text-red-400 text-sm font-medium transition-colors"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
+        {posts.length === 0 && (
+          <div className="text-center text-neutral-500 py-8 bg-neutral-900 rounded-xl border border-neutral-800">
+            No posts found. Create one to get started.
+          </div>
+        )}
+      </div>
+
+      {/* Desktop View (Table) */}
+      <div className="hidden md:block bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden">
+        <table className="w-full text-left">
           <thead className="bg-neutral-800 text-neutral-400 text-sm uppercase">
             <tr>
               <th className="px-6 py-4 font-medium">Title</th>
@@ -56,7 +106,10 @@ export default function AdminPostsPage() {
           </thead>
           <tbody className="divide-y divide-neutral-800">
             {posts.map((post) => (
-              <tr key={post._id} className="hover:bg-neutral-800/50">
+              <tr
+                key={post._id}
+                className="hover:bg-neutral-800/50 transition-colors"
+              >
                 <td className="px-6 py-4 font-medium text-white">
                   {post.title}
                 </td>
@@ -77,13 +130,13 @@ export default function AdminPostsPage() {
                 <td className="px-6 py-4 text-right space-x-4">
                   <Link
                     href={`/admin/posts/${post._id}`}
-                    className="text-blue-400 hover:text-blue-300 text-sm font-medium"
+                    className="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors"
                   >
                     Edit
                   </Link>
                   <button
                     onClick={() => handleDelete(post._id)}
-                    className="text-red-500 hover:text-red-400 text-sm font-medium"
+                    className="text-red-500 hover:text-red-400 text-sm font-medium transition-colors"
                   >
                     Delete
                   </button>
@@ -94,7 +147,7 @@ export default function AdminPostsPage() {
               <tr>
                 <td
                   colSpan={4}
-                  className="px-6 py-8 text-center text-neutral-500"
+                  className="px-6 py-12 text-center text-neutral-500"
                 >
                   No posts found. Create one to get started.
                 </td>

@@ -151,18 +151,97 @@ export default function AdminOutreachPage() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Outreach</h1>
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold">Outreach</h1>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="bg-yellow-500 text-black px-4 py-2 rounded-lg font-medium hover:bg-yellow-400"
+          className="w-full md:w-auto bg-yellow-500 text-black px-4 py-2 rounded-lg font-medium hover:bg-yellow-400 transition-colors"
         >
           + New Target
         </button>
       </div>
 
-      <div className="bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden overflow-x-auto">
-        <table className="w-full text-left min-w-[800px]">
+      {/* Mobile View (Cards) */}
+      <div className="md:hidden space-y-4">
+        {targets.map((target) => (
+          <div
+            key={target._id}
+            className="bg-neutral-900 border border-neutral-800 p-4 rounded-xl space-y-4"
+          >
+            <div className="flex justify-between items-start gap-4">
+              <div>
+                <div className="font-bold text-lg text-white">
+                  {target.name}
+                </div>
+                <div className="text-neutral-400">{target.company}</div>
+              </div>
+              <select
+                value={target.status}
+                onChange={(e) => handleStatusChange(target._id, e.target.value)}
+                className={`
+                  text-xs font-medium rounded px-2 py-1 border-none focus:ring-1 focus:ring-yellow-500
+                  ${
+                    target.status === "Converted"
+                      ? "bg-green-500/20 text-green-500"
+                      : target.status === "Rejected"
+                        ? "bg-red-500/20 text-red-500"
+                        : "bg-neutral-800 text-neutral-300"
+                  }
+                `}
+              >
+                {STATUSES.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="text-sm text-neutral-500 break-all">
+              {target.email}
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              <span className="px-2 py-1 bg-neutral-800 rounded text-xs text-neutral-400 border border-neutral-700">
+                {target.segment}
+              </span>
+            </div>
+
+            <div className="pt-4 border-t border-neutral-800 flex justify-between items-center">
+              <button
+                onClick={() => copyTemplate(target)}
+                className="flex items-center gap-2 text-yellow-500 hover:text-yellow-400 text-sm font-medium transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path d="M7 3.5A1.5 1.5 0 018.5 2h3.879a1.5 1.5 0 011.06.44l3.122 3.12A1.5 1.5 0 0117 6.622V12.5a1.5 1.5 0 01-1.5 1.5h-1v-3.379a3 3 0 00-.879-2.121L10.5 5.379A3 3 0 008.379 4.5H7v-1z" />
+                  <path d="M4.5 6A1.5 1.5 0 003 7.5v9A1.5 1.5 0 004.5 18h7a1.5 1.5 0 001.5-1.5v-5.879a1.5 1.5 0 00-.44-1.06L9.44 6.439A1.5 1.5 0 008.378 6H4.5z" />
+                </svg>
+                Copy Msg
+              </button>
+              <button
+                onClick={() => handleDelete(target._id)}
+                className="text-red-500 hover:text-red-400 text-sm font-medium transition-colors"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
+        {targets.length === 0 && (
+          <div className="text-center text-neutral-500 py-8 bg-neutral-900 rounded-xl border border-neutral-800">
+            No outreach targets found.
+          </div>
+        )}
+      </div>
+
+      {/* Desktop View (Table) */}
+      <div className="hidden md:block bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden">
+        <table className="w-full text-left">
           <thead className="bg-neutral-800 text-neutral-400 text-sm uppercase">
             <tr>
               <th className="px-6 py-4 font-medium">Name / Company</th>
@@ -173,22 +252,40 @@ export default function AdminOutreachPage() {
           </thead>
           <tbody className="divide-y divide-neutral-800">
             {targets.map((target) => (
-              <tr key={target._id} className="hover:bg-neutral-800/50">
+              <tr
+                key={target._id}
+                className="hover:bg-neutral-800/50 transition-colors"
+              >
                 <td className="px-6 py-4 font-medium text-white">
-                  <div>{target.name}</div>
-                  <div className="text-sm text-neutral-500">
+                  <div className="text-lg">{target.name}</div>
+                  <div className="text-sm text-neutral-400 font-normal">
                     {target.company}
                   </div>
-                  <div className="text-xs text-neutral-600">{target.email}</div>
+                  <div className="text-xs text-neutral-600 font-normal mt-1">
+                    {target.email}
+                  </div>
                 </td>
-                <td className="px-6 py-4 text-neutral-300">{target.segment}</td>
+                <td className="px-6 py-4">
+                  <span className="inline-block px-2 py-1 bg-neutral-800 rounded text-xs text-neutral-300 border border-neutral-700">
+                    {target.segment}
+                  </span>
+                </td>
                 <td className="px-6 py-4">
                   <select
                     value={target.status}
                     onChange={(e) =>
                       handleStatusChange(target._id, e.target.value)
                     }
-                    className="bg-neutral-800 border-none text-xs rounded p-1 focus:ring-1 focus:ring-yellow-500"
+                    className={`
+                      bg-neutral-800 border-none text-xs rounded p-1.5 focus:ring-1 focus:ring-yellow-500 cursor-pointer
+                      ${
+                        target.status === "Converted"
+                          ? "text-green-500"
+                          : target.status === "Rejected"
+                            ? "text-red-500"
+                            : "text-neutral-300"
+                      }
+                    `}
                   >
                     {STATUSES.map((s) => (
                       <option key={s} value={s}>
@@ -200,13 +297,13 @@ export default function AdminOutreachPage() {
                 <td className="px-6 py-4 text-right space-x-4">
                   <button
                     onClick={() => copyTemplate(target)}
-                    className="text-yellow-500 hover:text-yellow-400 text-sm font-medium"
+                    className="text-yellow-500 hover:text-yellow-400 text-sm font-medium transition-colors"
                   >
                     Copy Msg
                   </button>
                   <button
                     onClick={() => handleDelete(target._id)}
-                    className="text-red-500 hover:text-red-400 text-sm font-medium"
+                    className="text-red-500 hover:text-red-400 text-sm font-medium transition-colors"
                   >
                     Delete
                   </button>
@@ -217,7 +314,7 @@ export default function AdminOutreachPage() {
               <tr>
                 <td
                   colSpan={4}
-                  className="px-6 py-8 text-center text-neutral-500"
+                  className="px-6 py-12 text-center text-neutral-500"
                 >
                   No outreach targets found.
                 </td>
@@ -229,8 +326,8 @@ export default function AdminOutreachPage() {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-          <div className="bg-neutral-900 border border-neutral-800 p-8 rounded-xl max-w-md w-full">
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+          <div className="bg-neutral-900 border border-neutral-800 p-6 md:p-8 rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl">
             <h2 className="text-xl font-bold mb-6">Add New Target</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
