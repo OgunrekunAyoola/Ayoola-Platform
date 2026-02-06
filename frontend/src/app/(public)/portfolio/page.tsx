@@ -29,7 +29,7 @@ export default async function PortfolioPage() {
   const hasProjects = projects.length > 0;
 
   return (
-    <main className="min-h-screen bg-black text-white py-24 md:py-32 px-4 sm:px-6 lg:px-8">
+    <main className="min-h-screen py-24 md:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <header className="mb-20 md:mb-24 text-center">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-neutral-100 tracking-tight">

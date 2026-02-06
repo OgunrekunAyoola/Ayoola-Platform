@@ -46,28 +46,28 @@ export default function NewsletterForm({
     <div className={`w-full ${className}`}>
       {variant === "default" && (
         <div className="mb-4">
-          <h4 className="text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wider">
+          <h4 className="text-sm font-bold text-[var(--foreground)] mb-2 uppercase tracking-wider">
             Newsletter
           </h4>
-          <p className="text-gray-400 text-sm">
+          <p className="text-[var(--muted)] text-sm">
             Get the latest thoughts on tech, policy, and creativity.
           </p>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="email@example.com"
-          className="w-full sm:flex-grow bg-gray-800 border border-gray-700 rounded px-4 py-3 sm:py-2 text-sm text-white focus:outline-none focus:border-yellow-500 transition disabled:opacity-50"
+          className="w-full sm:flex-grow bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 sm:py-2 text-sm text-[var(--foreground)] placeholder-[var(--muted)]/50 focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition-all disabled:opacity-50 backdrop-blur-sm"
           disabled={status === "loading" || status === "success"}
           required
         />
         <button
           type="submit"
-          className="w-full sm:w-auto bg-yellow-500 text-black px-6 py-3 sm:py-2 text-sm font-bold rounded hover:bg-yellow-400 transition disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+          className="w-full sm:w-auto bg-[var(--accent)] text-black px-6 py-3 sm:py-2 text-sm font-bold rounded-lg hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shadow-lg shadow-[var(--accent)]/20"
           disabled={status === "loading" || status === "success"}
         >
           {status === "loading"
@@ -80,7 +80,7 @@ export default function NewsletterForm({
 
       {message && (
         <p
-          className={`text-xs mt-2 ${status === "success" ? "text-green-500" : "text-red-500"}`}
+          className={`text-xs mt-3 ${status === "success" ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}
         >
           {message}
         </p>

@@ -23,7 +23,7 @@ export default async function BlogPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white py-24 md:py-32 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-24 md:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto animate-fade-in-up">
         <div className="text-center mb-20 md:mb-24">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">

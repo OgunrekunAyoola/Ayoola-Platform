@@ -15,12 +15,12 @@ export default function Home() {
           <ScrollReveal delay={0}>
             <Link
               href="/portfolio#systems"
-              className="group block bg-neutral-900/30 border border-neutral-800 p-8 rounded-xl hover:bg-neutral-900/50 transition-all duration-300 hover:border-yellow-500/50 h-full"
+              className="group block glass-card p-8 rounded-xl h-full"
             >
-              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-yellow-500 transition-colors">
+              <h3 className="text-xl font-bold text-[var(--foreground)] mb-3 group-hover:text-[var(--accent)] transition-colors">
                 Client & Collaboration Work
               </h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">
+              <p className="text-[var(--muted)] text-sm leading-relaxed">
                 AI-enhanced systems and websites I’ve built with clients and
                 teams.
               </p>
@@ -30,12 +30,12 @@ export default function Home() {
           <ScrollReveal delay={1}>
             <Link
               href="/portfolio#experiments"
-              className="group block bg-neutral-900/30 border border-neutral-800 p-8 rounded-xl hover:bg-neutral-900/50 transition-all duration-300 hover:border-yellow-500/50 h-full"
+              className="group block glass-card p-8 rounded-xl h-full"
             >
-              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-yellow-500 transition-colors">
+              <h3 className="text-xl font-bold text-[var(--foreground)] mb-3 group-hover:text-[var(--accent)] transition-colors">
                 Products & Experiments
               </h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">
+              <p className="text-[var(--muted)] text-sm leading-relaxed">
                 Personal projects, prototypes, and tools where I explore ideas.
               </p>
             </Link>
@@ -44,12 +44,12 @@ export default function Home() {
           <ScrollReveal delay={2}>
             <Link
               href="/blog"
-              className="group block bg-neutral-900/30 border border-neutral-800 p-8 rounded-xl hover:bg-neutral-900/50 transition-all duration-300 hover:border-yellow-500/50 h-full"
+              className="group block glass-card p-8 rounded-xl h-full"
             >
-              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-yellow-500 transition-colors">
+              <h3 className="text-xl font-bold text-[var(--foreground)] mb-3 group-hover:text-[var(--accent)] transition-colors">
                 Writing & Ideas
               </h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">
+              <p className="text-[var(--muted)] text-sm leading-relaxed">
                 Essays and notes on technology, systems, and creativity.
               </p>
             </Link>
@@ -61,36 +61,36 @@ export default function Home() {
       <section className="max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <ScrollReveal delay={0}>
-            <div className="bg-neutral-900/30 border border-neutral-800 p-8 rounded-xl text-center h-full">
-              <h3 className="text-4xl font-bold text-white mb-2">70%</h3>
-              <p className="text-neutral-400 text-sm uppercase tracking-wider font-medium">
+            <div className="glass-card p-8 rounded-xl text-center h-full">
+              <h3 className="text-4xl font-bold text-[var(--foreground)] mb-2">70%</h3>
+              <p className="text-[var(--muted)] text-sm uppercase tracking-wider font-medium">
                 Reduction in Ops Time
               </p>
-              <p className="text-neutral-500 text-sm mt-2">
+              <p className="text-[var(--muted)]/80 text-sm mt-2">
                 With custom booking automation
               </p>
             </div>
           </ScrollReveal>
 
           <ScrollReveal delay={1}>
-            <div className="bg-neutral-900/30 border border-neutral-800 p-8 rounded-xl text-center h-full">
-              <h3 className="text-4xl font-bold text-white mb-2">200+</h3>
-              <p className="text-neutral-400 text-sm uppercase tracking-wider font-medium">
+            <div className="glass-card p-8 rounded-xl text-center h-full">
+              <h3 className="text-4xl font-bold text-[var(--foreground)] mb-2">200+</h3>
+              <p className="text-[var(--muted)] text-sm uppercase tracking-wider font-medium">
                 Monthly Users
               </p>
-              <p className="text-neutral-500 text-sm mt-2">
+              <p className="text-[var(--muted)]/80 text-sm mt-2">
                 On shipped AI-powered tools
               </p>
             </div>
           </ScrollReveal>
 
           <ScrollReveal delay={2}>
-            <div className="bg-neutral-900/30 border border-neutral-800 p-8 rounded-xl text-center h-full">
-              <h3 className="text-4xl font-bold text-white mb-2">4 Weeks</h3>
-              <p className="text-neutral-400 text-sm uppercase tracking-wider font-medium">
+            <div className="glass-card p-8 rounded-xl text-center h-full">
+              <h3 className="text-4xl font-bold text-[var(--foreground)] mb-2">4 Weeks</h3>
+              <p className="text-[var(--muted)] text-sm uppercase tracking-wider font-medium">
                 Time to Launch
               </p>
-              <p className="text-neutral-500 text-sm mt-2">
+              <p className="text-[var(--muted)]/80 text-sm mt-2">
                 For full custom platforms
               </p>
             </div>

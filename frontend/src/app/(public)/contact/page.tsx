@@ -59,29 +59,29 @@ export default function Contact() {
       <div className="grid md:grid-cols-2 gap-12 items-start">
         {/* Contact Info */}
         <div className="space-y-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white">
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-[var(--foreground)]">
             Let&apos;s build something meaningful.
           </h1>
-          <p className="text-xl text-neutral-400 leading-relaxed">
+          <p className="text-xl text-[var(--muted)] leading-relaxed font-light">
             Whether you&apos;re looking for strategic advice, technical
             execution, or just want to connect, I&apos;m always open to
             interesting conversations.
           </p>
 
-          <div className="space-y-4 pt-4 border-t border-neutral-800">
+          <div className="space-y-4 pt-4 border-t border-[var(--card-border)]">
             <div>
-              <h3 className="text-yellow-500 font-bold mb-1 uppercase text-sm tracking-wider">
+              <h3 className="text-[var(--accent)] font-bold mb-1 uppercase text-sm tracking-wider">
                 Email
               </h3>
               <a
                 href="mailto:hello@ayoola.io"
-                className="text-white hover:text-yellow-500 transition-colors text-lg"
+                className="text-[var(--foreground)] hover:text-[var(--accent)] transition-colors text-lg"
               >
                 hello@ayoola.io
               </a>
             </div>
             <div>
-              <h3 className="text-yellow-500 font-bold mb-1 uppercase text-sm tracking-wider">
+              <h3 className="text-[var(--accent)] font-bold mb-1 uppercase text-sm tracking-wider">
                 Socials
               </h3>
               <div className="flex gap-4">
@@ -89,7 +89,7 @@ export default function Contact() {
                   href="https://twitter.com/ayoola"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-neutral-400 hover:text-white transition-colors"
+                  className="text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
                 >
                   Twitter / X
                 </a>
@@ -97,7 +97,7 @@ export default function Contact() {
                   href="https://linkedin.com/in/ayoola"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-neutral-400 hover:text-white transition-colors"
+                  className="text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
                 >
                   LinkedIn
                 </a>
@@ -105,7 +105,7 @@ export default function Contact() {
                   href="https://github.com/ayoola"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-neutral-400 hover:text-white transition-colors"
+                  className="text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
                 >
                   GitHub
                 </a>
@@ -115,8 +115,10 @@ export default function Contact() {
         </div>
 
         {/* Contact Form */}
-        <div className="bg-neutral-900/50 p-8 rounded-2xl border border-neutral-800">
-          <h2 className="text-2xl font-bold text-white mb-6">Send a Message</h2>
+        <div className="glass-card p-8 rounded-2xl">
+          <h2 className="text-2xl font-serif font-bold text-[var(--foreground)] mb-6">
+            Send a Message
+          </h2>
 
           {status === "success" ? (
             <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-8 text-center">

@@ -41,24 +41,24 @@ export default function HeroSection() {
           </motion.div>
 
           <motion.div 
-            className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4"
+            className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-6"
             variants={fadeUp} 
             custom={2}
           >
-            <Link href="/portfolio#systems">
+            <Link href="/portfolio">
               <Button
                 variant="primary"
-                className="w-full sm:w-auto text-lg py-4 px-8 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40"
+                className="w-full sm:w-auto text-base md:text-lg py-3.5 px-8"
               >
                 View Systems
               </Button>
             </Link>
-            <Link href="/services">
+            <Link href="/contact">
               <Button
                 variant="secondary"
-                className="w-full sm:w-auto text-lg py-4 px-8"
+                className="w-full sm:w-auto text-base md:text-lg py-3.5 px-8"
               >
-                Hire Me
+                Start a Project
               </Button>
             </Link>
           </motion.div>
@@ -74,80 +74,65 @@ export default function HeroSection() {
         <div className="relative h-[500px] w-full hidden lg:block">
           {/* Card 1: Code (Back) */}
           <motion.div
-            className="absolute top-0 right-10 w-72 h-80 glass-card rounded-2xl p-6 border border-white/10 dark:border-white/5 z-10"
+            className="absolute top-0 right-10 w-72 h-80 glass-card rounded-2xl p-6 z-10"
             initial={{ opacity: 0, y: 40, rotate: -6 }}
             animate={{ opacity: 1, y: 0, rotate: -6 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             whileHover={{ y: -10, rotate: -4, transition: { duration: 0.3 } }}
           >
             <div className="h-full flex flex-col justify-between">
-              <Code className="w-10 h-10 text-blue-400" />
+              <Code className="w-10 h-10 text-blue-500" />
               <div className="space-y-3">
-                <div className="h-2 w-full bg-white/10 rounded-full" />
-                <div className="h-2 w-3/4 bg-white/10 rounded-full" />
-                <div className="h-2 w-1/2 bg-white/10 rounded-full" />
+                <div className="h-2 w-full bg-[var(--muted)]/10 rounded-full" />
+                <div className="h-2 w-3/4 bg-[var(--muted)]/10 rounded-full" />
+                <div className="h-2 w-1/2 bg-[var(--muted)]/10 rounded-full" />
               </div>
-              <span className="text-xs font-mono text-blue-400">/systems/core</span>
+              <span className="text-xs font-mono text-blue-500">/systems/core</span>
             </div>
           </motion.div>
 
           {/* Card 2: Content (Middle) */}
           <motion.div
-            className="absolute top-16 right-32 w-72 h-80 glass-card rounded-2xl p-6 border border-white/10 dark:border-white/5 z-20 bg-black/40 dark:bg-black/60 backdrop-blur-xl"
+            className="absolute top-16 right-32 w-72 h-80 glass-card rounded-2xl p-6 z-20 backdrop-blur-xl"
             initial={{ opacity: 0, y: 40, rotate: 3 }}
             animate={{ opacity: 1, y: 0, rotate: 3 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             whileHover={{ y: -10, rotate: 1, transition: { duration: 0.3 } }}
           >
             <div className="h-full flex flex-col justify-between">
-              <FileText className="w-10 h-10 text-emerald-400" />
+              <FileText className="w-10 h-10 text-[var(--accent)]" />
               <div className="space-y-4">
-                 <div className="h-24 w-full bg-gradient-to-b from-white/5 to-transparent rounded-lg border border-white/5" />
+                <div className="h-20 w-full bg-[var(--muted)]/5 rounded-lg border border-[var(--card-border)]" />
+                <div className="space-y-2">
+                  <div className="h-2 w-full bg-[var(--muted)]/10 rounded-full" />
+                  <div className="h-2 w-5/6 bg-[var(--muted)]/10 rounded-full" />
+                </div>
               </div>
-              <span className="text-xs font-mono text-emerald-400">/content/strategy</span>
+              <span className="text-xs font-mono text-[var(--accent)]">
+                /content/generate
+              </span>
             </div>
           </motion.div>
 
-          {/* Card 3: Capital/Growth (Front) */}
+          {/* Card 3: Growth (Front) */}
           <motion.div
-            className="absolute top-32 right-52 w-72 h-80 glass-card rounded-2xl p-6 border border-[var(--accent)]/30 z-30 shadow-2xl shadow-black/50"
+            className="absolute top-32 right-52 w-72 h-80 glass-card rounded-2xl p-6 z-30 backdrop-blur-xl"
             initial={{ opacity: 0, y: 40, rotate: -3 }}
             animate={{ opacity: 1, y: 0, rotate: -3 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            whileHover={{ y: -10, rotate: -1, scale: 1.02, transition: { duration: 0.3 } }}
+            whileHover={{ y: -10, rotate: -1, transition: { duration: 0.3 } }}
           >
             <div className="h-full flex flex-col justify-between">
-              <div className="flex justify-between items-start">
-                <TrendingUp className="w-10 h-10 text-[var(--accent)]" />
-                <div className="px-2 py-1 rounded bg-[var(--accent)]/20 border border-[var(--accent)]/30 text-[var(--accent)] text-xs font-bold">
-                  +124%
-                </div>
+              <TrendingUp className="w-10 h-10 text-green-500" />
+              <div className="flex items-end gap-2 h-20 px-2">
+                <div className="w-1/4 h-1/3 bg-[var(--muted)]/10 rounded-t" />
+                <div className="w-1/4 h-1/2 bg-[var(--muted)]/10 rounded-t" />
+                <div className="w-1/4 h-3/4 bg-[var(--muted)]/10 rounded-t" />
+                <div className="w-1/4 h-full bg-green-500/20 rounded-t" />
               </div>
-              
-              <div className="relative h-32 w-full">
-                 {/* Abstract Chart */}
-                 <svg className="w-full h-full overflow-visible" preserveAspectRatio="none">
-                    <path 
-                      d="M0 100 C 50 100, 100 80, 150 40 S 250 0, 250 0" 
-                      fill="none" 
-                      stroke="var(--accent)" 
-                      strokeWidth="2"
-                    />
-                    <path 
-                      d="M0 100 L 250 100 L 250 0 C 250 0, 150 40, 0 100" 
-                      fill="url(#gradient)" 
-                      opacity="0.2"
-                    />
-                    <defs>
-                      <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="var(--accent)" />
-                        <stop offset="100%" stopColor="transparent" />
-                      </linearGradient>
-                    </defs>
-                 </svg>
-              </div>
-
-              <span className="text-xs font-mono text-[var(--accent)]">/growth/metrics</span>
+              <span className="text-xs font-mono text-green-500">
+                /metrics/scale
+              </span>
             </div>
           </motion.div>
         </div>

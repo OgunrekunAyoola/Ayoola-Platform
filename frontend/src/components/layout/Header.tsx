@@ -21,7 +21,7 @@ export default function Header() {
       <div className="container mx-auto px-4 h-16 flex justify-between items-center">
         <Link
           href="/"
-          className="text-xl font-bold text-[var(--accent)] hover:opacity-80 transition"
+          className="text-xl font-serif font-bold text-[var(--foreground)] hover:text-[var(--accent)] transition-colors"
           onClick={() => setIsMobileMenuOpen(false)}
         >
           Ayoola Ogunrekun
