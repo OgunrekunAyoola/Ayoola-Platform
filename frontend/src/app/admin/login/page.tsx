@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { loginAdmin } from "@/lib/api-client";
+import { useToast } from "@/context/ToastContext";
 import Button from "@/components/ui/Button";
 
 export default function AdminLogin() {
   const router = useRouter();
+  const { addToast } = useToast();
   const [formData, setFormData] = useState({
     email: "",
     password: "",

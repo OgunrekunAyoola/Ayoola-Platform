@@ -120,8 +120,9 @@ export default function AdminOutreachPage() {
         notes: "",
       });
       loadTargets();
+      addToast("Target created successfully", "success");
     } catch (error) {
-      alert("Failed to create target");
+      addToast("Failed to create target", "error");
       console.error(error);
     }
   };
@@ -193,7 +194,7 @@ export default function AdminOutreachPage() {
         subject: emailData.subject,
         htmlContent: emailData.htmlContent,
       });
-      alert("Email sent successfully!");
+      addToast("Email sent successfully!", "success");
       setEmailModalOpen(false);
       setTargets(
         targets.map((t) =>
@@ -201,7 +202,7 @@ export default function AdminOutreachPage() {
         ),
       );
     } catch (error) {
-      alert("Failed to send email");
+      addToast("Failed to send email", "error");
       console.error(error);
     }
   };

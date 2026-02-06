@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { submitContact } from "@/lib/api-client";
+import { useToast } from "@/context/ToastContext";
 import Button from "@/components/ui/Button";
 
 export default function Contact() {
+  const { addToast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
