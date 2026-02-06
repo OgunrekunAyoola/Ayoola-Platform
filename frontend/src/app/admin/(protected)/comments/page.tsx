@@ -29,7 +29,7 @@ export default function AdminCommentsPage() {
       await approveComment(id);
       // Optimistic update or reload
       setComments((prev) =>
-        prev.map((c) => (c._id === id ? { ...c, approved: true } : c)),
+        prev.map((c) => (c._id === id ? { ...c, isApproved: true } : c)),
       );
       // If we are showing pending only, remove it from list
       if (showPendingOnly) {
@@ -99,7 +99,7 @@ export default function AdminCommentsPage() {
                   <span className="text-xs text-neutral-500">
                     {new Date(comment.createdAt).toLocaleDateString()}
                   </span>
-                  {!comment.approved && (
+                  {!comment.isApproved && (
                     <span className="bg-yellow-500/10 text-yellow-500 text-xs px-2 py-0.5 rounded">
                       Pending
                     </span>
