@@ -5,6 +5,8 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { getAdminToken } from "@/lib/api-client";
 
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
+
 export default function AdminLayout({
   children,
 }: {
@@ -44,52 +46,56 @@ export default function AdminLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col md:flex-row">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] flex flex-col md:flex-row transition-colors duration-300">
       {/* Mobile Header */}
-      <header className="md:hidden border-b border-neutral-800 p-4 flex justify-between items-center bg-black sticky top-0 z-30">
-        <h1 className="text-lg font-bold text-yellow-500">Admin Panel</h1>
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="text-white p-2 hover:bg-neutral-800 rounded-lg transition"
-        >
-          {isMobileMenuOpen ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-              />
-            </svg>
-          )}
-        </button>
+      <header className="md:hidden border-b border-[var(--card-border)] p-4 flex justify-between items-center bg-[var(--background)] sticky top-0 z-30 backdrop-blur-md bg-opacity-90">
+        <h1 className="text-lg font-bold text-[var(--accent)]">Admin Panel</h1>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="text-[var(--foreground)] p-2 hover:bg-[var(--muted)]/10 rounded-lg transition"
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
       </header>
 
       {/* Sidebar Overlay (Mobile) */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-20 md:hidden"
+          className="fixed inset-0 bg-black/50 z-30 md:hidden backdrop-blur-sm"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
@@ -97,23 +103,25 @@ export default function AdminLayout({
       {/* Sidebar */}
       <aside
         className={`
-          w-64 border-r border-neutral-800 p-6 flex flex-col 
-          fixed top-0 bottom-0 left-0 bg-black z-30
+          w-64 border-r border-[var(--card-border)] p-6 flex flex-col 
+          fixed top-0 bottom-0 left-0 bg-[var(--background)] z-40
           transition-transform duration-300 ease-in-out
           ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
-          ${/* Adjust top padding on mobile if needed, but since it covers full height, it's fine */ ""}
         `}
       >
-        <div className="mb-8 hidden md:block">
-          <h1 className="text-xl font-bold text-yellow-500">Admin Panel</h1>
+        <div className="mb-8 hidden md:flex items-center justify-between">
+          <h1 className="text-xl font-bold text-[var(--accent)]">
+            Admin Panel
+          </h1>
+          <ThemeToggle />
         </div>
 
         <div className="md:hidden mb-8 flex justify-between items-center">
-          <h1 className="text-xl font-bold text-yellow-500">Menu</h1>
+          <h1 className="text-xl font-bold text-[var(--accent)]">Menu</h1>
           <button
             onClick={() => setIsMobileMenuOpen(false)}
-            className="p-1 text-neutral-400 hover:text-white"
+            className="p-1 text-[var(--muted)] hover:text-[var(--foreground)]"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -142,8 +150,8 @@ export default function AdminLayout({
                 href={item.href}
                 className={`block px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   isActive
-                    ? "bg-yellow-500/10 text-yellow-500"
-                    : "text-neutral-400 hover:text-white hover:bg-neutral-900"
+                    ? "bg-[var(--accent)]/10 text-[var(--accent)]"
+                    : "text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/10"
                 }`}
               >
                 {item.label}
@@ -152,13 +160,13 @@ export default function AdminLayout({
           })}
         </nav>
 
-        <div className="pt-6 border-t border-neutral-800">
+        <div className="pt-6 border-t border-[var(--card-border)]">
           <button
             onClick={() => {
               localStorage.removeItem("adminToken");
               router.push("/admin/login");
             }}
-            className="w-full text-left px-4 py-2 text-sm font-medium text-red-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+            className="w-full text-left px-4 py-2 text-sm font-medium text-red-500 hover:text-red-600 hover:bg-red-500/10 rounded-lg transition-colors"
           >
             Sign Out
           </button>
@@ -166,7 +174,7 @@ export default function AdminLayout({
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 md:ml-64 min-h-screen">
+      <main className="flex-1 md:ml-64 min-h-screen bg-[var(--background)] transition-colors duration-300">
         <div className="p-4 md:p-8 max-w-6xl mx-auto">{children}</div>
       </main>
     </div>
