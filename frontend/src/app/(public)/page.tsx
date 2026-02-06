@@ -10,11 +10,14 @@ export default function Home() {
           Ayoola Ogunrekun
         </p>
         <h1 className="text-4xl md:text-7xl font-serif font-bold mb-8 tracking-tight text-white leading-tight">
-          I build AI-enhanced web systems that automate operations and help
-          small businesses grow.
+          I build AI-enhanced web systems and tools.
         </h1>
-        <p className="text-xl md:text-2xl text-neutral-400 mb-12 max-w-2xl mx-auto leading-relaxed font-light">
-          Full-stack engineer · Lagos → Global · Available for select projects.
+        <p className="text-xl md:text-2xl text-neutral-300 mb-6 max-w-3xl mx-auto leading-relaxed font-light">
+          I use AI, code, and writing to automate work, prototype new products,
+          and tell clear stories—for myself and for teams I collaborate with.
+        </p>
+        <p className="text-lg text-neutral-500 mb-12 max-w-2xl mx-auto font-mono text-sm uppercase tracking-wider">
+          Full-stack engineer · Lagos → Global · Available for select projects
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-6">
           <Link href="/portfolio#systems">
@@ -32,6 +35,48 @@ export default function Home() {
             >
               Hire Me
             </Button>
+          </Link>
+        </div>
+      </section>
+
+      {/* Tracks Section */}
+      <section className="max-w-6xl mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <Link
+            href="/portfolio#systems"
+            className="group block bg-neutral-900/30 border border-neutral-800 p-8 rounded-xl hover:bg-neutral-900/50 transition-all duration-300 hover:border-yellow-500/50"
+          >
+            <h3 className="text-xl font-bold text-white mb-3 group-hover:text-yellow-500 transition-colors">
+              Client & Collaboration Work
+            </h3>
+            <p className="text-neutral-400 text-sm leading-relaxed">
+              AI-enhanced systems and websites I’ve built with clients and
+              teams.
+            </p>
+          </Link>
+
+          <Link
+            href="/portfolio#experiments"
+            className="group block bg-neutral-900/30 border border-neutral-800 p-8 rounded-xl hover:bg-neutral-900/50 transition-all duration-300 hover:border-yellow-500/50"
+          >
+            <h3 className="text-xl font-bold text-white mb-3 group-hover:text-yellow-500 transition-colors">
+              Products & Experiments
+            </h3>
+            <p className="text-neutral-400 text-sm leading-relaxed">
+              Personal projects, prototypes, and tools where I explore ideas.
+            </p>
+          </Link>
+
+          <Link
+            href="/blog"
+            className="group block bg-neutral-900/30 border border-neutral-800 p-8 rounded-xl hover:bg-neutral-900/50 transition-all duration-300 hover:border-yellow-500/50"
+          >
+            <h3 className="text-xl font-bold text-white mb-3 group-hover:text-yellow-500 transition-colors">
+              Writing & Ideas
+            </h3>
+            <p className="text-neutral-400 text-sm leading-relaxed">
+              Essays and notes on technology, systems, and creativity.
+            </p>
           </Link>
         </div>
       </section>
@@ -124,18 +169,19 @@ export default function Home() {
             </Link>
           </div>
           <div className="space-y-8">
+            {/* Project 1: Platform/System */}
             <div className="group block glass-card p-10 rounded-2xl hover:bg-neutral-900/40 transition-all duration-300">
               <div className="flex justify-between items-start mb-6">
                 <h3 className="text-2xl font-bold text-neutral-200 group-hover:text-yellow-500 transition-colors font-serif leading-tight">
                   Ayoola Platform
                 </h3>
                 <span className="text-xs font-bold bg-neutral-800/80 text-neutral-300 px-4 py-1.5 rounded-full border border-neutral-700 tracking-wider uppercase">
-                  Full Stack
+                  System
                 </span>
               </div>
               <p className="text-neutral-400 text-sm mb-6 leading-relaxed">
-                A modern, high-performance personal platform built with Next.js,
-                Node.js, and MongoDB.
+                A unified system for content management, portfolio showcasing,
+                and AI experimentation—built for my own digital operations.
               </p>
               <div className="flex gap-2">
                 <span className="text-xs text-yellow-500/90 bg-yellow-500/10 px-3 py-1 rounded-full border border-yellow-500/20">
@@ -146,6 +192,8 @@ export default function Home() {
                 </span>
               </div>
             </div>
+
+            {/* Project 2: Client/Data */}
             <div className="group block glass-card p-8 rounded-xl">
               <div className="flex justify-between items-start mb-4">
                 <h3 className="text-xl font-bold text-neutral-200 group-hover:text-yellow-500 transition-colors font-serif">
@@ -156,8 +204,8 @@ export default function Home() {
                 </span>
               </div>
               <p className="text-neutral-400 text-sm mb-6 leading-relaxed">
-                Real-time dashboard for tracking sales performance and user
-                behavior metrics.
+                A real-time data visualization engine for monitoring sales
+                performance and user behavior—built for an e-commerce startup.
               </p>
               <div className="flex gap-2">
                 <span className="text-xs text-yellow-500/90 bg-yellow-500/10 px-3 py-1 rounded-full border border-yellow-500/20">

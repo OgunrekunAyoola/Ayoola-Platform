@@ -6,11 +6,20 @@ export default function About() {
       </h1>
 
       <div className="prose prose-invert prose-lg prose-yellow max-w-none">
-        <p className="text-2xl text-neutral-300 leading-relaxed font-light mb-12 border-l-4 border-yellow-500 pl-6">
-          I am a writer, software engineer, and entrepreneur focused on building
-          meaningful products and exploring the intersection of technology,
-          policy, and creativity.
-        </p>
+        <div className="mb-12 border-l-4 border-yellow-500 pl-6 space-y-6">
+          <p className="text-2xl text-neutral-300 leading-relaxed font-light">
+            Ayoola Platform is my umbrella for everything I build: client systems,
+            personal tools, and experiments at the edge of AI and the web.
+          </p>
+          <p className="text-2xl text-neutral-300 leading-relaxed font-light">
+            I’m interested in how software, AI, and writing can change operations,
+            storytelling, and even policy—not only business metrics.
+          </p>
+          <p className="text-lg text-neutral-500">
+            I also collaborate with separate studios and ventures focused on AI
+            automation for businesses.
+          </p>
+        </div>
 
         <div className="grid md:grid-cols-12 gap-12 my-16">
           <div className="md:col-span-4">
