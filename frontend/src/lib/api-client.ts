@@ -315,3 +315,16 @@ export const deleteOutreachTarget = (id: string) => {
     method: "DELETE",
   });
 };
+
+export const sendOutreachEmail = (
+  id: string,
+  data: { subject: string; htmlContent: string },
+) => {
+  return fetchAPI<{ message: string; target: OutreachTarget }>(
+    `/admin/outreach/${id}/send`,
+    {
+      method: "POST",
+      body: JSON.stringify(data),
+    },
+  );
+};

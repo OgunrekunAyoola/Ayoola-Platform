@@ -23,10 +23,12 @@ export default function AdminLogin() {
     try {
       const { token } = await loginAdmin(formData);
       localStorage.setItem("adminToken", token);
+      addToast("Login successful", "success");
       router.push("/admin/dashboard");
     } catch (err) {
       console.error("Login error:", err);
       setError("Invalid credentials");
+      addToast("Invalid credentials", "error");
     } finally {
       setLoading(false);
     }

@@ -34,11 +34,12 @@ export default function Contact() {
     } catch (err) {
       console.error("Contact submission error:", err);
       setStatus("error");
-      setErrorMessage(
+      const msg =
         err instanceof Error
           ? err.message
-          : "Something went wrong. Please try again.",
-      );
+          : "Something went wrong. Please try again.";
+      setErrorMessage(msg);
+      addToast(msg, "error");
     }
   };
 

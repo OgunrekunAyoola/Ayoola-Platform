@@ -17,6 +17,7 @@ import adminCommentRoutes from "./routes/adminComments";
 import adminStatsRoutes from "./routes/adminStats";
 import adminOutreachRoutes from "./routes/adminOutreach";
 import aiRoutes from "./routes/aiRoutes";
+import webhookRoutes from "./routes/webhooks";
 
 const app = express();
 
@@ -110,5 +111,6 @@ app.use("/api/posts", postRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/subscribers", subscriberRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/webhooks", webhookRoutes);
 
 export default app;

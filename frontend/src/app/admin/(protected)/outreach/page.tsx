@@ -6,6 +6,7 @@ import {
   createOutreachTarget,
   updateOutreachTarget,
   deleteOutreachTarget,
+  sendOutreachEmail,
   OutreachTarget,
 } from "@/lib/api-client";
 
@@ -86,6 +87,14 @@ export default function AdminOutreachPage() {
     notes: "",
   });
 
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
+  const [emailData, setEmailData] = useState({
+    targetId: "",
+    to: "",
+    subject: "",
+    htmlContent: "",
+  });
+
   useEffect(() => {
     loadTargets();
   }, []);
@@ -123,8 +132,10 @@ export default function AdminOutreachPage() {
       setTargets(
         targets.map((t) => (t._id === id ? { ...t, status: newStatus } : t)),
       );
+      addToast("Status updated", "success");
     } catch (error) {
       console.error("Failed to update status", error);
+      addToast("Failed to update status", "error");
     }
   };
 
@@ -144,7 +155,55 @@ export default function AdminOutreachPage() {
       .replace("[Name]", target.name)
       .replace("[Company]", target.company);
     navigator.clipboard.writeText(personalized);
-    alert("Template copied to clipboard!");
+    addToast("Template copied to clipboard!", "success");
+  };
+
+  const openEmailModal = (target: OutreachTarget) => {
+    const template = TEMPLATES[target.segment] || "No template found";
+    // Split subject and body
+    const lines = template.split("\n");
+    let subject = "Partnership Opportunity";
+    let body = template;
+
+    if (lines[0].startsWith("Subject: ")) {
+      subject = lines[0]
+        .replace("Subject: ", "")
+        .replace("[Company]", target.company);
+      body = lines.slice(1).join("\n").trim();
+    }
+
+    // Personalize body
+    body = body
+      .replace("[Name]", target.name)
+      .replace("[Company]", target.company);
+
+    setEmailData({
+      targetId: target._id,
+      to: target.email,
+      subject: subject,
+      htmlContent: body,
+    });
+    setEmailModalOpen(true);
+  };
+
+  const handleSendEmail = async () => {
+    if (!confirm("Send this email now?")) return;
+    try {
+      await sendOutreachEmail(emailData.targetId, {
+        subject: emailData.subject,
+        htmlContent: emailData.htmlContent,
+      });
+      alert("Email sent successfully!");
+      setEmailModalOpen(false);
+      setTargets(
+        targets.map((t) =>
+          t._id === emailData.targetId ? { ...t, status: "Sent" } : t,
+        ),
+      );
+    } catch (error) {
+      alert("Failed to send email");
+      console.error(error);
+    }
   };
 
   if (loading) return <div className="text-white">Loading...</div>;
@@ -208,6 +267,12 @@ export default function AdminOutreachPage() {
             </div>
 
             <div className="pt-4 border-t border-neutral-800 flex justify-between items-center">
+              <button
+                onClick={() => openEmailModal(target)}
+                className="flex items-center gap-2 text-blue-500 hover:text-blue-400 text-sm font-medium transition-colors"
+              >
+                Send Email
+              </button>
               <button
                 onClick={() => copyTemplate(target)}
                 className="flex items-center gap-2 text-yellow-500 hover:text-yellow-400 text-sm font-medium transition-colors"
@@ -295,6 +360,12 @@ export default function AdminOutreachPage() {
                   </select>
                 </td>
                 <td className="px-6 py-4 text-right space-x-4">
+                  <button
+                    onClick={() => openEmailModal(target)}
+                    className="text-blue-500 hover:text-blue-400 text-sm font-medium transition-colors"
+                  >
+                    Send
+                  </button>
                   <button
                     onClick={() => copyTemplate(target)}
                     className="text-yellow-500 hover:text-yellow-400 text-sm font-medium transition-colors"
@@ -402,6 +473,65 @@ export default function AdminOutreachPage() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Email Modal */}
+      {emailModalOpen && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+          <div className="bg-neutral-900 border border-neutral-800 rounded-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <h2 className="text-xl font-bold mb-6">Send Email</h2>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm text-neutral-400 mb-1">
+                  To
+                </label>
+                <input
+                  disabled
+                  className="w-full bg-neutral-800 border-none rounded p-3 text-white opacity-50"
+                  value={emailData.to}
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-neutral-400 mb-1">
+                  Subject
+                </label>
+                <input
+                  className="w-full bg-neutral-800 border-none rounded p-3 text-white"
+                  value={emailData.subject}
+                  onChange={(e) =>
+                    setEmailData({ ...emailData, subject: e.target.value })
+                  }
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-neutral-400 mb-1">
+                  Message
+                </label>
+                <textarea
+                  className="w-full bg-neutral-800 border-none rounded p-3 text-white font-mono text-sm h-64"
+                  value={emailData.htmlContent}
+                  onChange={(e) =>
+                    setEmailData({ ...emailData, htmlContent: e.target.value })
+                  }
+                />
+              </div>
+              <div className="flex justify-end gap-4 mt-6">
+                <button
+                  onClick={() => setEmailModalOpen(false)}
+                  className="text-neutral-400 hover:text-white"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSendEmail}
+                  className="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-blue-500"
+                >
+                  Send Email
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

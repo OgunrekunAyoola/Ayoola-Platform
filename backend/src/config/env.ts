@@ -11,4 +11,6 @@ export const config = {
   ADMIN_PASSWORD_HASH: process.env.ADMIN_PASSWORD_HASH || "",
   ADMIN_JWT_SECRET: process.env.ADMIN_JWT_SECRET || "secret",
   FRONTEND_URL: process.env.FRONTEND_URL || "http://localhost:3000",
+  RESEND_API_KEY: process.env.RESEND_API_KEY || "",
+  RESEND_WEBHOOK_SECRET: process.env.RESEND_WEBHOOK_SECRET || "",
 };
