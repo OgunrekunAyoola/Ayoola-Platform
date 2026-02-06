@@ -30,7 +30,7 @@ export default function AdminLayout({
   }, [pathname]);
 
   if (!isAuthorized) {
-    return null; 
+    return null;
   }
 
   const navItems = [
@@ -38,6 +38,7 @@ export default function AdminLayout({
     { label: "Posts", href: "/admin/posts" },
     { label: "Projects", href: "/admin/projects" },
     { label: "Comments", href: "/admin/comments" },
+    { label: "Outreach", href: "/admin/outreach" },
   ];
 
   return (
@@ -50,12 +51,34 @@ export default function AdminLayout({
           className="text-white p-2 hover:bg-neutral-800 rounded-lg transition"
         >
           {isMobileMenuOpen ? (
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
             </svg>
           )}
         </button>
@@ -63,14 +86,14 @@ export default function AdminLayout({
 
       {/* Sidebar Overlay (Mobile) */}
       {isMobileMenuOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 z-20 md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <aside 
+      <aside
         className={`
           w-64 border-r border-neutral-800 p-6 flex flex-col 
           fixed top-0 bottom-0 left-0 bg-black z-30
@@ -83,35 +106,47 @@ export default function AdminLayout({
         <div className="mb-8 hidden md:block">
           <h1 className="text-xl font-bold text-yellow-500">Admin Panel</h1>
         </div>
-        
+
         <div className="md:hidden mb-8 flex justify-between items-center">
           <h1 className="text-xl font-bold text-yellow-500">Menu</h1>
-          <button 
+          <button
             onClick={() => setIsMobileMenuOpen(false)}
             className="p-1 text-neutral-400 hover:text-white"
           >
-             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
-        
+
         <nav className="flex-1 space-y-2">
           {navItems.map((item) => {
-             const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
-             return (
+            const isActive =
+              pathname === item.href || pathname.startsWith(`${item.href}/`);
+            return (
               <Link
                 key={item.href}
                 href={item.href}
                 className={`block px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  isActive 
-                    ? "bg-yellow-500/10 text-yellow-500" 
+                  isActive
+                    ? "bg-yellow-500/10 text-yellow-500"
                     : "text-neutral-400 hover:text-white hover:bg-neutral-900"
                 }`}
               >
                 {item.label}
               </Link>
-             );
+            );
           })}
         </nav>
 
@@ -130,9 +165,7 @@ export default function AdminLayout({
 
       {/* Main Content */}
       <main className="flex-1 md:ml-64 min-h-screen">
-        <div className="p-4 md:p-8 max-w-6xl mx-auto">
-          {children}
-        </div>
+        <div className="p-4 md:p-8 max-w-6xl mx-auto">{children}</div>
       </main>
     </div>
   );

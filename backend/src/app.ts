@@ -15,6 +15,7 @@ import adminPostRoutes from "./routes/adminPosts";
 import adminProjectRoutes from "./routes/adminProjects";
 import adminCommentRoutes from "./routes/adminComments";
 import adminStatsRoutes from "./routes/adminStats";
+import adminOutreachRoutes from "./routes/adminOutreach";
 import aiRoutes from "./routes/aiRoutes";
 
 const app = express();
@@ -102,6 +103,7 @@ app.use("/api/admin", adminAuthRoutes);
 app.use("/api/admin/posts", adminPostRoutes);
 app.use("/api/admin/projects", adminProjectRoutes);
 app.use("/api/admin/comments", adminCommentRoutes);
+app.use("/api/admin/outreach", adminOutreachRoutes);
 app.use("/api/admin/stats", adminStatsRoutes);
 app.use("/api/ai", aiRoutes);
 app.use("/api/posts", postRoutes);

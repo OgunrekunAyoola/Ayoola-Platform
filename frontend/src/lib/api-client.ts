@@ -41,6 +41,24 @@ export interface Comment {
   approved: boolean;
 }
 
+export interface OutreachTarget {
+  _id: string;
+  name: string;
+  email: string;
+  company: string;
+  segment:
+    | "UK Service Businesses"
+    | "Design & Brand Agencies"
+    | "AI-Adjacent Founders"
+    | "Other";
+  templateUsed?: string;
+  status: "Pending" | "Sent" | "Replied" | "Converted" | "Rejected";
+  lastContactedAt?: string;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface PaginatedResponse<T> {
   data: T[];
   meta: {
@@ -266,6 +284,34 @@ export const approveComment = (id: string) => {
 
 export const deleteComment = (id: string) => {
   return fetchAPI(`/admin/comments/${id}`, {
+    method: "DELETE",
+  });
+};
+
+// Admin Outreach
+export const fetchOutreachTargets = () => {
+  return fetchAPI<OutreachTarget[]>("/admin/outreach");
+};
+
+export const createOutreachTarget = (data: Partial<OutreachTarget>) => {
+  return fetchAPI<OutreachTarget>("/admin/outreach", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+};
+
+export const updateOutreachTarget = (
+  id: string,
+  data: Partial<OutreachTarget>,
+) => {
+  return fetchAPI<OutreachTarget>(`/admin/outreach/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
+};
+
+export const deleteOutreachTarget = (id: string) => {
+  return fetchAPI(`/admin/outreach/${id}`, {
     method: "DELETE",
   });
 };
