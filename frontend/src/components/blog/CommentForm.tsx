@@ -46,7 +46,7 @@ export default function CommentForm({ postId }: CommentFormProps) {
       
       {success && (
         <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 text-green-500 rounded-lg">
-          Comment submitted for review! It will appear once approved.
+          Comment posted successfully!
         </div>
       )}
 
