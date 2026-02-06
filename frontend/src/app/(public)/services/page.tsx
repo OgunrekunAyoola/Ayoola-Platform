@@ -54,8 +54,8 @@ export default function Services() {
           </p>
           <ul className="space-y-4 text-neutral-400 mb-8 text-sm">
             <li className="flex items-start">
-              <span className="text-yellow-500 mr-2">✓</span> Full-stack Next.js
-              App
+              <span className="text-yellow-500 mr-2">✓</span> Full-stack Web
+              Applications
             </li>
             <li className="flex items-start">
               <span className="text-yellow-500 mr-2">✓</span> Custom Admin

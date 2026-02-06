@@ -8,12 +8,13 @@ export default function About() {
       <div className="prose prose-invert prose-lg prose-yellow max-w-none">
         <div className="mb-12 border-l-4 border-yellow-500 pl-6 space-y-6">
           <p className="text-2xl text-neutral-300 leading-relaxed font-light">
-            Ayoola Platform is my umbrella for everything I build: client systems,
-            personal tools, and experiments at the edge of AI and the web.
+            Ayoola Platform is my umbrella for everything I build: client
+            systems, personal tools, and experiments at the edge of AI and the
+            web.
           </p>
           <p className="text-2xl text-neutral-300 leading-relaxed font-light">
-            I’m interested in how software, AI, and writing can change operations,
-            storytelling, and even policy—not only business metrics.
+            I’m interested in how software, AI, and writing can change
+            operations, storytelling, and even policy—not only business metrics.
           </p>
           <p className="text-lg text-neutral-500">
             I also collaborate with separate studios and ventures focused on AI
@@ -77,8 +78,8 @@ export default function About() {
                 Full-Stack Engineering
               </h4>
               <p className="text-sm text-neutral-400">
-                Building end-to-end solutions using modern stacks (Next.js,
-                Node, Cloud).
+                Building end-to-end solutions using modern stacks (Web, Mobile,
+                Node).
               </p>
             </div>
             <div>
