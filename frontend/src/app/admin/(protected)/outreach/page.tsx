@@ -68,11 +68,21 @@ export default function AdminOutreachPage() {
   const [targets, setTargets] = useState<OutreachTarget[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    name: string;
+    email: string;
+    company: string;
+    segment:
+      | "UK Service Businesses"
+      | "Design & Brand Agencies"
+      | "AI-Adjacent Founders"
+      | "Other";
+    notes: string;
+  }>({
     name: "",
     email: "",
     company: "",
-    segment: SEGMENTS[0],
+    segment: "UK Service Businesses",
     notes: "",
   });
 
@@ -97,7 +107,7 @@ export default function AdminOutreachPage() {
         name: "",
         email: "",
         company: "",
-        segment: SEGMENTS[0],
+        segment: "UK Service Businesses",
         notes: "",
       });
       loadTargets();
@@ -111,7 +121,7 @@ export default function AdminOutreachPage() {
     try {
       await updateOutreachTarget(id, { status: newStatus });
       setTargets(
-        targets.map((t) => (t._id === id ? { ...t, status: newStatus } : t))
+        targets.map((t) => (t._id === id ? { ...t, status: newStatus } : t)),
       );
     } catch (error) {
       console.error("Failed to update status", error);
@@ -166,14 +176,18 @@ export default function AdminOutreachPage() {
               <tr key={target._id} className="hover:bg-neutral-800/50">
                 <td className="px-6 py-4 font-medium text-white">
                   <div>{target.name}</div>
-                  <div className="text-sm text-neutral-500">{target.company}</div>
+                  <div className="text-sm text-neutral-500">
+                    {target.company}
+                  </div>
                   <div className="text-xs text-neutral-600">{target.email}</div>
                 </td>
                 <td className="px-6 py-4 text-neutral-300">{target.segment}</td>
                 <td className="px-6 py-4">
                   <select
                     value={target.status}
-                    onChange={(e) => handleStatusChange(target._id, e.target.value)}
+                    onChange={(e) =>
+                      handleStatusChange(target._id, e.target.value)
+                    }
                     className="bg-neutral-800 border-none text-xs rounded p-1 focus:ring-1 focus:ring-yellow-500"
                   >
                     {STATUSES.map((s) => (
@@ -201,7 +215,10 @@ export default function AdminOutreachPage() {
             ))}
             {targets.length === 0 && (
               <tr>
-                <td colSpan={4} className="px-6 py-8 text-center text-neutral-500">
+                <td
+                  colSpan={4}
+                  className="px-6 py-8 text-center text-neutral-500"
+                >
                   No outreach targets found.
                 </td>
               </tr>
@@ -220,7 +237,9 @@ export default function AdminOutreachPage() {
                 placeholder="Name"
                 className="w-full bg-neutral-800 border-none rounded p-3 text-white"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 required
               />
               <input
@@ -228,7 +247,9 @@ export default function AdminOutreachPage() {
                 type="email"
                 className="w-full bg-neutral-800 border-none rounded p-3 text-white"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 required
               />
               <input
@@ -244,7 +265,14 @@ export default function AdminOutreachPage() {
                 className="w-full bg-neutral-800 border-none rounded p-3 text-white"
                 value={formData.segment}
                 onChange={(e) =>
-                  setFormData({ ...formData, segment: e.target.value })
+                  setFormData({
+                    ...formData,
+                    segment: e.target.value as
+                      | "UK Service Businesses"
+                      | "Design & Brand Agencies"
+                      | "AI-Adjacent Founders"
+                      | "Other",
+                  })
                 }
               >
                 {SEGMENTS.map((s) => (
