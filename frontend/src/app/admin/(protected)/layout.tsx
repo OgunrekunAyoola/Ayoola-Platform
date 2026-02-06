@@ -28,10 +28,8 @@ export default function AdminLayout({
 
   // Close mobile menu when route changes
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      setIsMobileMenuOpen(false);
-    }
-  }, [pathname, isMobileMenuOpen]);
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   if (!isAuthorized) {
     return null;
