@@ -112,7 +112,7 @@ export default function AdminCommentsPage() {
               </div>
 
               <div className="flex flex-col gap-2">
-                {!comment.approved && (
+                {!comment.isApproved && (
                   <button
                     onClick={() => handleApprove(comment._id)}
                     className="bg-green-600 hover:bg-green-500 text-white px-3 py-1.5 rounded text-sm font-medium transition-colors"

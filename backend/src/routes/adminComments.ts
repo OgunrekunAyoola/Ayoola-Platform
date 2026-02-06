@@ -12,7 +12,7 @@ router.get("/", async (req: AdminRequest, res: Response): Promise<void> => {
     // If query param ?pending=true is present, filter by approved: false
     const filter: any = {};
     if (req.query.pending === "true") {
-      filter.approved = false;
+      filter.isApproved = false;
     }
     const comments = await Comment.find(filter).sort({ createdAt: -1 });
     res.json(comments);
@@ -28,7 +28,7 @@ router.put(
     try {
       const comment = await Comment.findByIdAndUpdate(
         req.params.id,
-        { approved: true },
+        { isApproved: true },
         { new: true },
       );
       if (!comment) {

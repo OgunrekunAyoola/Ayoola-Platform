@@ -38,7 +38,7 @@ export interface Comment {
   authorName: string;
   body: string;
   createdAt: string;
-  approved: boolean;
+  isApproved: boolean;
 }
 
 export interface OutreachTarget {
