@@ -9,6 +9,7 @@ import {
   sendOutreachEmail,
   OutreachTarget,
 } from "@/lib/api-client";
+import { useToast } from "@/context/ToastContext";
 
 const SEGMENTS = [
   "UK Service Businesses",
@@ -66,6 +67,7 @@ Ayoola`,
 };
 
 export default function AdminOutreachPage() {
+  const { addToast } = useToast();
   const [targets, setTargets] = useState<OutreachTarget[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
