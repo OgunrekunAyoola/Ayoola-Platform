@@ -16,7 +16,7 @@ const CommentSchema: Schema = new Schema(
     authorName: { type: String, required: true },
     authorEmail: { type: String, required: true },
     body: { type: String, required: true },
-    isApproved: { type: Boolean, default: false },
+    isApproved: { type: Boolean, default: true },
   },
   { timestamps: true }
 );

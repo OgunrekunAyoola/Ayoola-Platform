@@ -100,7 +100,7 @@ router.post('/:id/comments', async (req: Request, res: Response): Promise<void> 
       authorName,
       authorEmail,
       body,
-      isApproved: false, // Explicitly false until admin approves
+      isApproved: true, // Auto-approve by default
     });
     await comment.save();
 
@@ -108,34 +108,6 @@ router.post('/:id/comments', async (req: Request, res: Response): Promise<void> 
     await Post.findByIdAndUpdate(req.params.id, { $inc: { commentCount: 1 } });
 
     // 3. Capture Subscriber (Upsert)
-    // We don't wait for this to fail the response, but good to await it.
-    await Subscriber.findOneAndUpdate(
-      { email: authorEmail },
-      { 
-        $set: { email: authorEmail }, 
-        $addToSet: { source: 'comment' } // Keep track if they came from multiple sources? 
-        // Schema says source is string enum, not array. 
-        // Spec says "upsert by email (if email exists, update source list or keep first)"
-        // But our schema is single string. Let's update source if it's new or keep existing.
-        // Actually, for simplicity and MVP, if they exist, we just leave them be or update timestamp.
-        // Let's just ensure they exist.
-        // If we want to strictly follow schema which has single source string:
-        // We will just use $setOnInsert to set source only if new.
-      },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
-    );
-    
-    // Update: Actually, looking at Subscriber model, source is a single string.
-    // If they are already a subscriber from 'newsletter', and now they comment, 
-    // we probably shouldn't overwrite 'newsletter' with 'comment' or vice versa blindly.
-    // But for MVP, let's just ensure they are in the DB.
-    // I'll use findOneAndUpdate to ensure existence.
-    // If it's a new user, source will be 'comment'.
-    
-    // Re-reading logic: "upsert by email (if email exists, update source list or keep first)"
-    // Since our schema `source` is a string (not array), I will stick to "keep first" (ignore if exists) 
-    // OR overwrite. Let's use $setOnInsert for source to "keep first".
-    
     await Subscriber.updateOne(
       { email: authorEmail },
       { 
@@ -145,7 +117,7 @@ router.post('/:id/comments', async (req: Request, res: Response): Promise<void> 
     );
 
     res.status(201).json({ 
-      message: 'Comment submitted for approval', 
+      message: 'Comment posted successfully', 
       comment 
     });
   } catch (error) {

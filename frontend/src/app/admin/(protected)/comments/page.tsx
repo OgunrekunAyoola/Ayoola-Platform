@@ -11,7 +11,7 @@ import {
 export default function AdminCommentsPage() {
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showPendingOnly, setShowPendingOnly] = useState(true);
+  const [showPendingOnly, setShowPendingOnly] = useState(false);
 
   useEffect(() => {
     const loadComments = () => {
@@ -54,12 +54,12 @@ export default function AdminCommentsPage() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
         <h1 className="text-3xl font-bold">Comments</h1>
-        <div className="flex bg-neutral-900 p-1 rounded-lg border border-neutral-800">
+        <div className="flex bg-neutral-900 p-1 rounded-lg border border-neutral-800 w-full md:w-auto">
           <button
             onClick={() => setShowPendingOnly(true)}
-            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+            className={`flex-1 md:flex-none px-4 py-2 rounded-md text-sm font-medium transition-colors ${
               showPendingOnly
                 ? "bg-neutral-800 text-white"
                 : "text-neutral-400 hover:text-white"
@@ -69,7 +69,7 @@ export default function AdminCommentsPage() {
           </button>
           <button
             onClick={() => setShowPendingOnly(false)}
-            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+            className={`flex-1 md:flex-none px-4 py-2 rounded-md text-sm font-medium transition-colors ${
               !showPendingOnly
                 ? "bg-neutral-800 text-white"
                 : "text-neutral-400 hover:text-white"
