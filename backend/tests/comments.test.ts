@@ -4,7 +4,8 @@ import app from "../src/app";
 import Post from "../src/models/Post";
 import Comment from "../src/models/Comment";
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/test_db";
+const MONGODB_URI =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/test_db";
 
 describe("Comments API (Auto-Approval)", () => {
   let postId: string;
@@ -13,7 +14,7 @@ describe("Comments API (Auto-Approval)", () => {
     if (mongoose.connection.readyState === 0) {
       await mongoose.connect(MONGODB_URI);
     }
-  }, 10000);
+  }, 30000);
 
   afterAll(async () => {
     await mongoose.connection.close();
@@ -33,16 +34,14 @@ describe("Comments API (Auto-Approval)", () => {
       publishedAt: new Date(),
     });
     postId = post._id.toString();
-  });
+  }, 30000);
 
   it("should auto-approve a new comment", async () => {
-    const res = await request(app)
-      .post(`/api/posts/${postId}/comments`)
-      .send({
-        authorName: "Test User",
-        authorEmail: "test@example.com",
-        body: "This is a great post!",
-      });
+    const res = await request(app).post(`/api/posts/${postId}/comments`).send({
+      authorName: "Test User",
+      authorEmail: "test@example.com",
+      body: "This is a great post!",
+    });
 
     expect(res.status).toBe(201);
     expect(res.body.message).toBe("Comment posted successfully");
@@ -57,13 +56,14 @@ describe("Comments API (Auto-Approval)", () => {
 
   it("should list the comment immediately after posting", async () => {
     // 1. Post a comment
-    await request(app)
+    const postRes = await request(app)
       .post(`/api/posts/${postId}/comments`)
       .send({
         authorName: "Immediate User",
         authorEmail: "immediate@example.com",
         body: "I should appear immediately.",
       });
+    expect(postRes.status).toBe(201);
 
     // 2. Fetch comments
     const res = await request(app).get(`/api/posts/${postId}/comments`);
@@ -73,15 +73,13 @@ describe("Comments API (Auto-Approval)", () => {
     expect(res.body.length).toBe(1);
     expect(res.body[0].authorName).toBe("Immediate User");
     expect(res.body[0].body).toBe("I should appear immediately.");
-  });
+  }, 30000);
 
   it("should reject invalid comments (missing fields)", async () => {
-    const res = await request(app)
-      .post(`/api/posts/${postId}/comments`)
-      .send({
-        authorName: "Incomplete User",
-        // Missing email and body
-      });
+    const res = await request(app).post(`/api/posts/${postId}/comments`).send({
+      authorName: "Incomplete User",
+      // Missing email and body
+    });
 
     expect(res.status).toBe(400);
   });

@@ -129,7 +129,10 @@ export default function AdminOutreachPage() {
     }
   };
 
-  const handleStatusChange = async (id: string, newStatus: any) => {
+  const handleStatusChange = async (
+    id: string,
+    newStatus: OutreachTarget["status"],
+  ) => {
     try {
       await updateOutreachTarget(id, { status: newStatus });
       setTargets(
@@ -239,7 +242,12 @@ export default function AdminOutreachPage() {
               </div>
               <select
                 value={target.status}
-                onChange={(e) => handleStatusChange(target._id, e.target.value)}
+                onChange={(e) =>
+                  handleStatusChange(
+                    target._id,
+                    e.target.value as OutreachTarget["status"],
+                  )
+                }
                 className={`
                   text-xs font-medium rounded px-2 py-1 border-none focus:ring-1 focus:ring-yellow-500
                   ${
@@ -342,7 +350,10 @@ export default function AdminOutreachPage() {
                   <select
                     value={target.status}
                     onChange={(e) =>
-                      handleStatusChange(target._id, e.target.value)
+                      handleStatusChange(
+                        target._id,
+                        e.target.value as OutreachTarget["status"],
+                      )
                     }
                     className={`
                       bg-neutral-800 border-none text-xs rounded p-1.5 focus:ring-1 focus:ring-yellow-500 cursor-pointer

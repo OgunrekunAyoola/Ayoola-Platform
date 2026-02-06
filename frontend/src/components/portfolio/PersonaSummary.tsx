@@ -44,8 +44,8 @@ export default function PersonaSummary({ projectId }: PersonaSummaryProps) {
       const result = await getPersonaSummary(projectId, personaId);
       setSummary(result.summary);
       setCache((prev) => ({ ...prev, [personaId]: result.summary }));
-    } catch (err: any) {
-      const msg = err.message || "";
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Unknown error";
       if (msg.includes("503") || msg.includes("overloaded")) {
         setError(
           "I'm currently overloaded with requests. Please give me a moment and try again.",

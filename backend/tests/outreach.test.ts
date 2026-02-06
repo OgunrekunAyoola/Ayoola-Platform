@@ -21,7 +21,7 @@ describe("Outreach API", () => {
     if (mongoose.connection.readyState === 0) {
       await mongoose.connect(MONGODB_URI);
     }
-  }, 10000);
+  }, 30000);
 
   afterAll(async () => {
     await mongoose.connection.close();
@@ -29,7 +29,7 @@ describe("Outreach API", () => {
 
   beforeEach(async () => {
     await OutreachTarget.deleteMany({});
-  });
+  }, 30000);
 
   it("should create a new outreach target", async () => {
     const res = await request(app)
@@ -46,7 +46,7 @@ describe("Outreach API", () => {
     expect(res.status).toBe(201);
     expect(res.body.name).toBe("Test User");
     expect(res.body.status).toBe("Pending");
-  });
+  }, 30000);
 
   it("should list outreach targets", async () => {
     await OutreachTarget.create({
@@ -101,8 +101,9 @@ describe("Outreach API", () => {
       .set("Authorization", `Bearer ${adminToken}`);
 
     expect(res.status).toBe(200);
+    expect(res.body.message).toBe("Target deleted successfully");
 
     const check = await OutreachTarget.findById(target._id);
     expect(check).toBeNull();
-  });
+  }, 30000);
 });

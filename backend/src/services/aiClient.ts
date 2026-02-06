@@ -117,17 +117,19 @@ export const generateText = async ({
         const data = await response.json();
         return data.choices[0].message.content;
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       attempt++;
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
       const isTransient =
-        error.message.includes("503") ||
-        error.message.includes("429") ||
-        error.message.includes("overloaded");
+        errorMessage.includes("503") ||
+        errorMessage.includes("429") ||
+        errorMessage.includes("overloaded");
 
       if (isTransient && attempt < maxRetries) {
         const delay = attempt * 1000; // 1s, 2s, 3s
         console.warn(
-          `AI Service: Attempt ${attempt} failed with ${error.message}. Retrying in ${delay}ms...`,
+          `AI Service: Attempt ${attempt} failed with ${errorMessage}. Retrying in ${delay}ms...`,
         );
         await sleep(delay);
         continue;

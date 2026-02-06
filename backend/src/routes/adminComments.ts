@@ -10,7 +10,7 @@ router.use(adminAuth);
 router.get("/", async (req: AdminRequest, res: Response): Promise<void> => {
   try {
     // If query param ?pending=true is present, filter by approved: false
-    const filter: any = {};
+    const filter: Record<string, any> = {};
     if (req.query.pending === "true") {
       filter.isApproved = false;
     }

@@ -19,15 +19,17 @@ export default function AdminLayout({
     const token = getAdminToken();
     if (!token) {
       router.push("/admin/login");
-    } else {
+    } else if (!isAuthorized) {
       setIsAuthorized(true);
     }
-  }, [router]);
+  }, [router, isAuthorized]);
 
   // Close mobile menu when route changes
   useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+    }
+  }, [pathname, isMobileMenuOpen]);
 
   if (!isAuthorized) {
     return null;

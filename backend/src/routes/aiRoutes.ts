@@ -164,9 +164,14 @@ Create the reading path JSON.`;
       throw new Error("AI response missing path array");
     }
 
+    interface AIPathItem {
+      id: string;
+      why: string;
+    }
+
     // Map back to full post objects (to include slugs, etc.)
     const fullPath = parsedData.path
-      .map((item: any) => {
+      .map((item: AIPathItem) => {
         const originalPost = posts.find((p) => p._id.toString() === item.id);
         if (!originalPost) return null;
         return {

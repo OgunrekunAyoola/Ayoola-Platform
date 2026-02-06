@@ -3,7 +3,7 @@
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
-interface PostFormData {
+export interface PostFormData {
   title: string;
   slug: string;
   excerpt: string;

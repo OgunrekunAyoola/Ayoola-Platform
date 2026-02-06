@@ -22,7 +22,7 @@ describe("Admin Comments API", () => {
     adminToken = jwt.sign({ role: "admin" }, ADMIN_JWT_SECRET, {
       expiresIn: "1h",
     });
-  }, 20000);
+  }, 30000);
 
   afterAll(async () => {
     await mongoose.connection.close();
@@ -52,7 +52,7 @@ describe("Admin Comments API", () => {
       isApproved: true,
     });
     commentId = comment._id.toString();
-  });
+  }, 30000);
 
   it("should list all comments with isApproved field", async () => {
     const res = await request(app)

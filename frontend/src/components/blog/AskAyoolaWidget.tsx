@@ -13,7 +13,6 @@ export default function AskAyoolaWidget({ postId }: AskAyoolaWidgetProps) {
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,8 +25,8 @@ export default function AskAyoolaWidget({ postId }: AskAyoolaWidgetProps) {
     try {
       const result = await askPostQuestion(postId, question);
       setAnswer(result.answer);
-    } catch (err: any) {
-      const msg = err.message || "";
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Unknown error";
       if (msg.includes("503") || msg.includes("overloaded")) {
         setError(
           "I'm currently overloaded with requests. Please give me a moment and try again.",

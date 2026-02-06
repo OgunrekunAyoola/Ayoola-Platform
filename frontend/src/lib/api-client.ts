@@ -13,6 +13,8 @@ export interface Post {
   readingTime: number;
   likeCount: number;
   commentCount: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Project {
@@ -30,6 +32,7 @@ export interface Project {
   isFeatured: boolean;
   visibility: "public" | "email_gated";
   category: "systems" | "tools" | "experiments";
+  createdAt: string;
 }
 
 export interface Comment {
@@ -46,6 +49,7 @@ export interface OutreachTarget {
   name: string;
   email: string;
   company: string;
+  website?: string;
   segment:
     | "UK Service Businesses"
     | "Design & Brand Agencies"
@@ -185,11 +189,21 @@ export const askPostQuestion = (postId: string, question: string) => {
   });
 };
 
+export interface ReadingPathItem {
+  _id: string;
+  title: string;
+  slug: string;
+  why: string;
+}
+
 export const generateReadingPath = (goal: string) => {
-  return fetchAPI<{ intro: string; path: any[] }>("/ai/reading-path", {
-    method: "POST",
-    body: JSON.stringify({ goal }),
-  });
+  return fetchAPI<{ intro: string; path: ReadingPathItem[] }>(
+    "/ai/reading-path",
+    {
+      method: "POST",
+      body: JSON.stringify({ goal }),
+    },
+  );
 };
 
 export const getPersonaSummary = (projectId: string, persona: string) => {

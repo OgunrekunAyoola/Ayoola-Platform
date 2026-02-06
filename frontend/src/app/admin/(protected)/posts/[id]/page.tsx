@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { fetchAdminPost, updatePost } from "@/lib/api-client";
-import PostForm from "@/components/admin/PostForm";
+import PostForm, { PostFormData } from "@/components/admin/PostForm";
 
 export default function EditPostPage() {
   const router = useRouter();
@@ -37,12 +37,15 @@ export default function EditPostPage() {
     }
   }, [id, router]);
 
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (data: PostFormData) => {
     setSaving(true);
     try {
       await updatePost(id, {
         ...data,
-        tags: data.tags.split(",").map((t: string) => t.trim()).filter(Boolean),
+        tags: data.tags
+          .split(",")
+          .map((t: string) => t.trim())
+          .filter(Boolean),
         status: data.status as "draft" | "published",
         readingTime: Number(data.readingTime),
       });

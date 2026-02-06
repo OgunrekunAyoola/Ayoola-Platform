@@ -3,13 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createPost } from "@/lib/api-client";
-import PostForm from "@/components/admin/PostForm";
+import PostForm, { PostFormData } from "@/components/admin/PostForm";
 
 export default function NewPostPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (data: PostFormData) => {
     setLoading(true);
     try {
       await createPost({

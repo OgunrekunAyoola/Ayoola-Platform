@@ -54,8 +54,8 @@ export default function ReadingPathBuilder({
     try {
       const data = await generateReadingPath(goal);
       setResult(data as unknown as PathResult);
-    } catch (err: any) {
-      const msg = err.message || "";
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Unknown error";
       if (msg.includes("503") || msg.includes("overloaded")) {
         setError(
           "I'm currently overloaded with requests. Please give me a moment and try again.",
@@ -124,7 +124,9 @@ export default function ReadingPathBuilder({
         {result && (
           <div className="mt-8 animate-fade-in-up">
             <div className="p-4 bg-yellow-500/5 rounded-lg border border-yellow-500/10 mb-6">
-              <p className="text-neutral-300 italic">"{result.intro}"</p>
+              <p className="text-neutral-300 italic">
+                &quot;{result.intro}&quot;
+              </p>
             </div>
 
             <div className="space-y-4">

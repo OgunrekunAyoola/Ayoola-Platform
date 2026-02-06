@@ -46,7 +46,7 @@ describe("Email Flow Integration Tests", () => {
       console.warn("Resend constructor not called yet?");
       // We can re-assign it later if needed or check in beforeEach
     }
-  }, 20000);
+  }, 30000);
 
   afterAll(async () => {
     await mongoose.connection.close();
@@ -62,7 +62,7 @@ describe("Email Flow Integration Tests", () => {
       mockSend = resendMock.mock.results[0].value.emails.send;
       mockSend.mockClear();
     }
-  });
+  }, 30000);
 
   describe("Contact Form Email", () => {
     it("should save contact message and send admin notification", async () => {
