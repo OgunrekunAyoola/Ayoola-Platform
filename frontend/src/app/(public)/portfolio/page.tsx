@@ -1,6 +1,8 @@
 import { fetchProjects, Project } from "@/lib/api-client";
 import ProjectCard from "@/components/portfolio/ProjectCard";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Portfolio | Ayoola Ogunrekun",
   description: "Selected works and case studies.",

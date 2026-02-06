@@ -70,7 +70,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans bg-black text-gray-100 antialiased selection:bg-yellow-500/30 selection:text-yellow-200">
-        {children}
+        <ToastProvider>{children}</ToastProvider>
       </body>
     </html>
   );

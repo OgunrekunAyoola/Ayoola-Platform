@@ -3,6 +3,8 @@ import PostCard from "@/components/blog/PostCard";
 import ReadingPathBuilder from "@/components/blog/ReadingPathBuilder";
 import { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Blog | Ayoola",
   description: "Thoughts on software engineering, design, and technology.",
