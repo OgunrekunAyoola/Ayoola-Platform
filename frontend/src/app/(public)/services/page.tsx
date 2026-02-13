@@ -6,9 +6,7 @@ export default function Services() {
     <div className="max-w-6xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
       {/* Hero Section */}
       <header className="mb-24 text-center max-w-4xl mx-auto">
-        <h1 className="text-5xl md:text-7xl font-serif font-bold mb-8 text-[var(--foreground)] tracking-tight">
-          Work With Me
-        </h1>
+        <h1 className="mb-8">Work With Me</h1>
         <p className="text-2xl md:text-3xl text-[var(--muted)] mb-8 leading-relaxed font-light">
           I build{" "}
           <span className="text-[var(--accent)] font-medium">
@@ -53,16 +51,16 @@ export default function Services() {
           </p>
           <ul className="space-y-4 text-[var(--muted)] mb-8 text-sm">
             <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> Full-stack Web
-              Applications
+              <span className="text-[var(--accent)] mr-2">✓</span> Full-stack
+              Web Applications
             </li>
             <li className="flex items-start">
               <span className="text-[var(--accent)] mr-2">✓</span> Custom Admin
               Dashboard
             </li>
             <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> Database & Auth
-              Setup
+              <span className="text-[var(--accent)] mr-2">✓</span> Database &
+              Auth Setup
             </li>
             <li className="flex items-start">
               <span className="text-[var(--accent)] mr-2">✓</span> Deployment &
@@ -91,15 +89,15 @@ export default function Services() {
           </p>
           <ul className="space-y-4 text-[var(--muted)] mb-8 text-sm">
             <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> LLM Integration
-              (OpenAI/Gemini)
+              <span className="text-[var(--accent)] mr-2">✓</span> LLM
+              Integration (OpenAI/Gemini)
             </li>
             <li className="flex items-start">
               <span className="text-[var(--accent)] mr-2">✓</span> RAG Pipelines
             </li>
             <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> Vector Database
-              Setup
+              <span className="text-[var(--accent)] mr-2">✓</span> Vector
+              Database Setup
             </li>
             <li className="flex items-start">
               <span className="text-[var(--accent)] mr-2">✓</span> Custom Agents
@@ -129,14 +127,16 @@ export default function Services() {
               Feasibility Audit
             </li>
             <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> Fractional CTO
-              Services
+              <span className="text-[var(--accent)] mr-2">✓</span> Fractional
+              CTO Services
             </li>
             <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> Codebase Review
+              <span className="text-[var(--accent)] mr-2">✓</span> Codebase
+              Review
             </li>
             <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> Team Mentorship
+              <span className="text-[var(--accent)] mr-2">✓</span> Team
+              Mentorship
             </li>
           </ul>
         </div>
@@ -144,9 +144,7 @@ export default function Services() {
 
       {/* Process Section */}
       <section className="mb-32">
-        <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center text-white">
-          How We Work
-        </h2>
+        <h2 className="mb-16 text-center">How We Work</h2>
         <div className="grid md:grid-cols-4 gap-8">
           {[
             {
@@ -172,33 +170,33 @@ export default function Services() {
           ].map((item) => (
             <div
               key={item.step}
-              className="bg-neutral-900/30 p-6 rounded-xl border border-neutral-800"
+              className="bg-[var(--card-bg)]/30 p-6 rounded-xl border border-[var(--card-border)]"
             >
-              <div className="text-5xl font-bold text-neutral-800 mb-4">
+              <div className="text-5xl font-bold text-[var(--foreground)]/20 mb-4">
                 {item.step}
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">
+              <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">
                 {item.title}
               </h3>
-              <p className="text-neutral-400 text-sm">{item.desc}</p>
+              <p className="text-[var(--muted)] text-sm">{item.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Availability Footer */}
-      <section className="bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-12 text-center">
-        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">
+      <section className="bg-[var(--accent)]/10 border border-[var(--accent)]/20 rounded-2xl p-12 text-center">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-[var(--foreground)]">
           Ready to start?
         </h2>
-        <p className="text-neutral-400 mb-8 max-w-2xl mx-auto">
+        <p className="text-[var(--muted)] mb-8 max-w-2xl mx-auto">
           I am currently available for{" "}
-          <span className="text-yellow-500 font-bold">1 new project</span>. I
-          typically respond to inquiries within 24 hours.
+          <span className="text-[var(--accent)] font-bold">1 new project</span>.
+          I typically respond to inquiries within 24 hours.
         </p>
         <a
           href="mailto:hello@ayoola.io"
-          className="inline-block px-8 py-4 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-400 transition-all text-lg"
+          className="inline-block px-8 py-4 bg-[var(--accent)] text-black font-bold rounded-lg hover:bg-[var(--accent)]/90 transition-all text-lg"
         >
           Email Me: hello@ayoola.io
         </a>

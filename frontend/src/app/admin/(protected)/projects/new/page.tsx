@@ -3,9 +3,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createProject } from "@/lib/api-client";
+import Button from "@/components/ui/Button";
+import { useToast } from "@/context/ToastContext";
 
 export default function NewProjectPage() {
   const router = useRouter();
+  const { addToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
@@ -18,16 +21,17 @@ export default function NewProjectPage() {
     repoUrl: "",
     isFeatured: false,
     visibility: "public",
+    category: "experiments",
   });
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
-    
+
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -40,17 +44,22 @@ export default function NewProjectPage() {
     try {
       await createProject({
         ...formData,
-        techStack: formData.techStack.split(",").map((t) => t.trim()).filter(Boolean),
+        techStack: formData.techStack
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean),
         visibility: formData.visibility as "public" | "email_gated",
+        category: formData.category as "systems" | "tools" | "experiments",
         links: {
           demoUrl: formData.demoUrl,
           repoUrl: formData.repoUrl,
         },
       });
+      addToast("Project created successfully", "success");
       router.push("/admin/projects");
     } catch (error) {
       console.error(error);
-      alert("Failed to create project");
+      addToast("Failed to create project", "error");
     } finally {
       setLoading(false);
     }
@@ -58,49 +67,57 @@ export default function NewProjectPage() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold">New Project</h1>
+      <header className="mb-8 -mx-4 px-4 md:-mx-8 md:px-8 border-b border-[var(--card-border)] pb-4">
+        <h1 className="text-3xl font-bold text-[var(--foreground)]">
+          New Project
+        </h1>
       </header>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-neutral-400">Title</label>
+            <label className="text-sm font-medium text-[var(--muted)]">
+              Title
+            </label>
             <input
               name="title"
               value={formData.title}
               onChange={handleChange}
               required
-              className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 focus:ring-1 focus:ring-yellow-500 outline-none"
+              className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 focus:ring-1 focus:ring-[var(--accent)] outline-none text-[var(--foreground)]"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-neutral-400">Slug</label>
+            <label className="text-sm font-medium text-[var(--muted)]">
+              Slug
+            </label>
             <input
               name="slug"
               value={formData.slug}
               onChange={handleChange}
               required
-              className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 focus:ring-1 focus:ring-yellow-500 outline-none"
+              className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 focus:ring-1 focus:ring-[var(--accent)] outline-none text-[var(--foreground)]"
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-neutral-400">Summary</label>
+          <label className="text-sm font-medium text-[var(--muted)]">
+            Summary
+          </label>
           <textarea
             name="summary"
             value={formData.summary}
             onChange={handleChange}
             required
             rows={2}
-            className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 focus:ring-1 focus:ring-yellow-500 outline-none"
+            className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 focus:ring-1 focus:ring-[var(--accent)] outline-none text-[var(--foreground)]"
           />
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-neutral-400">
+          <label className="text-sm font-medium text-[var(--muted)]">
             Description (Markdown)
           </label>
           <textarea
@@ -108,64 +125,88 @@ export default function NewProjectPage() {
             value={formData.description}
             onChange={handleChange}
             rows={10}
-            className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 focus:ring-1 focus:ring-yellow-500 outline-none font-mono text-sm"
+            className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 focus:ring-1 focus:ring-[var(--accent)] outline-none font-mono text-sm text-[var(--foreground)]"
           />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-neutral-400">
+            <label className="text-sm font-medium text-[var(--muted)]">
               Tech Stack (comma separated)
             </label>
             <input
               name="techStack"
               value={formData.techStack}
               onChange={handleChange}
-              className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 focus:ring-1 focus:ring-yellow-500 outline-none"
+              className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 focus:ring-1 focus:ring-[var(--accent)] outline-none text-[var(--foreground)]"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-neutral-400">Role</label>
+            <label className="text-sm font-medium text-[var(--muted)]">
+              Role
+            </label>
             <input
               name="role"
               value={formData.role}
               onChange={handleChange}
-              className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 focus:ring-1 focus:ring-yellow-500 outline-none"
+              className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 focus:ring-1 focus:ring-[var(--accent)] outline-none text-[var(--foreground)]"
             />
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-neutral-400">Demo URL</label>
+            <label className="text-sm font-medium text-[var(--muted)]">
+              Demo URL
+            </label>
             <input
               name="demoUrl"
               value={formData.demoUrl}
               onChange={handleChange}
-              className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 focus:ring-1 focus:ring-yellow-500 outline-none"
+              className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 focus:ring-1 focus:ring-[var(--accent)] outline-none text-[var(--foreground)]"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-neutral-400">Repo URL</label>
+            <label className="text-sm font-medium text-[var(--muted)]">
+              Repo URL
+            </label>
             <input
               name="repoUrl"
               value={formData.repoUrl}
               onChange={handleChange}
-              className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 focus:ring-1 focus:ring-yellow-500 outline-none"
+              className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 focus:ring-1 focus:ring-[var(--accent)] outline-none text-[var(--foreground)]"
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-neutral-400">Visibility</label>
+            <label className="text-sm font-medium text-[var(--muted)]">
+              Category
+            </label>
+            <select
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 focus:ring-1 focus:ring-[var(--accent)] outline-none text-[var(--foreground)]"
+            >
+              <option value="experiments">Experiments</option>
+              <option value="systems">Systems</option>
+              <option value="tools">Tools</option>
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-[var(--muted)]">
+              Visibility
+            </label>
             <select
               name="visibility"
               value={formData.visibility}
               onChange={handleChange}
-              className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 focus:ring-1 focus:ring-yellow-500 outline-none"
+              className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 focus:ring-1 focus:ring-[var(--accent)] outline-none text-[var(--foreground)]"
             >
               <option value="public">Public</option>
               <option value="email_gated">Email Gated</option>
@@ -179,22 +220,26 @@ export default function NewProjectPage() {
               checked={formData.isFeatured}
               onChange={handleChange}
               id="isFeatured"
-              className="w-5 h-5 rounded border-neutral-800 bg-neutral-900 text-yellow-500 focus:ring-yellow-500"
+              className="w-5 h-5 rounded border-[var(--card-border)] bg-[var(--card-bg)] text-[var(--accent)] focus:ring-[var(--accent)]"
             />
-            <label htmlFor="isFeatured" className="text-sm font-medium text-white">
+            <label
+              htmlFor="isFeatured"
+              className="text-sm font-medium text-[var(--foreground)]"
+            >
               Featured Project
             </label>
           </div>
         </div>
 
         <div className="flex justify-end pt-4">
-          <button
+          <Button
             type="submit"
             disabled={loading}
-            className="bg-yellow-500 text-black px-6 py-2 rounded-lg font-bold hover:bg-yellow-400 disabled:opacity-50"
+            variant="primary"
+            className="px-6"
           >
             {loading ? "Creating..." : "Create Project"}
-          </button>
+          </Button>
         </div>
       </form>
     </div>

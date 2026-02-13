@@ -1,11 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./ThemeToggle";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   const navItems = [
     { label: "Home", href: "/" },
@@ -28,18 +35,31 @@ export default function Header() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-6">
-          <ul className="flex space-x-6 text-sm font-medium">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="text-[var(--muted)] hover:text-[var(--accent)] transition-colors duration-200"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+        <nav className="hidden md:flex items-center gap-8">
+          <ul className="flex space-x-8 text-sm font-medium">
+            {navItems.map((item) => {
+              const isActive =
+                pathname === item.href ||
+                (item.href !== "/" && pathname?.startsWith(item.href));
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`transition-colors duration-200 relative py-2 ${
+                      isActive
+                        ? "text-[var(--accent)]"
+                        : "text-[var(--muted)] hover:text-[var(--foreground)]"
+                    }`}
+                  >
+                    {item.label}
+                    {isActive && (
+                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[var(--accent)] rounded-full" />
+                    )}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
           <ThemeToggle />
         </nav>
@@ -48,9 +68,11 @@ export default function Header() {
         <div className="flex items-center gap-4 md:hidden">
           <ThemeToggle />
           <button
-            className="text-[var(--muted)] hover:text-[var(--accent)] focus:outline-none"
+            className="text-[var(--muted)] hover:text-[var(--accent)] focus:outline-none p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             {isMobileMenuOpen ? (
               // Close Icon (X)
@@ -91,19 +113,32 @@ export default function Header() {
 
       {/* Mobile Nav Dropdown */}
       {isMobileMenuOpen && (
-        <nav className="md:hidden border-t border-[var(--card-border)] bg-[var(--background)] absolute w-full left-0 shadow-xl transition-colors duration-300">
+        <nav
+          id="mobile-menu"
+          className="md:hidden border-t border-[var(--card-border)] bg-[var(--background)] absolute w-full left-0 shadow-xl transition-colors duration-300"
+        >
           <ul className="flex flex-col py-4">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="block px-6 py-3 text-[var(--muted)] hover:bg-[var(--card-bg)] hover:text-[var(--accent)] transition-colors duration-200"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {navItems.map((item) => {
+              const isActive =
+                pathname === item.href ||
+                (item.href !== "/" && pathname?.startsWith(item.href));
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`block px-6 py-4 text-base transition-colors duration-200 ${
+                      isActive
+                        ? "text-[var(--accent)] font-semibold bg-[var(--accent)]/5"
+                        : "text-[var(--muted)] hover:bg-[var(--card-bg)] hover:text-[var(--accent)]"
+                    }`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
       )}

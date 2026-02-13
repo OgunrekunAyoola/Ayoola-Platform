@@ -7,7 +7,7 @@ describe('Button Component', () => {
     render(<Button>Click me</Button>);
     const button = screen.getByRole('button', { name: /click me/i });
     expect(button).toBeInTheDocument();
-    expect(button).toHaveClass('bg-yellow-500'); // Default variant is primary
+    expect(button).toHaveClass('bg-[var(--accent)]'); // Default variant is primary
   });
 
   it('renders secondary variant correctly', () => {

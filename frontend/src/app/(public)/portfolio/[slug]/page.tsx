@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
 import PersonaSummary from "@/components/portfolio/PersonaSummary";
+import ShareButton from "@/components/ui/ShareButton";
 
 interface ProjectPageProps {
   params: Promise<{
@@ -105,14 +106,20 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                       href={project.links.repoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-yellow-500 hover:underline"
+                      className="text-yellow-500 hover:underline hover:text-yellow-400 transition-colors"
                     >
-                      Source Code ↗
+                      GitHub ↗
                     </a>
                   )}
                 </div>
               </div>
             )}
+            <div>
+              <span className="block text-neutral-500 uppercase text-xs tracking-widest font-bold mb-2">
+                Share
+              </span>
+              <ShareButton title={project.title} text={project.summary} />
+            </div>
           </div>
         </header>
 

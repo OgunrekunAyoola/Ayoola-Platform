@@ -59,9 +59,7 @@ export default function Contact() {
       <div className="grid md:grid-cols-2 gap-12 items-start">
         {/* Contact Info */}
         <div className="space-y-8">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-[var(--foreground)]">
-            Let&apos;s build something meaningful.
-          </h1>
+          <h1 className="mb-6">Let&apos;s build something meaningful.</h1>
           <p className="text-xl text-[var(--muted)] leading-relaxed font-light">
             Whether you&apos;re looking for strategic advice, technical
             execution, or just want to connect, I&apos;m always open to
@@ -138,16 +136,16 @@ export default function Contact() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">
+              <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">
                 Message Sent!
               </h3>
-              <p className="text-neutral-400">
+              <p className="text-[var(--muted)]">
                 Thanks for reaching out. I&apos;ll get back to you as soon as
                 possible.
               </p>
               <button
                 onClick={() => setStatus("idle")}
-                className="mt-6 text-yellow-500 font-medium hover:text-yellow-400"
+                className="mt-6 text-[var(--accent)] font-medium hover:text-[var(--accent)]/80"
               >
                 Send another message
               </button>
@@ -157,7 +155,7 @@ export default function Contact() {
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium text-neutral-300 mb-2"
+                  className="block text-sm font-medium text-[var(--muted)] mb-2"
                 >
                   Name
                 </label>
@@ -168,7 +166,7 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full bg-black border border-neutral-700 rounded-lg p-3 text-white focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition"
+                  className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg p-3 text-[var(--foreground)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition"
                   placeholder="Your name"
                 />
               </div>
@@ -176,7 +174,7 @@ export default function Contact() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-neutral-300 mb-2"
+                  className="block text-sm font-medium text-[var(--muted)] mb-2"
                 >
                   Email
                 </label>
@@ -187,7 +185,7 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full bg-black border border-neutral-700 rounded-lg p-3 text-white focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition"
+                  className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg p-3 text-[var(--foreground)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition"
                   placeholder="your@email.com"
                 />
               </div>
@@ -195,7 +193,7 @@ export default function Contact() {
               <div>
                 <label
                   htmlFor="typeOfWork"
-                  className="block text-sm font-medium text-neutral-300 mb-2"
+                  className="block text-sm font-medium text-[var(--muted)] mb-2"
                 >
                   Inquiry Type
                 </label>
@@ -204,7 +202,7 @@ export default function Contact() {
                   name="typeOfWork"
                   value={formData.typeOfWork}
                   onChange={handleChange}
-                  className="w-full bg-black border border-neutral-700 rounded-lg p-3 text-white focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition appearance-none"
+                  className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg p-3 text-[var(--foreground)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition appearance-none"
                 >
                   <option value="consulting">Consulting / Strategy</option>
                   <option value="engineering">Engineering / Development</option>
@@ -216,7 +214,7 @@ export default function Contact() {
               <div>
                 <label
                   htmlFor="message"
-                  className="block text-sm font-medium text-neutral-300 mb-2"
+                  className="block text-sm font-medium text-[var(--muted)] mb-2"
                 >
                   Message
                 </label>
@@ -227,7 +225,7 @@ export default function Contact() {
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  className="w-full bg-black border border-neutral-700 rounded-lg p-3 text-white focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition"
+                  className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg p-3 text-[var(--foreground)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition"
                   placeholder="How can I help you?"
                 ></textarea>
               </div>

@@ -23,13 +23,13 @@ export default async function BlogPage() {
   }
 
   return (
-    <div className="min-h-screen py-24 md:py-32 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto animate-fade-in-up">
-        <div className="text-center mb-20 md:mb-24">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-            <span className="text-yellow-500">Blog</span> & Thoughts
+        <div className="text-center mb-16 md:mb-20">
+          <h1 className="mb-6">
+            <span className="text-[var(--accent)]">Blog</span> & Thoughts
           </h1>
-          <p className="text-xl md:text-2xl text-neutral-400 max-w-3xl mx-auto leading-relaxed font-light">
+          <p className="text-lg md:text-xl text-[var(--muted)] max-w-3xl mx-auto leading-relaxed font-light">
             Technical deep dives, tutorials, and updates on my latest projects.
           </p>
         </div>

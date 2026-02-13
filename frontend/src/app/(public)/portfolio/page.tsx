@@ -32,10 +32,8 @@ export default async function PortfolioPage() {
     <main className="min-h-screen py-24 md:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <header className="mb-20 md:mb-24 text-center">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-neutral-100 tracking-tight">
-            Selected Work
-          </h1>
-          <p className="text-xl md:text-2xl text-neutral-400 max-w-3xl mx-auto leading-relaxed font-light">
+          <h1 className="mb-6">Selected Work</h1>
+          <p className="text-xl md:text-2xl text-[var(--muted)] max-w-3xl mx-auto leading-relaxed font-light">
             A collection of projects exploring software engineering, product
             design, and creative problem solving.
           </p>
@@ -48,17 +46,19 @@ export default async function PortfolioPage() {
         )}
 
         {!hasProjects && !error && (
-          <div className="text-center py-20 bg-neutral-900/30 rounded-xl border border-neutral-800">
-            <p className="text-neutral-500">No projects found.</p>
+          <div className="text-center py-20 bg-[var(--card-bg)]/30 rounded-xl border border-[var(--card-border)]">
+            <p className="text-[var(--muted)]">No projects found.</p>
           </div>
         )}
 
         {/* Systems Section - High Value */}
         {systems.length > 0 && (
           <section className="mb-24">
-            <div className="flex items-end gap-4 mb-8 border-b border-neutral-800 pb-4">
-              <h2 className="text-3xl font-bold text-white">Systems</h2>
-              <span className="text-neutral-500 pb-1 text-sm uppercase tracking-wider">
+            <div className="flex items-end gap-4 mb-8 border-b border-[var(--card-border)] pb-4">
+              <h2 className="text-3xl font-bold text-[var(--foreground)]">
+                Systems
+              </h2>
+              <span className="text-[var(--muted)] pb-1 text-sm uppercase tracking-wider">
                 High-Value Platforms
               </span>
             </div>
@@ -73,9 +73,11 @@ export default async function PortfolioPage() {
         {/* Tools Section */}
         {tools.length > 0 && (
           <section className="mb-24">
-            <div className="flex items-end gap-4 mb-8 border-b border-neutral-800 pb-4">
-              <h2 className="text-3xl font-bold text-white">Tools</h2>
-              <span className="text-neutral-500 pb-1 text-sm uppercase tracking-wider">
+            <div className="flex items-end gap-4 mb-8 border-b border-[var(--card-border)] pb-4">
+              <h2 className="text-3xl font-bold text-[var(--foreground)]">
+                Tools
+              </h2>
+              <span className="text-[var(--muted)] pb-1 text-sm uppercase tracking-wider">
                 Utilities & Libraries
               </span>
             </div>
@@ -90,9 +92,11 @@ export default async function PortfolioPage() {
         {/* Experiments Section */}
         {experiments.length > 0 && (
           <section id="experiments" className="mb-24">
-            <div className="flex items-end gap-4 mb-8 border-b border-neutral-800 pb-4">
-              <h2 className="text-3xl font-bold text-white">Experiments</h2>
-              <span className="text-neutral-500 pb-1 text-sm uppercase tracking-wider">
+            <div className="flex items-end gap-4 mb-8 border-b border-[var(--card-border)] pb-4">
+              <h2 className="text-3xl font-bold text-[var(--foreground)]">
+                Experiments
+              </h2>
+              <span className="text-[var(--muted)] pb-1 text-sm uppercase tracking-wider">
                 Prototypes & Concepts
               </span>
             </div>
@@ -103,26 +107,6 @@ export default async function PortfolioPage() {
             </div>
           </section>
         )}
-
-        {/* My Journey Section */}
-        <section className="mt-32 border-t border-neutral-800 pt-20">
-          <div className="max-w-3xl">
-            <h2 className="text-3xl font-bold mb-8 text-white">
-              My Journey as a Developer
-            </h2>
-            <div className="prose prose-invert prose-yellow text-neutral-400">
-              <p className="mb-4">
-                [Placeholder: This section will detail my background, how I
-                started coding, and my growth path.]
-              </p>
-              <p>
-                From early experiments to building complex platforms, my journey
-                has been driven by curiosity and a desire to build things that
-                matter.
-              </p>
-            </div>
-          </div>
-        </section>
       </div>
     </main>
   );

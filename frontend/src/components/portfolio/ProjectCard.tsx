@@ -39,7 +39,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             {project.techStack.slice(0, 3).map((tech) => (
               <span
                 key={tech}
-                className="text-[10px] uppercase tracking-wider font-semibold text-[var(--muted)] bg-[var(--muted)]/10 border border-[var(--card-border)] px-2 py-1 rounded"
+                className="text-xs uppercase tracking-wider font-semibold text-[var(--muted)] bg-[var(--muted)]/10 border border-[var(--card-border)] px-2 py-1 rounded"
               >
                 {tech}
               </span>

@@ -93,7 +93,7 @@ export default function AdminLayout({
       {/* Sidebar Overlay (Mobile) */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-30 md:hidden backdrop-blur-sm"
+          className="fixed inset-0 bg-black/50 z-40 md:hidden backdrop-blur-sm"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
@@ -102,7 +102,7 @@ export default function AdminLayout({
       <aside
         className={`
           w-64 border-r border-[var(--card-border)] p-6 flex flex-col 
-          fixed top-0 bottom-0 left-0 bg-[var(--background)] z-40
+          fixed top-0 bottom-0 left-0 bg-[var(--background)] z-50
           transition-transform duration-300 ease-in-out
           ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
@@ -138,7 +138,7 @@ export default function AdminLayout({
           </button>
         </div>
 
-        <nav className="flex-1 space-y-2">
+        <nav className="flex-1 space-y-3">
           {navItems.map((item) => {
             const isActive =
               pathname === item.href || pathname.startsWith(`${item.href}/`);
@@ -146,7 +146,7 @@ export default function AdminLayout({
               <Link
                 key={item.href}
                 href={item.href}
-                className={`block px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                   isActive
                     ? "bg-[var(--accent)]/10 text-[var(--accent)]"
                     : "text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/10"

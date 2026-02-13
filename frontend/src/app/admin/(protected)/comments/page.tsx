@@ -7,6 +7,7 @@ import {
   deleteComment,
   Comment,
 } from "@/lib/api-client";
+import Button from "@/components/ui/Button";
 
 export default function AdminCommentsPage() {
   const [comments, setComments] = useState<Comment[]>([]);
@@ -113,19 +114,21 @@ export default function AdminCommentsPage() {
 
               <div className="flex flex-col gap-2">
                 {!comment.isApproved && (
-                  <button
+                  <Button
+                    variant="success"
+                    className="px-3 py-1.5 text-sm"
                     onClick={() => handleApprove(comment._id)}
-                    className="bg-green-600 hover:bg-green-500 text-white px-3 py-1.5 rounded text-sm font-medium transition-colors"
                   >
                     Approve
-                  </button>
+                  </Button>
                 )}
-                <button
+                <Button
+                  variant="danger"
+                  className="px-3 py-1.5 text-sm"
                   onClick={() => handleDelete(comment._id)}
-                  className="bg-red-900/20 hover:bg-red-900/40 text-red-500 px-3 py-1.5 rounded text-sm font-medium transition-colors"
                 >
                   Delete
-                </button>
+                </Button>
               </div>
             </div>
           ))

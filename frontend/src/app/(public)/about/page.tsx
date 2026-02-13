@@ -1,9 +1,7 @@
 export default function About() {
   return (
     <div className="max-w-4xl mx-auto py-12 px-4">
-      <h1 className="text-4xl md:text-6xl font-serif font-bold text-[var(--foreground)] mb-12">
-        About Ayoola
-      </h1>
+      <h1 className="mb-12">About Ayoola</h1>
 
       <div className="prose prose-invert prose-lg prose-yellow max-w-none">
         <div className="mb-12 border-l-4 border-[var(--accent)] pl-6 space-y-6">
@@ -16,7 +14,7 @@ export default function About() {
             I’m interested in how software, AI, and writing can change
             operations, storytelling, and even policy—not only business metrics.
           </p>
-          <p className="text-lg text-[var(--muted)]/80">
+          <p className="text-lg text-[var(--muted)]">
             I also collaborate with separate studios and ventures focused on AI
             automation for businesses.
           </p>
@@ -24,12 +22,9 @@ export default function About() {
 
         <div className="grid md:grid-cols-12 gap-12 my-16">
           <div className="md:col-span-4">
-            <h3 className="text-xl font-bold text-[var(--foreground)] mb-4 uppercase tracking-wider">
-              The Story
-            </h3>
+            <h3 className="uppercase tracking-wider">The Story</h3>
           </div>
           <div className="md:col-span-8 space-y-6 text-[var(--muted)]">
-            <p>[Narrative Content Placeholder]</p>
             <p>
               My journey started with a curiosity for how things work—first
               machines, then code, then systems of people and governance. This
@@ -46,12 +41,9 @@ export default function About() {
 
         <div className="grid md:grid-cols-12 gap-12 my-16 border-t border-[var(--card-border)] pt-16">
           <div className="md:col-span-4">
-            <h3 className="text-xl font-bold text-[var(--foreground)] mb-4 uppercase tracking-wider">
-              Philosophy
-            </h3>
+            <h3 className="uppercase tracking-wider">Philosophy</h3>
           </div>
           <div className="md:col-span-8 space-y-6 text-[var(--muted)]">
-            <p>[Philosophy Content Placeholder]</p>
             <p>
               I believe that technology is a tool for amplification—it scales
               whatever we feed it. Therefore, the most critical work isn&apos;t
@@ -62,7 +54,7 @@ export default function About() {
         </div>
 
         <div className="glass-card p-8 rounded-2xl mt-16">
-          <h3 className="text-2xl font-serif font-bold text-[var(--foreground)] mb-6">What I Do Best</h3>
+          <h3 className="mb-6">What I Do Best</h3>
           <div className="grid sm:grid-cols-2 gap-6">
             <div>
               <h4 className="font-bold text-[var(--accent)] mb-2">

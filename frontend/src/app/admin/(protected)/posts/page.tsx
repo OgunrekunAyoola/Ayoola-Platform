@@ -3,8 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { fetchAdminPosts, deletePost, Post } from "@/lib/api-client";
+import Button from "@/components/ui/Button";
+import StatusBadge from "@/components/ui/StatusBadge";
+import { useToast } from "@/context/ToastContext";
 
 export default function AdminPostsPage() {
+  const { addToast } = useToast();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -24,56 +28,45 @@ export default function AdminPostsPage() {
     try {
       await deletePost(id);
       setPosts(posts.filter((p) => p._id !== id));
+      addToast("Post deleted successfully", "success");
     } catch (error) {
-      alert("Failed to delete post");
+      addToast("Failed to delete post", "error");
       console.error(error);
     }
   };
 
-  if (loading) return <div className="text-white">Loading...</div>;
+  if (loading) return <div className="text-[var(--muted)]">Loading...</div>;
 
   return (
     <div>
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
         <h1 className="text-2xl md:text-3xl font-bold">Posts</h1>
-        <Link
-          href="/admin/posts/new"
-          className="w-full md:w-auto bg-yellow-500 text-black px-4 py-2 rounded-lg font-medium hover:bg-yellow-400 text-center transition-colors"
-        >
-          + New Post
+        <Link href="/admin/posts/new">
+          <Button variant="primary" className="w-full md:w-auto">
+            + New Post
+          </Button>
         </Link>
       </div>
 
       {/* Mobile View (Cards) */}
       <div className="md:hidden space-y-4">
         {posts.map((post) => (
-          <div
-            key={post._id}
-            className="bg-neutral-900 border border-neutral-800 p-4 rounded-xl space-y-3"
-          >
+          <div key={post._id} className="glass-card p-4 rounded-xl space-y-3">
             <div className="flex justify-between items-start gap-4">
-              <h2 className="font-bold text-lg text-white line-clamp-2">
+              <h2 className="font-bold text-lg text-[var(--foreground)] line-clamp-2">
                 {post.title}
               </h2>
-              <span
-                className={`shrink-0 px-2 py-1 rounded text-xs font-medium ${
-                  post.status === "published"
-                    ? "bg-green-500/10 text-green-500"
-                    : "bg-yellow-500/10 text-yellow-500"
-                }`}
-              >
-                {post.status}
-              </span>
+              <StatusBadge status={post.status} className="shrink-0" />
             </div>
 
-            <div className="text-sm text-neutral-400">
+            <div className="text-sm text-[var(--muted)]">
               {new Date(post.publishedAt).toLocaleDateString()}
             </div>
 
-            <div className="pt-4 border-t border-neutral-800 flex justify-end gap-4">
+            <div className="pt-4 border-t border-[var(--card-border)] flex justify-end gap-4">
               <Link
                 href={`/admin/posts/${post._id}`}
-                className="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors"
+                className="text-[var(--accent)] hover:opacity-80 text-sm font-medium transition-colors"
               >
                 Edit
               </Link>
@@ -87,16 +80,16 @@ export default function AdminPostsPage() {
           </div>
         ))}
         {posts.length === 0 && (
-          <div className="text-center text-neutral-500 py-8 bg-neutral-900 rounded-xl border border-neutral-800">
+          <div className="text-center text-[var(--muted)] py-8 glass-card rounded-xl">
             No posts found. Create one to get started.
           </div>
         )}
       </div>
 
       {/* Desktop View (Table) */}
-      <div className="hidden md:block bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden">
+      <div className="hidden md:block glass-card rounded-xl overflow-hidden">
         <table className="w-full text-left">
-          <thead className="bg-neutral-800 text-neutral-400 text-sm uppercase">
+          <thead className="bg-[var(--card-bg)] text-[var(--muted)] text-sm uppercase">
             <tr>
               <th className="px-6 py-4 font-medium">Title</th>
               <th className="px-6 py-4 font-medium">Status</th>
@@ -104,42 +97,37 @@ export default function AdminPostsPage() {
               <th className="px-6 py-4 font-medium text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-neutral-800">
+          <tbody className="divide-y divide-[var(--card-border)]">
             {posts.map((post) => (
               <tr
                 key={post._id}
-                className="hover:bg-neutral-800/50 transition-colors"
+                className="hover:bg-[var(--card-bg)]/50 transition-colors"
               >
-                <td className="px-6 py-4 font-medium text-white">
+                <td className="px-6 py-4 font-medium text-[var(--foreground)]">
                   {post.title}
                 </td>
                 <td className="px-6 py-4">
-                  <span
-                    className={`inline-block px-2 py-1 rounded text-xs font-medium ${
-                      post.status === "published"
-                        ? "bg-green-500/10 text-green-500"
-                        : "bg-yellow-500/10 text-yellow-500"
-                    }`}
-                  >
-                    {post.status}
-                  </span>
+                  <StatusBadge status={post.status} />
                 </td>
-                <td className="px-6 py-4 text-neutral-400">
+                <td className="px-6 py-5 text-[var(--muted)]">
                   {new Date(post.publishedAt).toLocaleDateString()}
                 </td>
-                <td className="px-6 py-4 text-right space-x-4">
+                <td className="px-6 py-5 text-right space-x-4">
                   <Link
                     href={`/admin/posts/${post._id}`}
-                    className="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors"
+                    className="inline-block"
                   >
-                    Edit
+                    <Button variant="secondary" className="px-4 py-2 text-sm">
+                      Edit
+                    </Button>
                   </Link>
-                  <button
+                  <Button
+                    variant="danger"
+                    className="px-4 py-2 text-sm"
                     onClick={() => handleDelete(post._id)}
-                    className="text-red-500 hover:text-red-400 text-sm font-medium transition-colors"
                   >
                     Delete
-                  </button>
+                  </Button>
                 </td>
               </tr>
             ))}
@@ -147,7 +135,7 @@ export default function AdminPostsPage() {
               <tr>
                 <td
                   colSpan={4}
-                  className="px-6 py-12 text-center text-neutral-500"
+                  className="px-6 py-12 text-center text-[var(--muted)]"
                 >
                   No posts found. Create one to get started.
                 </td>

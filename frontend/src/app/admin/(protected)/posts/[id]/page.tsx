@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { fetchAdminPost, updatePost } from "@/lib/api-client";
 import PostForm, { PostFormData } from "@/components/admin/PostForm";
+import { useToast } from "@/context/ToastContext";
 
 export default function EditPostPage() {
   const router = useRouter();
   const { id } = useParams() as { id: string };
+  const { addToast } = useToast();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [initialData, setInitialData] = useState<any>(null);
@@ -49,11 +51,11 @@ export default function EditPostPage() {
         status: data.status as "draft" | "published",
         readingTime: Number(data.readingTime),
       });
-      alert("Post updated successfully");
+      addToast("Post updated successfully", "success");
       router.push("/admin/posts");
     } catch (error) {
       console.error(error);
-      alert("Failed to update post");
+      addToast("Failed to update post", "error");
     } finally {
       setSaving(false);
     }

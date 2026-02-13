@@ -59,10 +59,12 @@ export default function Home() {
 
       {/* Proof Points Section */}
       <section className="max-w-6xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           <ScrollReveal delay={0}>
             <div className="glass-card p-8 rounded-xl text-center h-full">
-              <h3 className="text-4xl font-bold text-[var(--foreground)] mb-2">70%</h3>
+              <h3 className="text-4xl font-bold text-[var(--foreground)] mb-2">
+                70%
+              </h3>
               <p className="text-[var(--muted)] text-sm uppercase tracking-wider font-medium">
                 Reduction in Ops Time
               </p>
@@ -74,7 +76,9 @@ export default function Home() {
 
           <ScrollReveal delay={1}>
             <div className="glass-card p-8 rounded-xl text-center h-full">
-              <h3 className="text-4xl font-bold text-[var(--foreground)] mb-2">200+</h3>
+              <h3 className="text-4xl font-bold text-[var(--foreground)] mb-2">
+                200+
+              </h3>
               <p className="text-[var(--muted)] text-sm uppercase tracking-wider font-medium">
                 Monthly Users
               </p>
@@ -86,7 +90,9 @@ export default function Home() {
 
           <ScrollReveal delay={2}>
             <div className="glass-card p-8 rounded-xl text-center h-full">
-              <h3 className="text-4xl font-bold text-[var(--foreground)] mb-2">4 Weeks</h3>
+              <h3 className="text-4xl font-bold text-[var(--foreground)] mb-2">
+                4 Weeks
+              </h3>
               <p className="text-[var(--muted)] text-sm uppercase tracking-wider font-medium">
                 Time to Launch
               </p>

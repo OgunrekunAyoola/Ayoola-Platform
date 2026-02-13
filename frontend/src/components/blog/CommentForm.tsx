@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { createComment } from '@/lib/api-client';
+import { useState } from "react";
+import { createComment } from "@/lib/api-client";
+import Button from "@/components/ui/Button";
 
 interface CommentFormProps {
   postId: string;
@@ -9,9 +10,9 @@ interface CommentFormProps {
 
 export default function CommentForm({ postId }: CommentFormProps) {
   const [formData, setFormData] = useState({
-    authorName: '',
-    authorEmail: '',
-    body: '',
+    authorName: "",
+    authorEmail: "",
+    body: "",
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -26,24 +27,28 @@ export default function CommentForm({ postId }: CommentFormProps) {
     try {
       await createComment(postId, formData);
       setSuccess(true);
-      setFormData({ authorName: '', authorEmail: '', body: '' });
+      setFormData({ authorName: "", authorEmail: "", body: "" });
     } catch (err) {
-      console.error('Failed to submit comment:', err);
-      setError('Failed to submit comment. Please try again.');
+      console.error("Failed to submit comment:", err);
+      setError("Failed to submit comment. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
-    <div className="bg-neutral-900/30 p-6 rounded-lg border border-neutral-800 mt-12">
-      <h3 className="text-xl font-bold mb-6">Leave a Comment</h3>
-      
+    <div className="bg-[var(--card-bg)]/30 p-6 rounded-lg border border-[var(--card-border)] mt-12">
+      <h3 className="text-xl font-bold mb-6 text-[var(--foreground)]">
+        Leave a Comment
+      </h3>
+
       {success && (
         <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 text-green-500 rounded-lg">
           Comment posted successfully!
@@ -59,7 +64,10 @@ export default function CommentForm({ postId }: CommentFormProps) {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="authorName" className="block text-sm font-medium text-neutral-400 mb-1">
+            <label
+              htmlFor="authorName"
+              className="block text-sm font-medium text-[var(--muted)] mb-1"
+            >
               Name
             </label>
             <input
@@ -69,12 +77,15 @@ export default function CommentForm({ postId }: CommentFormProps) {
               value={formData.authorName}
               onChange={handleChange}
               required
-              className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-yellow-500 transition-colors"
+              className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-2 text-[var(--foreground)] focus:outline-none focus:border-[var(--accent)] transition-colors"
               placeholder="John Doe"
             />
           </div>
           <div>
-            <label htmlFor="authorEmail" className="block text-sm font-medium text-neutral-400 mb-1">
+            <label
+              htmlFor="authorEmail"
+              className="block text-sm font-medium text-[var(--muted)] mb-1"
+            >
               Email (not published)
             </label>
             <input
@@ -84,14 +95,17 @@ export default function CommentForm({ postId }: CommentFormProps) {
               value={formData.authorEmail}
               onChange={handleChange}
               required
-              className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-yellow-500 transition-colors"
+              className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-2 text-[var(--foreground)] focus:outline-none focus:border-[var(--accent)] transition-colors"
               placeholder="john@example.com"
             />
           </div>
         </div>
 
         <div>
-          <label htmlFor="body" className="block text-sm font-medium text-neutral-400 mb-1">
+          <label
+            htmlFor="body"
+            className="block text-sm font-medium text-[var(--muted)] mb-1"
+          >
             Comment
           </label>
           <textarea
@@ -101,18 +115,18 @@ export default function CommentForm({ postId }: CommentFormProps) {
             onChange={handleChange}
             required
             rows={4}
-            className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-yellow-500 transition-colors resize-none"
+            className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-2 text-[var(--foreground)] focus:outline-none focus:border-[var(--accent)] transition-colors resize-none"
             placeholder="Share your thoughts..."
           />
         </div>
 
-        <button
+        <Button
           type="submit"
           disabled={loading}
-          className="bg-yellow-500 text-black font-bold py-2 px-6 rounded-lg hover:bg-yellow-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? 'Submitting...' : 'Post Comment'}
-        </button>
+          {loading ? "Submitting..." : "Post Comment"}
+        </Button>
       </form>
     </div>
   );

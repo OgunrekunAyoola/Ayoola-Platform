@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
 import LikeButton from "@/components/blog/LikeButton";
+import ShareButton from "@/components/ui/ShareButton";
 import CommentList from "@/components/blog/CommentList";
 import CommentForm from "@/components/blog/CommentForm";
 import NewsletterForm from "@/components/newsletter/NewsletterForm";
@@ -103,6 +104,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <span>{post.readingTime} min read</span>
             <div className="flex items-center gap-2">
               <LikeButton postId={post._id} initialLikes={post.likeCount} />
+              <ShareButton title={post.title} text={post.excerpt} />
             </div>
           </div>
         </header>

@@ -39,7 +39,7 @@ export default function PostForm({
       heroImage: "",
       readingTime: 5,
       publishedAt: new Date().toISOString().slice(0, 16),
-    }
+    },
   );
 
   const [previewMode, setPreviewMode] = useState(false);
@@ -47,7 +47,7 @@ export default function PostForm({
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -61,14 +61,14 @@ export default function PostForm({
   return (
     <div className="max-w-4xl mx-auto px-4 pb-20">
       {/* Sticky Header for Mobile Actions */}
-      <header className="sticky top-0 z-20 bg-black/80 backdrop-blur-md py-4 mb-8 -mx-4 px-4 flex justify-between items-center border-b border-neutral-800">
-        <h1 className="text-2xl md:text-3xl font-bold">
+      <header className="sticky top-0 z-20 bg-[var(--background)]/80 backdrop-blur-md py-4 mb-8 -mx-4 px-4 md:-mx-8 md:px-8 flex justify-between items-center border-b border-[var(--card-border)]">
+        <h1 className="text-2xl md:text-3xl font-bold text-[var(--foreground)]">
           {mode === "create" ? "New Post" : "Edit Post"}
         </h1>
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="bg-yellow-500 text-black px-4 py-2 rounded-lg font-bold hover:bg-yellow-400 disabled:opacity-50 text-sm md:text-base"
+          className="bg-[var(--accent)] text-black px-4 py-2 rounded-lg font-bold hover:opacity-90 disabled:opacity-50 text-sm md:text-base transition-opacity"
         >
           {loading ? "Saving..." : "Save"}
         </button>
@@ -77,54 +77,60 @@ export default function PostForm({
       <form onSubmit={handleSubmit} className="space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-neutral-400">Title</label>
+            <label className="text-sm font-medium text-[var(--muted)]">
+              Title
+            </label>
             <input
               name="title"
               value={formData.title}
               onChange={handleChange}
               required
-              className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 focus:ring-1 focus:ring-yellow-500 outline-none text-base"
+              className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 focus:ring-1 focus:ring-[var(--accent)] outline-none text-base text-[var(--foreground)]"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-neutral-400">Slug</label>
+            <label className="text-sm font-medium text-[var(--muted)]">
+              Slug
+            </label>
             <input
               name="slug"
               value={formData.slug}
               onChange={handleChange}
               required
-              className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 focus:ring-1 focus:ring-yellow-500 outline-none text-base"
+              className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 focus:ring-1 focus:ring-[var(--accent)] outline-none text-base text-[var(--foreground)]"
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-neutral-400">Excerpt</label>
+          <label className="text-sm font-medium text-[var(--muted)]">
+            Excerpt
+          </label>
           <textarea
             name="excerpt"
             value={formData.excerpt}
             onChange={handleChange}
             required
             rows={3}
-            className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 focus:ring-1 focus:ring-yellow-500 outline-none text-base"
+            className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 focus:ring-1 focus:ring-[var(--accent)] outline-none text-base text-[var(--foreground)]"
           />
         </div>
 
         {/* Content Editor with Preview Toggle */}
         <div className="space-y-2">
           <div className="flex justify-between items-end">
-            <label className="text-sm font-medium text-neutral-400">
+            <label className="text-sm font-medium text-[var(--muted)]">
               Content (Markdown)
             </label>
-            <div className="flex bg-neutral-900 rounded-lg p-1 border border-neutral-800">
+            <div className="flex bg-[var(--card-bg)] rounded-lg p-1 border border-[var(--card-border)]">
               <button
                 type="button"
                 onClick={() => setPreviewMode(false)}
                 className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
                   !previewMode
-                    ? "bg-neutral-800 text-white"
-                    : "text-neutral-400 hover:text-white"
+                    ? "bg-[var(--accent)]/10 text-[var(--accent)]"
+                    : "text-[var(--muted)] hover:text-[var(--foreground)]"
                 }`}
               >
                 Write
@@ -134,8 +140,8 @@ export default function PostForm({
                 onClick={() => setPreviewMode(true)}
                 className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
                   previewMode
-                    ? "bg-neutral-800 text-white"
-                    : "text-neutral-400 hover:text-white"
+                    ? "bg-[var(--accent)]/10 text-[var(--accent)]"
+                    : "text-[var(--muted)] hover:text-[var(--foreground)]"
                 }`}
               >
                 Preview
@@ -144,8 +150,10 @@ export default function PostForm({
           </div>
 
           {previewMode ? (
-            <div className="w-full min-h-[400px] bg-neutral-900 border border-neutral-800 rounded-lg px-6 py-6 prose prose-invert max-w-none prose-yellow">
-              <ReactMarkdown>{formData.content || "*No content yet*"}</ReactMarkdown>
+            <div className="w-full min-h-[400px] bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-6 py-6 prose prose-invert max-w-none prose-yellow">
+              <ReactMarkdown>
+                {formData.content || "*No content yet*"}
+              </ReactMarkdown>
             </div>
           ) : (
             <textarea
@@ -154,7 +162,7 @@ export default function PostForm({
               onChange={handleChange}
               required
               rows={15}
-              className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 focus:ring-1 focus:ring-yellow-500 outline-none font-mono text-sm leading-relaxed min-h-[400px]"
+              className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 focus:ring-1 focus:ring-[var(--accent)] outline-none font-mono text-sm leading-relaxed min-h-[400px] text-[var(--foreground)]"
               placeholder="# Write your post here..."
             />
           )}
@@ -162,24 +170,26 @@ export default function PostForm({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-neutral-400">
+            <label className="text-sm font-medium text-[var(--muted)]">
               Tags (comma separated)
             </label>
             <input
               name="tags"
               value={formData.tags}
               onChange={handleChange}
-              className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 focus:ring-1 focus:ring-yellow-500 outline-none text-base"
+              className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 focus:ring-1 focus:ring-[var(--accent)] outline-none text-base text-[var(--foreground)]"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-neutral-400">Status</label>
+            <label className="text-sm font-medium text-[var(--muted)]">
+              Status
+            </label>
             <select
               name="status"
               value={formData.status}
               onChange={handleChange}
-              className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 focus:ring-1 focus:ring-yellow-500 outline-none text-base"
+              className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 focus:ring-1 focus:ring-[var(--accent)] outline-none text-base text-[var(--foreground)]"
             >
               <option value="draft">Draft</option>
               <option value="published">Published</option>
@@ -187,7 +197,7 @@ export default function PostForm({
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-neutral-400">
+            <label className="text-sm font-medium text-[var(--muted)]">
               Reading Time (mins)
             </label>
             <input
@@ -195,7 +205,7 @@ export default function PostForm({
               name="readingTime"
               value={formData.readingTime}
               onChange={handleChange}
-              className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 focus:ring-1 focus:ring-yellow-500 outline-none text-base"
+              className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-4 py-3 focus:ring-1 focus:ring-[var(--accent)] outline-none text-base text-[var(--foreground)]"
             />
           </div>
 

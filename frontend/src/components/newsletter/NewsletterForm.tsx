@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { subscribe } from "@/lib/api-client";
+import Button from "@/components/ui/Button";
 
 interface NewsletterFormProps {
   source?: string;
@@ -65,9 +66,9 @@ export default function NewsletterForm({
           disabled={status === "loading" || status === "success"}
           required
         />
-        <button
+        <Button
           type="submit"
-          className="w-full sm:w-auto bg-[var(--accent)] text-black px-6 py-3 sm:py-2 text-sm font-bold rounded-lg hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shadow-lg shadow-[var(--accent)]/20"
+          className="w-full sm:w-auto sm:py-2 whitespace-nowrap"
           disabled={status === "loading" || status === "success"}
         >
           {status === "loading"
@@ -75,7 +76,7 @@ export default function NewsletterForm({
             : status === "success"
               ? "Subscribed ✓"
               : "Subscribe"}
-        </button>
+        </Button>
       </form>
 
       {message && (

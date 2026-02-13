@@ -13,6 +13,7 @@ export interface IProject extends Document {
   };
   isFeatured: boolean;
   visibility: "public" | "email_gated";
+  category: "systems" | "tools" | "experiments";
   createdAt: Date;
   updatedAt: Date;
 }
