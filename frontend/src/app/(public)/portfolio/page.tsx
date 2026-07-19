@@ -28,86 +28,58 @@ export default async function PortfolioPage() {
 
   const hasProjects = projects.length > 0;
 
+  const sections = [
+    { key: "systems", label: "High-value platforms", items: systems },
+    { key: "tools", label: "Utilities & libraries", items: tools },
+    { key: "experiments", label: "Prototypes & concepts", items: experiments },
+  ].filter((s) => s.items.length > 0);
+
   return (
-    <main className="min-h-screen py-24 md:py-32 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
-        <header className="mb-20 md:mb-24 text-center">
-          <h1 className="mb-6">Selected Work</h1>
-          <p className="text-xl md:text-2xl text-[var(--muted)] max-w-3xl mx-auto leading-relaxed font-light">
-            A collection of projects exploring software engineering, product
-            design, and creative problem solving.
-          </p>
-        </header>
-
-        {error && (
-          <div className="text-red-500 bg-red-500/10 p-4 rounded-lg border border-red-500/20 text-center mb-12">
-            {error}
-          </div>
-        )}
-
-        {!hasProjects && !error && (
-          <div className="text-center py-20 bg-[var(--card-bg)]/30 rounded-xl border border-[var(--card-border)]">
-            <p className="text-[var(--muted)]">No projects found.</p>
-          </div>
-        )}
-
-        {/* Systems Section - High Value */}
-        {systems.length > 0 && (
-          <section className="mb-24">
-            <div className="flex items-end gap-4 mb-8 border-b border-[var(--card-border)] pb-4">
-              <h2 className="text-3xl font-bold text-[var(--foreground)]">
-                Systems
-              </h2>
-              <span className="text-[var(--muted)] pb-1 text-sm uppercase tracking-wider">
-                High-Value Platforms
-              </span>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {systems.map((project) => (
-                <ProjectCard key={project._id} project={project} />
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Tools Section */}
-        {tools.length > 0 && (
-          <section className="mb-24">
-            <div className="flex items-end gap-4 mb-8 border-b border-[var(--card-border)] pb-4">
-              <h2 className="text-3xl font-bold text-[var(--foreground)]">
-                Tools
-              </h2>
-              <span className="text-[var(--muted)] pb-1 text-sm uppercase tracking-wider">
-                Utilities & Libraries
-              </span>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {tools.map((project) => (
-                <ProjectCard key={project._id} project={project} />
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Experiments Section */}
-        {experiments.length > 0 && (
-          <section id="experiments" className="mb-24">
-            <div className="flex items-end gap-4 mb-8 border-b border-[var(--card-border)] pb-4">
-              <h2 className="text-3xl font-bold text-[var(--foreground)]">
-                Experiments
-              </h2>
-              <span className="text-[var(--muted)] pb-1 text-sm uppercase tracking-wider">
-                Prototypes & Concepts
-              </span>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {experiments.map((project) => (
-                <ProjectCard key={project._id} project={project} />
-              ))}
-            </div>
-          </section>
-        )}
+    <section className="max-w-[1200px] mx-auto px-5 sm:px-7 pt-20 pb-24">
+      <div className="font-mono text-xs tracking-[0.14em] uppercase text-[var(--accent)] mb-3.5">
+        Portfolio
       </div>
-    </main>
+      <h1 className="font-serif font-extrabold tracking-tight leading-[1.05] text-[clamp(34px,4.6vw,56px)] text-[var(--foreground)] mb-3.5">
+        Systems, shipped.
+      </h1>
+      <p className="text-[18px] text-[var(--muted)] max-w-[560px] mb-12">
+        A selection of the platforms, tools, and experiments I&apos;ve designed,
+        built, and kept running.
+      </p>
+
+      {error && (
+        <div className="text-red-500 bg-red-500/10 p-4 rounded-xl border border-red-500/20 text-center mb-12">
+          {error}
+        </div>
+      )}
+
+      {!hasProjects && !error && (
+        <div className="text-center py-20 glass rounded-2xl">
+          <p className="text-[var(--muted)]">No projects found.</p>
+        </div>
+      )}
+
+      {sections.map((section) => (
+        <section
+          key={section.key}
+          id={section.key}
+          className="mb-16 scroll-mt-24"
+        >
+          <div className="flex items-end gap-4 mb-7 border-b border-[var(--hair)] pb-4">
+            <h2 className="font-serif font-bold text-[28px] tracking-tight text-[var(--foreground)] capitalize">
+              {section.key}
+            </h2>
+            <span className="text-[var(--muted)] pb-1 font-mono text-xs uppercase tracking-wider">
+              {section.label}
+            </span>
+          </div>
+          <div className="grid gap-[22px] [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
+            {section.items.map((project) => (
+              <ProjectCard key={project._id} project={project} />
+            ))}
+          </div>
+        </section>
+      ))}
+    </section>
   );
 }

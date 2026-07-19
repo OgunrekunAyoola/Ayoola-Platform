@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
+import { ArrowLeft } from "lucide-react";
 import LikeButton from "@/components/blog/LikeButton";
 import ShareButton from "@/components/ui/ShareButton";
 import CommentList from "@/components/blog/CommentList";
@@ -68,32 +69,29 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <article className="min-h-screen bg-black text-white py-24 md:py-32 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
-        {/* Back Link */}
-        <Link
-          href="/blog"
-          className="text-yellow-500 hover:text-yellow-400 mb-8 md:mb-12 inline-block transition-colors text-base font-medium"
-        >
-          ← Back to Blog
-        </Link>
+    <article className="max-w-[720px] mx-auto px-5 sm:px-7 pt-16 pb-24">
+      <Link href="/blog" className="btn btn-ghost !pl-0 mb-7">
+        <ArrowLeft className="w-4 h-4" />
+        All writing
+      </Link>
 
-        {/* Header */}
-        <header className="mb-20 border-b border-neutral-800 pb-16">
-          <div className="flex gap-2 mb-8 flex-wrap">
-            {post.tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-sm font-medium text-yellow-500 bg-yellow-500/10 px-3 py-1 rounded-full"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-8 text-neutral-100 leading-tight tracking-tight">
-            {post.title}
-          </h1>
-          <div className="flex items-center text-neutral-400 text-base gap-6">
+      {/* Header */}
+      <div className="font-mono text-[11px] tracking-[0.1em] uppercase text-[var(--accent)] mb-3.5">
+        {post.tags?.[0] ?? "Writing"} · {post.readingTime} min read
+      </div>
+      <h1 className="font-serif font-extrabold tracking-tight leading-[1.08] text-[clamp(32px,4.4vw,48px)] text-[var(--foreground)] mb-5">
+        {post.title}
+      </h1>
+
+      <div className="flex items-center gap-3 pb-7 mb-9 border-b border-[var(--hair)]">
+        <span className="w-9 h-9 rounded-full bg-[var(--accent)] text-white flex items-center justify-center font-serif font-bold text-[15px]">
+          A
+        </span>
+        <span className="flex flex-col leading-[1.3]">
+          <span className="text-sm font-semibold text-[var(--foreground)]">
+            Ayoola Ogunrekun
+          </span>
+          <span className="font-mono text-xs text-[var(--muted)]">
             <time dateTime={post.publishedAt} suppressHydrationWarning>
               {new Date(post.publishedAt).toLocaleDateString("en-US", {
                 year: "numeric",
@@ -101,48 +99,47 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 day: "numeric",
               })}
             </time>
-            <span>{post.readingTime} min read</span>
-            <div className="flex items-center gap-2">
-              <LikeButton postId={post._id} initialLikes={post.likeCount} />
-              <ShareButton title={post.title} text={post.excerpt} />
-            </div>
-          </div>
-        </header>
-
-        {/* Hero Image */}
-        {post.heroImage && (
-          <div className="mb-8 md:mb-12 rounded-xl overflow-hidden border border-neutral-800">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={post.heroImage}
-              alt={post.title}
-              className="w-full h-auto object-cover max-h-[300px] md:max-h-[500px]"
-            />
-          </div>
-        )}
-
-        {/* Content */}
-        <div className="prose prose-invert prose-yellow max-w-none prose-base md:prose-lg prose-headings:font-bold prose-a:text-yellow-500 hover:prose-a:text-yellow-400 prose-img:rounded-xl prose-img:border prose-img:border-neutral-800">
-          <ReactMarkdown>{post.content || ""}</ReactMarkdown>
+          </span>
+        </span>
+        <div className="flex items-center gap-2 ml-auto">
+          <LikeButton postId={post._id} initialLikes={post.likeCount} />
+          <ShareButton title={post.title} text={post.excerpt} />
         </div>
-
-        {/* AI Widget */}
-        <AskAyoolaWidget postId={post._id} />
-
-        {/* Newsletter Signup */}
-        <div className="my-16 p-8 bg-neutral-900/50 border border-neutral-800 rounded-xl">
-          <NewsletterForm source="blog_post_footer" />
-        </div>
-
-        {/* Footer / Comments Placeholder */}
-        <footer className="mt-16 pt-8 border-t border-neutral-800">
-          <h3 className="text-2xl font-bold mb-4">
-            Comments ({post.commentCount})
-          </h3>
-          <CommentList comments={comments} />
-          <CommentForm postId={post._id} />
-        </footer>
       </div>
+
+      {/* Hero Image */}
+      {post.heroImage && (
+        <div className="mb-10 rounded-2xl overflow-hidden border border-[var(--card-border)]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={post.heroImage}
+            alt={post.title}
+            className="w-full h-auto object-cover max-h-[500px]"
+          />
+        </div>
+      )}
+
+      {/* Content */}
+      <div className="prose dark:prose-invert prose-lg max-w-none prose-headings:font-serif prose-headings:tracking-tight prose-a:text-[var(--accent)] prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-blockquote:border-l-[var(--accent)] prose-blockquote:font-serif prose-blockquote:not-italic">
+        <ReactMarkdown>{post.content || ""}</ReactMarkdown>
+      </div>
+
+      {/* AI Widget */}
+      <AskAyoolaWidget postId={post._id} />
+
+      {/* Newsletter Signup */}
+      <div className="my-14 glass rounded-2xl p-8">
+        <NewsletterForm source="blog_post_footer" />
+      </div>
+
+      {/* Comments */}
+      <footer className="mt-14 pt-8 border-t border-[var(--hair)]">
+        <h3 className="font-serif text-2xl font-bold text-[var(--foreground)] mb-5">
+          Comments ({post.commentCount})
+        </h3>
+        <CommentList comments={comments} />
+        <CommentForm postId={post._id} />
+      </footer>
     </article>
   );
 }

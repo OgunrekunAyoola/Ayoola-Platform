@@ -1,145 +1,112 @@
 "use client";
 
 import Link from "next/link";
-import Button from "@/components/ui/Button";
 import { motion } from "framer-motion";
-import { Code, FileText, TrendingUp } from "lucide-react";
-import { fadeUp, staggerContainer } from "@/lib/motion";
+import { Code, TrendingUp, Terminal, ArrowRight } from "lucide-react";
+import { fadeUp } from "@/lib/motion";
+import FramedPortrait from "@/components/ui/FramedPortrait";
 
 export default function HeroSection() {
   return (
-    <section className="min-h-[calc(100vh-64px)] flex items-center justify-center py-12 lg:py-20 px-4 overflow-hidden relative">
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(245,158,11,0.05),transparent_70%)] dark:bg-[radial-gradient(circle_at_50%_50%,rgba(245,158,11,0.1),transparent_70%)] pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10 w-full">
-        {/* Left Column: Copy */}
+    <section className="max-w-[1200px] mx-auto px-5 sm:px-7 pt-16 lg:pt-20 pb-16">
+      <div className="grid grid-cols-1 lg:[grid-template-columns:1.05fr_0.95fr] gap-12 items-center">
+        {/* Copy */}
         <motion.div
-          className="space-y-8 text-center lg:text-left order-2 lg:order-1"
-          variants={{
-            hidden: { opacity: 1 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-          }}
+          className="order-2 lg:order-1 text-center lg:text-left"
           initial="hidden"
           animate="visible"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.1 } },
+          }}
         >
-          <motion.div variants={fadeUp} custom={0}>
-            <p className="text-[var(--accent)] font-medium tracking-widest uppercase mb-4 text-sm md:text-base">
-              Ayoola Ogunrekun
-            </p>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold tracking-tight leading-[1.1] mb-6">
-              Architecting Intelligent <br className="hidden lg:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] to-yellow-200">
-                Digital Systems
-              </span>
-            </h1>
+          <motion.div
+            variants={fadeUp}
+            className="inline-flex items-center gap-2.5 font-mono text-xs tracking-[0.14em] uppercase text-[var(--accent)] mb-5"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] anim-blink" />
+            Ayoola Ogunrekun
           </motion.div>
 
-          <motion.div variants={fadeUp} custom={1}>
-            <p className="text-lg md:text-xl text-[var(--muted)] leading-relaxed max-w-2xl mx-auto lg:mx-0 font-light">
-              I combine software engineering, AI integration, and technical
-              writing to build scalable platforms and automate complex
-              workflows.
-            </p>
+          <motion.h1
+            variants={fadeUp}
+            className="font-serif font-extrabold tracking-tight leading-[1.03] text-[clamp(40px,5.4vw,68px)] text-[var(--foreground)] mb-6"
+          >
+            I build intelligent{" "}
+            <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] to-[#f59e0b]">
+              systems
+            </span>{" "}
+            that ship — and keep shipping.
+          </motion.h1>
+
+          <motion.p
+            variants={fadeUp}
+            className="text-[18.5px] text-[var(--muted)] max-w-[540px] mx-auto lg:mx-0 leading-[1.65] mb-[34px]"
+          >
+            Software engineer, writer, and operator. I design resilient
+            platforms, weave in AI where it earns its place, and write about what
+            I learn along the way.
+          </motion.p>
+
+          <motion.div
+            variants={fadeUp}
+            className="flex flex-wrap gap-3.5 justify-center lg:justify-start mb-[30px]"
+          >
+            <Link href="/portfolio" className="btn btn-primary">
+              View systems
+              <ArrowRight className="w-[17px] h-[17px]" />
+            </Link>
+            <Link href="/contact" className="btn btn-secondary">
+              Start a project
+            </Link>
           </motion.div>
 
           <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-6"
             variants={fadeUp}
-            custom={2}
+            className="font-mono text-[13px] text-[var(--muted)]"
           >
-            <Link href="/portfolio">
-              <Button
-                variant="primary"
-                className="w-full sm:w-auto text-base md:text-lg py-3.5 px-8"
-              >
-                View Systems
-              </Button>
-            </Link>
-            <Link href="/contact">
-              <Button
-                variant="secondary"
-                className="w-full sm:w-auto text-base md:text-lg py-3.5 px-8"
-              >
-                Start a Project
-              </Button>
-            </Link>
-          </motion.div>
-
-          <motion.div variants={fadeUp} custom={3}>
-            <p className="text-sm text-[var(--muted)] font-mono uppercase tracking-wider mt-8 opacity-70">
-              Full-stack engineer · Lagos → Global
-            </p>
+            {"// available for select engagements · 2026"}
           </motion.div>
         </motion.div>
 
-        {/* Right Column: System Cards (Abstract Visuals) */}
-        <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] w-full flex items-center justify-center lg:block order-1 lg:order-2">
-          {/* Card 1: Code (Back) */}
-          <motion.div
-            className="absolute lg:top-0 lg:right-10 w-60 sm:w-72 h-64 sm:h-80 glass-card rounded-2xl p-6 z-10 transform scale-90 lg:scale-100 top-0 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto"
-            initial={{ opacity: 0, y: 40, rotate: -6 }}
-            animate={{ opacity: 1, y: 0, rotate: -6 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            whileHover={{ y: -10, rotate: -4, transition: { duration: 0.3 } }}
-          >
-            <div className="h-full flex flex-col justify-between">
-              <Code className="w-10 h-10 text-blue-500" />
-              <div className="space-y-3">
-                <div className="h-2 w-full bg-[var(--muted)]/10 rounded-full" />
-                <div className="h-2 w-3/4 bg-[var(--muted)]/10 rounded-full" />
-                <div className="h-2 w-1/2 bg-[var(--muted)]/10 rounded-full" />
-              </div>
-              <span className="text-xs font-mono text-blue-500">
-                /systems/core
-              </span>
-            </div>
-          </motion.div>
+        {/* Portrait */}
+        <div className="order-1 lg:order-2 relative flex items-center justify-center min-h-[420px] lg:min-h-[520px]">
+          {/* glow */}
+          <div
+            className="absolute -inset-3 rounded-[34px] anim-glow pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(circle at 50% 40%, var(--glow), transparent 70%)",
+              filter: "blur(46px)",
+            }}
+          />
 
-          {/* Card 2: Content (Middle) */}
-          <motion.div
-            className="absolute lg:top-16 lg:right-32 w-60 sm:w-72 h-64 sm:h-80 glass-card rounded-2xl p-6 z-20 backdrop-blur-xl transform scale-95 lg:scale-100 top-4 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto"
-            initial={{ opacity: 0, y: 40, rotate: 3 }}
-            animate={{ opacity: 1, y: 0, rotate: 3 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            whileHover={{ y: -10, rotate: 1, transition: { duration: 0.3 } }}
-          >
-            <div className="h-full flex flex-col justify-between">
-              <FileText className="w-10 h-10 text-[var(--accent)]" />
-              <div className="space-y-4">
-                <div className="h-20 w-full bg-[var(--muted)]/5 rounded-lg border border-[var(--card-border)]" />
-                <div className="space-y-2">
-                  <div className="h-2 w-full bg-[var(--muted)]/10 rounded-full" />
-                  <div className="h-2 w-5/6 bg-[var(--muted)]/10 rounded-full" />
-                </div>
-              </div>
-              <span className="text-xs font-mono text-[var(--accent)]">
-                /content/generate
-              </span>
-            </div>
-          </motion.div>
+          {/* ambient signal chips */}
+          <div className="glass anim-floaty absolute top-4 -left-1.5 z-[1] rounded-[13px] px-3.5 py-2.5 hidden lg:flex items-center gap-2.5 opacity-95">
+            <Code className="w-[18px] h-[18px] text-[var(--accent)]" />
+            <span className="font-mono text-[12.5px] text-[var(--foreground)]">
+              /systems/core
+            </span>
+          </div>
+          <div className="glass anim-floaty-b absolute bottom-14 -right-2.5 z-[3] rounded-[13px] px-[15px] py-3 hidden lg:flex flex-col gap-0.5">
+            <span className="font-mono text-[11px] text-[var(--muted)] flex items-center gap-1.5">
+              <TrendingUp className="w-3.5 h-3.5 text-[var(--accent)]" />
+              uptime
+            </span>
+            <span className="font-mono text-[20px] font-semibold text-[var(--foreground)]">
+              99.98%
+            </span>
+          </div>
+          <div className="glass anim-floaty absolute top-28 -right-0.5 z-[1] rounded-xl w-[46px] h-[46px] hidden lg:flex items-center justify-center text-[var(--accent)]">
+            <Terminal className="w-5 h-5" />
+          </div>
 
-          {/* Card 3: Growth (Front) */}
-          <motion.div
-            className="absolute lg:top-32 lg:right-52 w-60 sm:w-72 h-64 sm:h-80 glass-card rounded-2xl p-6 z-30 backdrop-blur-xl top-8 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto"
-            initial={{ opacity: 0, y: 40, rotate: -3 }}
-            animate={{ opacity: 1, y: 0, rotate: -3 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            whileHover={{ y: -10, rotate: -1, transition: { duration: 0.3 } }}
-          >
-            <div className="h-full flex flex-col justify-between">
-              <TrendingUp className="w-10 h-10 text-green-500" />
-              <div className="flex items-end gap-2 h-20 px-2">
-                <div className="w-1/4 h-1/3 bg-[var(--muted)]/10 rounded-t" />
-                <div className="w-1/4 h-1/2 bg-[var(--muted)]/10 rounded-t" />
-                <div className="w-1/4 h-3/4 bg-[var(--muted)]/10 rounded-t" />
-                <div className="w-1/4 h-full bg-green-500/20 rounded-t" />
-              </div>
-              <span className="text-xs font-mono text-green-500">
-                /metrics/scale
-              </span>
-            </div>
-          </motion.div>
+          {/* framed portrait */}
+          <FramedPortrait
+            priority
+            float
+            className="relative z-[2] w-[min(420px,82vw)] aspect-[4/5]"
+          />
         </div>
       </div>
     </section>

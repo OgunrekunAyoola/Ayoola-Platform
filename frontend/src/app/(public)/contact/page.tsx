@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { submitContact } from "@/lib/api-client";
 import { useToast } from "@/context/ToastContext";
-import Button from "@/components/ui/Button";
+import { Mail, MapPin, Check, Send, Github, Linkedin } from "lucide-react";
 
 export default function Contact() {
   const { addToast } = useToast();
@@ -11,7 +11,7 @@ export default function Contact() {
     name: "",
     email: "",
     message: "",
-    typeOfWork: "consulting", // default
+    typeOfWork: "consulting",
   });
 
   const [status, setStatus] = useState<
@@ -55,154 +55,139 @@ export default function Contact() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-12 px-4">
-      <div className="grid md:grid-cols-2 gap-12 items-start">
-        {/* Contact Info */}
-        <div className="space-y-8">
-          <h1 className="mb-6">Let&apos;s build something meaningful.</h1>
-          <p className="text-xl text-[var(--muted)] leading-relaxed font-light">
-            Whether you&apos;re looking for strategic advice, technical
-            execution, or just want to connect, I&apos;m always open to
-            interesting conversations.
+    <section className="max-w-[980px] mx-auto px-5 sm:px-7 pt-20 pb-24">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+        {/* Info */}
+        <div>
+          <div className="font-mono text-xs tracking-[0.14em] uppercase text-[var(--accent)] mb-3.5">
+            Contact
+          </div>
+          <h1 className="font-serif font-extrabold tracking-tight leading-[1.05] text-[clamp(34px,4.6vw,52px)] text-[var(--foreground)] mb-5">
+            Let&apos;s build something durable.
+          </h1>
+          <p className="text-[18px] text-[var(--muted)] leading-[1.65] mb-7">
+            Tell me about the system you&apos;re trying to ship. I read every
+            message and reply within two business days.
           </p>
 
-          <div className="space-y-4 pt-4 border-t border-[var(--card-border)]">
-            <div>
-              <h3 className="text-[var(--accent)] font-bold mb-1 uppercase text-sm tracking-wider">
-                Email
-              </h3>
-              <a
-                href="mailto:hello@ayoola.io"
-                className="text-[var(--foreground)] hover:text-[var(--accent)] transition-colors text-lg"
-              >
-                hello@ayoola.io
-              </a>
+          <div className="flex flex-col gap-4">
+            <a
+              href="mailto:hello@ayoola.io"
+              className="flex items-center gap-3 text-[var(--foreground)] text-[15.5px] hover:text-[var(--accent)] transition-colors"
+            >
+              <span className="w-10 h-10 rounded-[11px] bg-[var(--accent-soft)] text-[var(--accent)] flex items-center justify-center shrink-0">
+                <Mail className="w-[18px] h-[18px]" />
+              </span>
+              hello@ayoola.io
+            </a>
+            <div className="flex items-center gap-3 text-[var(--muted)] text-[15.5px]">
+              <span className="w-10 h-10 rounded-[11px] bg-[var(--accent-soft)] text-[var(--accent)] flex items-center justify-center shrink-0">
+                <MapPin className="w-[18px] h-[18px]" />
+              </span>
+              Lagos, Nigeria · remote-friendly
             </div>
-            <div>
-              <h3 className="text-[var(--accent)] font-bold mb-1 uppercase text-sm tracking-wider">
-                Socials
-              </h3>
-              <div className="flex gap-4">
+            <div className="flex gap-2.5 mt-2">
+              {[
+                {
+                  href: "https://github.com/ayoola",
+                  Icon: Github,
+                  label: "GitHub",
+                },
+                {
+                  href: "https://linkedin.com/in/ayoola",
+                  Icon: Linkedin,
+                  label: "LinkedIn",
+                },
+              ].map(({ href, Icon, label }) => (
                 <a
-                  href="https://twitter.com/ayoola"
+                  key={label}
+                  href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+                  aria-label={label}
+                  className="w-10 h-10 rounded-[11px] border border-[var(--card-border)] bg-[var(--card-bg)] text-[var(--foreground)] flex items-center justify-center transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
                 >
-                  Twitter / X
+                  <Icon className="w-[18px] h-[18px]" />
                 </a>
-                <a
-                  href="https://linkedin.com/in/ayoola"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
-                >
-                  LinkedIn
-                </a>
-                <a
-                  href="https://github.com/ayoola"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
-                >
-                  GitHub
-                </a>
-              </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Contact Form */}
-        <div className="glass-card p-8 rounded-2xl">
-          <h2 className="text-2xl font-serif font-bold text-[var(--foreground)] mb-6">
-            Send a Message
-          </h2>
-
+        {/* Form */}
+        <div className="glass rounded-[18px] p-7">
           {status === "success" ? (
-            <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-8 text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-green-500/20 text-green-500 mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">
-                Message Sent!
+            <div className="flex flex-col items-center text-center gap-3.5 py-9 px-3">
+              <span className="w-[58px] h-[58px] rounded-full bg-[var(--accent-soft)] text-[var(--accent)] flex items-center justify-center">
+                <Check className="w-7 h-7" />
+              </span>
+              <h3 className="font-serif font-semibold text-2xl text-[var(--foreground)]">
+                Message sent.
               </h3>
-              <p className="text-[var(--muted)]">
-                Thanks for reaching out. I&apos;ll get back to you as soon as
-                possible.
+              <p className="text-sm text-[var(--muted)] max-w-[320px]">
+                Thanks for reaching out — I&apos;ll get back to you within two
+                business days.
               </p>
               <button
                 onClick={() => setStatus("idle")}
-                className="mt-6 text-[var(--accent)] font-medium hover:text-[var(--accent)]/80"
+                className="btn btn-secondary mt-1"
               >
-                Send another message
+                Send another
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <div className="flex flex-col gap-1.5">
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium text-[var(--muted)] mb-2"
+                  className="text-[13px] font-semibold text-[var(--foreground)]"
                 >
                   Name
                 </label>
                 <input
+                  className="field"
                   type="text"
                   id="name"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg p-3 text-[var(--foreground)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition"
                   placeholder="Your name"
                 />
               </div>
 
-              <div>
+              <div className="flex flex-col gap-1.5">
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-[var(--muted)] mb-2"
+                  className="text-[13px] font-semibold text-[var(--foreground)]"
                 >
                   Email
                 </label>
                 <input
+                  className="field"
                   type="email"
                   id="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg p-3 text-[var(--foreground)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition"
-                  placeholder="your@email.com"
+                  placeholder="you@company.com"
                 />
               </div>
 
-              <div>
+              <div className="flex flex-col gap-1.5">
                 <label
                   htmlFor="typeOfWork"
-                  className="block text-sm font-medium text-[var(--muted)] mb-2"
+                  className="text-[13px] font-semibold text-[var(--foreground)]"
                 >
-                  Inquiry Type
+                  Inquiry type
                 </label>
                 <select
+                  className="field appearance-none"
                   id="typeOfWork"
                   name="typeOfWork"
                   value={formData.typeOfWork}
                   onChange={handleChange}
-                  className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg p-3 text-[var(--foreground)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition appearance-none"
                 >
                   <option value="consulting">Consulting / Strategy</option>
                   <option value="engineering">Engineering / Development</option>
@@ -211,42 +196,49 @@ export default function Contact() {
                 </select>
               </div>
 
-              <div>
+              <div className="flex flex-col gap-1.5">
                 <label
                   htmlFor="message"
-                  className="block text-sm font-medium text-[var(--muted)] mb-2"
+                  className="text-[13px] font-semibold text-[var(--foreground)]"
                 >
-                  Message
+                  What are you building?
                 </label>
                 <textarea
+                  className="field resize-y"
                   id="message"
                   name="message"
-                  rows={5}
+                  rows={4}
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg p-3 text-[var(--foreground)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition"
-                  placeholder="How can I help you?"
-                ></textarea>
+                  placeholder="A few sentences about the system, the timeline, and where you're stuck…"
+                />
               </div>
 
               {status === "error" && (
-                <div className="text-red-500 text-sm bg-red-500/10 p-3 rounded border border-red-500/20">
+                <div className="text-red-500 text-sm bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                   {errorMessage}
                 </div>
               )}
 
-              <Button
-                variant="primary"
-                className="w-full py-3"
+              <button
+                type="submit"
+                className="btn btn-primary w-full mt-1"
                 disabled={status === "submitting"}
               >
-                {status === "submitting" ? "Sending..." : "Send Message"}
-              </Button>
+                {status === "submitting" ? (
+                  "Sending..."
+                ) : (
+                  <>
+                    Send message
+                    <Send className="w-[17px] h-[17px]" />
+                  </>
+                )}
+              </button>
             </form>
           )}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

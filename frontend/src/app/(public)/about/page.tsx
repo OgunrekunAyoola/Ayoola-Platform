@@ -1,100 +1,92 @@
+import Link from "next/link";
+import FramedPortrait from "@/components/ui/FramedPortrait";
+
+const SKILLS = [
+  "AI integration",
+  "full-stack engineering",
+  "product & systems",
+  "automation",
+  "technical writing",
+];
+
+export const metadata = {
+  title: "About",
+  description:
+    "Ayoola Ogunrekun — software engineer, writer, and creator building intelligent systems.",
+};
+
 export default function About() {
   return (
-    <div className="max-w-4xl mx-auto py-12 px-4">
-      <h1 className="mb-12">About Ayoola</h1>
+    <section className="max-w-[1100px] mx-auto px-5 sm:px-7 pt-20 pb-24">
+      <div className="font-mono text-xs tracking-[0.14em] uppercase text-[var(--accent)] mb-3.5">
+        About
+      </div>
+      <h1 className="font-serif font-extrabold tracking-tight leading-[1.05] text-[clamp(34px,4.6vw,56px)] text-[var(--foreground)] max-w-[18ch] mb-12">
+        The engineer behind the systems.
+      </h1>
 
-      <div className="prose prose-invert prose-lg prose-yellow max-w-none">
-        <div className="mb-12 border-l-4 border-[var(--accent)] pl-6 space-y-6">
-          <p className="text-2xl text-[var(--muted)] leading-relaxed font-light">
-            Ayoola Platform is my umbrella for everything I build: client
-            systems, personal tools, and experiments at the edge of AI and the
-            web.
-          </p>
-          <p className="text-2xl text-[var(--muted)] leading-relaxed font-light">
-            I’m interested in how software, AI, and writing can change
-            operations, storytelling, and even policy—not only business metrics.
-          </p>
-          <p className="text-lg text-[var(--muted)]">
-            I also collaborate with separate studios and ventures focused on AI
-            automation for businesses.
-          </p>
+      <div className="grid grid-cols-1 lg:[grid-template-columns:0.85fr_1.15fr] gap-11 items-start">
+        {/* portrait */}
+        <div className="relative min-h-[360px] flex justify-center lg:justify-start items-start">
+          <div
+            className="absolute -inset-2 rounded-[28px] anim-glow pointer-events-none opacity-70"
+            style={{
+              background:
+                "radial-gradient(circle at 50% 30%, var(--glow), transparent 70%)",
+              filter: "blur(40px)",
+            }}
+          />
+          <FramedPortrait className="relative w-full max-w-[380px] aspect-[4/5]" />
         </div>
 
-        <div className="grid md:grid-cols-12 gap-12 my-16">
-          <div className="md:col-span-4">
-            <h3 className="uppercase tracking-wider">The Story</h3>
-          </div>
-          <div className="md:col-span-8 space-y-6 text-[var(--muted)]">
-            <p>
-              My journey started with a curiosity for how things work—first
-              machines, then code, then systems of people and governance. This
-              path has led me through various roles: from writing code that
-              powers businesses to writing words that shape opinions.
-            </p>
-            <p>
-              Today, I operate at the convergence of these fields, helping
-              organizations build robust technology while understanding the
-              broader societal context in which it operates.
-            </p>
-          </div>
-        </div>
+        {/* bio */}
+        <div className="flex flex-col gap-5 text-[17px] leading-[1.75] text-[var(--muted)]">
+          <p>
+            I&apos;m Ayoola — a software engineer who builds at the intersection
+            of software, AI, and writing. Ayoola Platform is my umbrella for
+            everything I make: client systems, personal tools, and experiments
+            at the edge of AI and the web.
+          </p>
+          <p>
+            I care about the unglamorous parts —{" "}
+            <span className="text-[var(--foreground)] font-medium">
+              durability
+            </span>
+            : software that survives its authors, scales without drama, and stays
+            kind to the next engineer. I&apos;m interested in how technology can
+            change operations, storytelling, and even policy — not only business
+            metrics.
+          </p>
+          <p>
+            When I&apos;m not shipping, I&apos;m writing.{" "}
+            <Link href="/blog" className="lk">
+              The blog
+            </Link>{" "}
+            is where I think out loud about systems, abstraction, and the
+            discipline of finishing.
+          </p>
 
-        <div className="grid md:grid-cols-12 gap-12 my-16 border-t border-[var(--card-border)] pt-16">
-          <div className="md:col-span-4">
-            <h3 className="uppercase tracking-wider">Philosophy</h3>
+          <div className="flex flex-wrap gap-2.5 mt-2">
+            {SKILLS.map((skill) => (
+              <span
+                key={skill}
+                className="font-mono text-[12.5px] text-[var(--foreground)] border border-[var(--card-border)] rounded-full px-3.5 py-[7px]"
+              >
+                {skill}
+              </span>
+            ))}
           </div>
-          <div className="md:col-span-8 space-y-6 text-[var(--muted)]">
-            <p>
-              I believe that technology is a tool for amplification—it scales
-              whatever we feed it. Therefore, the most critical work isn&apos;t
-              just in the code we write, but in the values we embed within it.
-              Clarity of thought precedes clarity of code.
-            </p>
-          </div>
-        </div>
 
-        <div className="glass-card p-8 rounded-2xl mt-16">
-          <h3 className="mb-6">What I Do Best</h3>
-          <div className="grid sm:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-bold text-[var(--accent)] mb-2">
-                Technical Leadership
-              </h4>
-              <p className="text-sm text-[var(--muted)]">
-                Guiding teams through complex architectural decisions and
-                product lifecycles.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-bold text-[var(--accent)] mb-2">
-                Full-Stack Engineering
-              </h4>
-              <p className="text-sm text-[var(--muted)]">
-                Building end-to-end solutions using modern stacks (Web, Mobile,
-                Node).
-              </p>
-            </div>
-            <div>
-              <h4 className="font-bold text-[var(--accent)] mb-2">
-                Strategic Communication
-              </h4>
-              <p className="text-sm text-[var(--muted)]">
-                Translating technical complexity into clear, actionable business
-                insights.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-bold text-[var(--accent)] mb-2">
-                Product Innovation
-              </h4>
-              <p className="text-sm text-[var(--muted)]">
-                Identifying opportunities and rapidly prototyping viable
-                solutions.
-              </p>
-            </div>
+          <div className="flex flex-wrap gap-3.5 mt-3.5">
+            <Link href="/contact" className="btn btn-primary">
+              Work with me
+            </Link>
+            <Link href="/portfolio" className="btn btn-secondary">
+              See the work
+            </Link>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

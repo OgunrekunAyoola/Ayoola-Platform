@@ -1,206 +1,220 @@
 import Link from "next/link";
-import Button from "@/components/ui/Button";
+import {
+  Check,
+  ArrowRight,
+  Layers,
+  Sparkles,
+  Compass,
+  type LucideIcon,
+} from "lucide-react";
+
+export const metadata = {
+  title: "Services",
+  description:
+    "Ways to work with Ayoola — custom web platforms, AI features, and technical consulting.",
+};
+
+interface Service {
+  name: string;
+  icon: LucideIcon;
+  price: string;
+  priceLabel: string;
+  timeline: string;
+  desc: string;
+  points: string[];
+  cta: string;
+  featured?: boolean;
+}
+
+const SERVICES: Service[] = [
+  {
+    name: "Custom Web Platforms",
+    icon: Layers,
+    price: "From $1,500",
+    priceLabel: "fixed scope",
+    timeline: "2–4 weeks",
+    desc: "Best for teams drowning in admin work or founders needing a robust MVP to validate their idea.",
+    points: [
+      "Full-stack web applications",
+      "Custom admin dashboard",
+      "Database & auth setup",
+      "Deployment & hosting",
+    ],
+    cta: "Scope a build",
+  },
+  {
+    name: "AI-Assisted Features",
+    icon: Sparkles,
+    price: "From $800",
+    priceLabel: "from",
+    timeline: "1–2 weeks",
+    desc: "Add intelligence to existing platforms — search, chatbots, auto-summaries, and RAG pipelines.",
+    points: [
+      "LLM integration",
+      "RAG pipelines",
+      "Vector database setup",
+      "Custom agents",
+    ],
+    cta: "Add AI",
+    featured: true,
+  },
+  {
+    name: "Consulting & Strategy",
+    icon: Compass,
+    price: "Retainer / hourly",
+    priceLabel: "flexible",
+    timeline: "ongoing",
+    desc: "Technical direction for non-technical founders — architecture reviews, hiring support, and roadmap planning.",
+    points: [
+      "Technical feasibility audit",
+      "Fractional CTO services",
+      "Codebase review",
+      "Team mentorship",
+    ],
+    cta: "Let's talk",
+  },
+];
+
+const PROCESS = [
+  {
+    step: "01",
+    title: "Discovery",
+    desc: "30-min call. No jargon. Just business problems.",
+  },
+  {
+    step: "02",
+    title: "Proposal",
+    desc: "Fixed-price quote. Clear deliverables. No surprises.",
+  },
+  {
+    step: "03",
+    title: "Build",
+    desc: "Weekly check-ins. Live progress link from day 7.",
+  },
+  {
+    step: "04",
+    title: "Launch",
+    desc: "Deployment, training videos, and full code handoff.",
+  },
+];
 
 export default function Services() {
   return (
-    <div className="max-w-6xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
-      {/* Hero Section */}
-      <header className="mb-24 text-center max-w-4xl mx-auto">
-        <h1 className="mb-8">Work With Me</h1>
-        <p className="text-2xl md:text-3xl text-[var(--muted)] mb-8 leading-relaxed font-light">
-          I build{" "}
-          <span className="text-[var(--accent)] font-medium">
-            AI-enhanced web systems
-          </span>{" "}
-          that automate operations for businesses and teams.
-        </p>
-        <p className="text-[var(--muted)]/80 mb-12 uppercase tracking-widest text-sm font-semibold">
-          Lagos-based · Serving Global Clients · 2–4 Week Delivery
-        </p>
-        <div className="flex flex-col sm:flex-row gap-6 justify-center">
-          <Link href="/contact">
-            <Button variant="primary" className="text-lg py-4 px-8">
-              Schedule Discovery Call
-            </Button>
-          </Link>
-          <Link href="/portfolio">
-            <Button variant="secondary" className="text-lg py-4 px-8">
-              View Case Studies
-            </Button>
-          </Link>
-        </div>
-      </header>
+    <section className="max-w-[1200px] mx-auto px-5 sm:px-7 pt-20 pb-24">
+      <div className="font-mono text-xs tracking-[0.14em] uppercase text-[var(--accent)] mb-3.5">
+        Services
+      </div>
+      <h1 className="font-serif font-extrabold tracking-tight leading-[1.05] text-[clamp(34px,4.6vw,56px)] text-[var(--foreground)] mb-3.5">
+        Ways to work together.
+      </h1>
+      <p className="text-[18px] text-[var(--muted)] max-w-[560px] mb-11">
+        Focused engagements for teams that need to ship something durable. Clear
+        scope, senior hands, no theatre.{" "}
+        <span className="text-[var(--foreground)]">
+          Lagos-based, serving global clients.
+        </span>
+      </p>
 
-      {/* Service Tiers */}
-      <div className="grid md:grid-cols-3 gap-8 mb-32">
-        {/* Tier 1 */}
-        <div className="glass-card p-8 rounded-2xl flex flex-col relative group">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--accent)]/0 via-[var(--accent)]/50 to-[var(--accent)]/0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-          <h2 className="text-2xl font-bold mb-2 text-[var(--foreground)]">
-            Custom Web Platforms
-          </h2>
-          <div className="text-3xl font-bold text-[var(--accent)] mb-6">
-            From $1,500
-          </div>
-          <p className="text-[var(--muted)] mb-8 text-sm uppercase tracking-wide font-semibold">
-            Timeline: 2-4 Weeks
-          </p>
-          <p className="text-[var(--muted)] mb-8 flex-grow">
-            Best for teams drowning in admin work or founders needing a robust
-            MVP to validate their idea.
-          </p>
-          <ul className="space-y-4 text-[var(--muted)] mb-8 text-sm">
-            <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> Full-stack
-              Web Applications
-            </li>
-            <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> Custom Admin
-              Dashboard
-            </li>
-            <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> Database &
-              Auth Setup
-            </li>
-            <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> Deployment &
-              Hosting
-            </li>
-          </ul>
-        </div>
-
-        {/* Tier 2 */}
-        <div className="glass-card p-8 rounded-2xl border-[var(--accent)]/30 hover:border-[var(--accent)]/60 transition-all flex flex-col relative group shadow-2xl shadow-[var(--accent)]/10">
-          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[var(--accent)] text-black px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-            Most Popular
-          </div>
-          <h2 className="text-2xl font-bold mb-2 text-[var(--foreground)]">
-            AI-Assisted Features
-          </h2>
-          <div className="text-3xl font-bold text-[var(--accent)] mb-6">
-            From $800
-          </div>
-          <p className="text-[var(--muted)] mb-8 text-sm uppercase tracking-wide font-semibold">
-            Timeline: 1-2 Weeks
-          </p>
-          <p className="text-[var(--muted)] mb-8 flex-grow">
-            Add intelligence to existing platforms. Search, chatbots,
-            auto-summaries, and RAG pipelines.
-          </p>
-          <ul className="space-y-4 text-[var(--muted)] mb-8 text-sm">
-            <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> LLM
-              Integration (OpenAI/Gemini)
-            </li>
-            <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> RAG Pipelines
-            </li>
-            <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> Vector
-              Database Setup
-            </li>
-            <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> Custom Agents
-            </li>
-          </ul>
-        </div>
-
-        {/* Tier 3 */}
-        <div className="glass-card p-8 rounded-2xl flex flex-col relative group">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--accent)]/0 via-[var(--accent)]/50 to-[var(--accent)]/0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-          <h2 className="text-2xl font-bold mb-2 text-[var(--foreground)]">
-            Consulting & Strategy
-          </h2>
-          <div className="text-3xl font-bold text-[var(--accent)] mb-6">
-            Retainer / Hourly
-          </div>
-          <p className="text-[var(--muted)] mb-8 text-sm uppercase tracking-wide font-semibold">
-            Timeline: Flexible
-          </p>
-          <p className="text-[var(--muted)] mb-8 flex-grow">
-            Technical direction for non-technical founders. Architecture
-            reviews, hiring support, and roadmap planning.
-          </p>
-          <ul className="space-y-4 text-[var(--muted)] mb-8 text-sm">
-            <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> Technical
-              Feasibility Audit
-            </li>
-            <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> Fractional
-              CTO Services
-            </li>
-            <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> Codebase
-              Review
-            </li>
-            <li className="flex items-start">
-              <span className="text-[var(--accent)] mr-2">✓</span> Team
-              Mentorship
-            </li>
-          </ul>
-        </div>
+      {/* Service cards */}
+      <div className="grid gap-[22px] [grid-template-columns:repeat(auto-fit,minmax(290px,1fr))]">
+        {SERVICES.map((svc) => {
+          const Icon = svc.icon;
+          return (
+            <div
+              key={svc.name}
+              className="glass glass-i rounded-[18px] p-7 flex flex-col gap-4 relative"
+              style={
+                svc.featured
+                  ? { borderColor: "var(--accent-line)" }
+                  : undefined
+              }
+            >
+              {svc.featured && (
+                <span className="absolute -top-3 left-7 bg-[var(--accent)] text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                  Most popular
+                </span>
+              )}
+              <div className="w-12 h-12 rounded-[13px] bg-[var(--accent-soft)] text-[var(--accent)] flex items-center justify-center">
+                <Icon className="w-6 h-6" />
+              </div>
+              <h2 className="font-serif font-semibold text-[23px] tracking-tight text-[var(--foreground)]">
+                {svc.name}
+              </h2>
+              <p className="text-[15px] text-[var(--muted)] leading-[1.6] flex-1">
+                {svc.desc}
+              </p>
+              <ul className="flex flex-col gap-2.5 my-1">
+                {svc.points.map((pt) => (
+                  <li
+                    key={pt}
+                    className="flex items-start gap-2.5 text-sm text-[var(--foreground)]"
+                  >
+                    <Check className="w-[15px] h-[15px] text-[var(--accent)] shrink-0 mt-0.5" />
+                    {pt}
+                  </li>
+                ))}
+              </ul>
+              <div className="flex items-baseline gap-2 pt-3.5 border-t border-[var(--hair)]">
+                <span className="font-mono text-[13px] text-[var(--muted)]">
+                  {svc.priceLabel}
+                </span>
+                <span className="font-serif font-bold text-[24px] text-[var(--foreground)]">
+                  {svc.price}
+                </span>
+                <span className="font-mono text-[12px] text-[var(--muted)] ml-auto">
+                  {svc.timeline}
+                </span>
+              </div>
+              <Link href="/contact" className="btn btn-secondary w-full">
+                {svc.cta}
+              </Link>
+            </div>
+          );
+        })}
       </div>
 
-      {/* Process Section */}
-      <section className="mb-32">
-        <h2 className="mb-16 text-center">How We Work</h2>
-        <div className="grid md:grid-cols-4 gap-8">
-          {[
-            {
-              step: "01",
-              title: "Discovery",
-              desc: "30-min call. No jargon. Just business problems.",
-            },
-            {
-              step: "02",
-              title: "Proposal",
-              desc: "Fixed-price quote. Clear deliverables. No surprises.",
-            },
-            {
-              step: "03",
-              title: "Build",
-              desc: "Weekly check-ins. Live progress link from Day 7.",
-            },
-            {
-              step: "04",
-              title: "Launch",
-              desc: "Deployment, training videos, and full code handoff.",
-            },
-          ].map((item) => (
-            <div
-              key={item.step}
-              className="bg-[var(--card-bg)]/30 p-6 rounded-xl border border-[var(--card-border)]"
-            >
-              <div className="text-5xl font-bold text-[var(--foreground)]/20 mb-4">
-                {item.step}
-              </div>
-              <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">
-                {item.title}
-              </h3>
-              <p className="text-[var(--muted)] text-sm">{item.desc}</p>
+      {/* Process */}
+      <h2 className="font-serif font-bold text-[28px] tracking-tight text-[var(--foreground)] mt-20 mb-8">
+        How we work
+      </h2>
+      <div className="grid gap-[22px] [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
+        {PROCESS.map((item) => (
+          <div key={item.step} className="glass rounded-2xl p-6">
+            <div className="font-serif font-bold text-5xl text-[var(--foreground)]/15 mb-4">
+              {item.step}
             </div>
-          ))}
-        </div>
-      </section>
+            <h3 className="font-serif font-semibold text-xl text-[var(--foreground)] mb-2">
+              {item.title}
+            </h3>
+            <p className="text-[var(--muted)] text-sm leading-relaxed">
+              {item.desc}
+            </p>
+          </div>
+        ))}
+      </div>
 
-      {/* Availability Footer */}
-      <section className="bg-[var(--accent)]/10 border border-[var(--accent)]/20 rounded-2xl p-12 text-center">
-        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-[var(--foreground)]">
-          Ready to start?
-        </h2>
-        <p className="text-[var(--muted)] mb-8 max-w-2xl mx-auto">
-          I am currently available for{" "}
-          <span className="text-[var(--accent)] font-bold">1 new project</span>.
-          I typically respond to inquiries within 24 hours.
-        </p>
-        <a
-          href="mailto:hello@ayoola.io"
-          className="inline-block px-8 py-4 bg-[var(--accent)] text-black font-bold rounded-lg hover:bg-[var(--accent)]/90 transition-all text-lg"
-        >
-          Email Me: hello@ayoola.io
-        </a>
-      </section>
-    </div>
+      {/* CTA banner */}
+      <div
+        className="glass rounded-[18px] p-8 mt-9 flex flex-wrap items-center justify-between gap-5"
+        style={{
+          background:
+            "linear-gradient(150deg, var(--accent-soft), var(--card-bg))",
+        }}
+      >
+        <div>
+          <h3 className="font-serif font-bold text-[26px] tracking-tight text-[var(--foreground)] mb-1.5">
+            Not sure which fits?
+          </h3>
+          <p className="text-[15.5px] text-[var(--muted)] max-w-[460px]">
+            Tell me what you&apos;re building. I&apos;ll tell you honestly
+            whether — and how — I can help.
+          </p>
+        </div>
+        <Link href="/contact" className="btn btn-primary">
+          Start a conversation
+          <ArrowRight className="w-[17px] h-[17px]" />
+        </Link>
+      </div>
+    </section>
   );
 }
