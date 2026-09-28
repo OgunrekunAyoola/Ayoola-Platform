@@ -70,7 +70,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       </h1>
 
       <div className="flex items-center gap-3 pb-7 mb-9 border-b border-[var(--hair)]">
-        <span className="w-9 h-9 rounded-full bg-[var(--accent)] text-white flex items-center justify-center font-serif font-bold text-[15px]">
+        <span className="w-9 h-9 rounded-full bg-[var(--accent)] text-[var(--accent-contrast)] flex items-center justify-center font-serif font-bold text-[15px]">
           A
         </span>
         <span className="flex flex-col leading-[1.3]">

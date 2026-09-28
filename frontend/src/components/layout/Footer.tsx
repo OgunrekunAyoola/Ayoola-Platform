@@ -15,7 +15,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="flex flex-col gap-3.5 max-w-[300px]">
             <div className="flex items-center gap-3">
-              <span className="w-[34px] h-[34px] rounded-[10px] bg-[var(--accent)] text-white flex items-center justify-center font-serif font-extrabold text-[16px]">
+              <span className="w-[34px] h-[34px] rounded-[10px] bg-[var(--accent)] text-[var(--accent-contrast)] flex items-center justify-center font-serif font-extrabold text-[16px]">
                 AO
               </span>
               <span className="font-semibold text-[15px] text-[var(--foreground)]">

@@ -130,7 +130,7 @@ export default function Services() {
               }
             >
               {svc.featured && (
-                <span className="absolute -top-3 left-7 bg-[var(--accent)] text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                <span className="absolute -top-3 left-7 bg-[var(--accent)] text-[var(--accent-contrast)] text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
                   Most popular
                 </span>
               )}

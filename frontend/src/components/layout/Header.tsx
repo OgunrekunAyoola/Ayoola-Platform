@@ -31,7 +31,7 @@ export default function Header() {
           className="flex items-center gap-3 group"
           onClick={() => setIsMobileMenuOpen(false)}
         >
-          <span className="w-[38px] h-[38px] rounded-[11px] bg-[var(--accent)] text-white flex items-center justify-center font-serif font-extrabold text-[18px] tracking-tight shadow-sm">
+          <span className="w-[38px] h-[38px] rounded-[11px] bg-[var(--accent)] text-[var(--accent-contrast)] flex items-center justify-center font-serif font-extrabold text-[18px] tracking-tight shadow-sm">
             AO
           </span>
           <span className="hidden sm:flex flex-col items-start leading-[1.15]">
