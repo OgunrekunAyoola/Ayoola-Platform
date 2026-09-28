@@ -13,11 +13,18 @@ interface FormState {
   company: string;
 }
 
+const INQUIRY_TYPES = [
+  "Full-time role",
+  "AI Readiness Review",
+  "Production AI Build",
+  "Something else",
+] as const;
+
 const INITIAL_STATE: FormState = {
   name: "",
   email: "",
   message: "",
-  typeOfWork: "consulting",
+  typeOfWork: INQUIRY_TYPES[0],
   company: "",
 };
 
@@ -162,10 +169,11 @@ export default function ContactForm() {
           value={formData.typeOfWork}
           onChange={handleChange}
         >
-          <option value="consulting">Consulting / Strategy</option>
-          <option value="engineering">Engineering / Development</option>
-          <option value="speaking">Speaking / Writing</option>
-          <option value="other">Other</option>
+          {INQUIRY_TYPES.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
         </select>
       </div>
 

@@ -18,7 +18,9 @@ export async function POST(request: Request) {
   const email = typeof body.email === "string" ? body.email.trim() : "";
   const message = typeof body.message === "string" ? body.message.trim() : "";
   const typeOfWork =
-    typeof body.typeOfWork === "string" ? body.typeOfWork : "consulting";
+    typeof body.typeOfWork === "string" && body.typeOfWork.trim()
+      ? body.typeOfWork.trim().slice(0, 60)
+      : "Something else";
   // Honeypot — real visitors never see or fill this field.
   const honeypot = typeof body.company === "string" ? body.company.trim() : "";
 

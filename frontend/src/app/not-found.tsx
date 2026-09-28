@@ -11,14 +11,19 @@ export default function NotFound() {
           404
         </div>
         <h1 className="font-serif font-extrabold tracking-tight text-[clamp(32px,4.4vw,48px)] text-[var(--foreground)] mb-4">
-          Not found.
+          This page doesn&apos;t exist.
         </h1>
         <p className="text-[var(--muted)] mb-8">
-          Could not find the requested resource.
+          It may have moved during the rebuild.
         </p>
-        <Link href="/" className="btn btn-primary">
-          Return Home
-        </Link>
+        <div className="flex flex-wrap gap-3.5 justify-center">
+          <Link href="/" className="btn btn-primary">
+            Go home
+          </Link>
+          <Link href="/portfolio" className="btn btn-secondary">
+            See the work
+          </Link>
+        </div>
       </main>
       <Footer />
     </div>
