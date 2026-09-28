@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Playfair_Display, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { MotionConfig } from "framer-motion";
 import "./globals.css";
 import { ToastProvider } from "@/context/ToastContext";
@@ -7,20 +7,34 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { getSiteUrl } from "@/lib/site-url";
 import { site } from "@/config/site";
 
-const inter = Inter({
-  subsets: ["latin"],
+// Self-hosted (latin, variable weight) so builds never depend on Google Fonts.
+const inter = localFont({
+  src: "../assets/fonts/Inter-Variable.woff2",
+  weight: "100 900",
   variable: "--font-inter",
   display: "swap",
 });
 
-const playfair = Playfair_Display({
-  subsets: ["latin"],
+const playfair = localFont({
+  src: [
+    {
+      path: "../assets/fonts/PlayfairDisplay-Variable.woff2",
+      weight: "400 900",
+      style: "normal",
+    },
+    {
+      path: "../assets/fonts/PlayfairDisplay-Italic-Variable.woff2",
+      weight: "400 900",
+      style: "italic",
+    },
+  ],
   variable: "--font-playfair",
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
+const jetbrainsMono = localFont({
+  src: "../assets/fonts/JetBrainsMono-Variable.woff2",
+  weight: "100 800",
   variable: "--font-jetbrains-mono",
   display: "swap",
 });
