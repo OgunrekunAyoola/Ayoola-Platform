@@ -55,9 +55,10 @@ function readMdxEntries<T>(dirName: string): (T & { content: string })[] {
     });
 }
 
+/** Featured case studies first, then by `order`. */
 export function getAllWork(): WorkEntry[] {
   return readMdxEntries<WorkFrontmatter>("work").sort(
-    (a, b) => a.order - b.order,
+    (a, b) => Number(b.featured) - Number(a.featured) || a.order - b.order,
   );
 }
 

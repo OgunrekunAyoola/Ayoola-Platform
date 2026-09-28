@@ -1,17 +1,55 @@
 import Link from "next/link";
-import { ArrowRight, Layers } from "lucide-react";
+import { ArrowRight, Boxes, UserCheck, ScrollText, type LucideIcon } from "lucide-react";
 import HeroSection from "@/components/home/HeroSection";
+import ProjectCard from "@/components/portfolio/ProjectCard";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import SectionHeading from "@/components/ui/SectionHeading";
+import CtaBand from "@/components/ui/CtaBand";
 import { getAllWriting, getAllWork } from "@/lib/content";
 import { site } from "@/config/site";
 import { getSiteUrl } from "@/lib/site-url";
 
-export default function Home() {
-  const featured = getAllWriting().slice(0, 3);
+const PROOF = [
+  "26+ AI agents in production",
+  "LLM pipelines & human-in-the-loop controls",
+  "End-to-end AWS infrastructure",
+  "Full-stack AI products",
+];
 
-  const allWork = getAllWork();
-  const featuredWork = allWork.filter((w) => w.featured);
-  const work = (featuredWork.length ? featuredWork : allWork).slice(0, 3);
+const PRINCIPLES: { title: string; body: string; icon: LucideIcon }[] = [
+  {
+    title: "Scoped, not sprawling",
+    body: "Every component owns one job, whether it's an agent, a pipeline stage or a service. Easier to test, reason about and roll back.",
+    icon: Boxes,
+  },
+  {
+    title: "Humans own the judgment calls",
+    body: "Confidence scoring decides what runs on its own and what waits for a person. Uncertainty is routed, not hidden.",
+    icon: UserCheck,
+  },
+  {
+    title: "Every action leaves a trace",
+    body: "Work is tracked end to end, so you can always answer: what ran, what it decided, who approved it.",
+    icon: ScrollText,
+  },
+];
+
+const WAYS = [
+  {
+    title: "Full-time remote",
+    body: "Joining a team shipping AI into production: applied AI, LLM platforms, AI products and agent systems.",
+    href: "/work-with-me#roles",
+  },
+  {
+    title: "Production AI builds",
+    body: "Fixed-scope engagements to take your AI from demo to production, with the controls built in.",
+    href: "/work-with-me#builds",
+  },
+];
+
+export default function Home() {
+  const writing = getAllWriting().slice(0, 3);
+  const work = getAllWork().filter((w) => w.featured);
 
   const siteUrl = getSiteUrl();
   const personJsonLd = {
@@ -31,45 +69,124 @@ export default function Home() {
       />
       <HeroSection />
 
-      {/* Building-with strip */}
+      {/* Proof strip */}
       <section className="max-w-[1200px] mx-auto px-5 sm:px-7">
-        <ScrollReveal className="glass rounded-2xl px-7 py-[22px] flex flex-wrap gap-x-11 gap-y-[18px] items-center justify-between">
-          <span className="font-mono text-xs tracking-[0.1em] uppercase text-[var(--muted)]">
-            Building with
-          </span>
-          <div className="flex flex-wrap gap-x-9 gap-y-3.5 items-center">
-            {site.stack.map((item) => (
-              <span
+        <ScrollReveal className="glass rounded-2xl px-7 py-6">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-4">
+            {PROOF.map((item, i) => (
+              <li
                 key={item}
-                className="font-serif font-bold text-[19px] text-[var(--foreground)] opacity-[0.78]"
+                className={`font-serif font-bold text-[18px] leading-[1.3] text-[var(--foreground)] lg:px-6 lg:first:pl-0 lg:last:pr-0 ${
+                  i > 0 ? "lg:border-l lg:border-[var(--hair)]" : ""
+                } ${i % 2 === 1 ? "sm:pl-6 sm:border-l sm:border-[var(--hair)]" : ""}`}
               >
                 {item}
-              </span>
+              </li>
             ))}
-          </div>
+          </ul>
+          <p className="mt-5 pt-4 border-t border-[var(--hair)] font-mono text-[12px] leading-[1.6] text-[var(--muted)]">
+            {site.stack.join(" · ")}
+          </p>
         </ScrollReveal>
       </section>
 
-      {/* Featured Thoughts */}
-      {featured.length > 0 && (
-        <section className="max-w-[1200px] mx-auto px-5 sm:px-7 pt-14">
-          <ScrollReveal className="flex items-end justify-between gap-5 mb-[34px]">
-            <div>
-              <div className="font-mono text-xs tracking-[0.14em] uppercase text-[var(--accent)] mb-2.5">
-                Featured thoughts
+      {/* Principles */}
+      <section className="max-w-[1200px] mx-auto px-5 sm:px-7 pt-20">
+        <ScrollReveal>
+          <SectionHeading
+            eyebrow="Principles"
+            title="How I build AI people can trust"
+          />
+        </ScrollReveal>
+        <div className="grid gap-[22px] grid-cols-1 md:grid-cols-3">
+          {PRINCIPLES.map(({ title, body, icon: Icon }, i) => (
+            <ScrollReveal key={title} delay={i}>
+              <div className="glass rounded-2xl p-6 h-full flex flex-col gap-3.5">
+                <span className="w-11 h-11 rounded-[12px] bg-[var(--accent-soft)] text-[var(--accent)] flex items-center justify-center">
+                  <Icon className="w-[22px] h-[22px]" />
+                </span>
+                <h3 className="font-serif font-semibold text-[21px] leading-[1.25] tracking-tight text-[var(--foreground)]">
+                  {title}
+                </h3>
+                <p className="text-[15px] text-[var(--muted)] leading-[1.6]">
+                  {body}
+                </p>
               </div>
-              <h2 className="font-serif font-bold tracking-tight text-[clamp(28px,3.4vw,40px)] text-[var(--foreground)]">
-                Writing on systems &amp; craft
-              </h2>
-            </div>
-            <Link href="/blog" className="btn btn-ghost shrink-0">
-              All writing
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </ScrollReveal>
+            </ScrollReveal>
+          ))}
+        </div>
+      </section>
 
-          <div className="grid gap-[22px] [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
-            {featured.map((post, i) => (
+      {/* Selected work */}
+      {work.length > 0 && (
+        <section className="max-w-[1200px] mx-auto px-5 sm:px-7 pt-20">
+          <ScrollReveal>
+            <SectionHeading
+              eyebrow="Selected work"
+              title="Systems in production"
+              action={
+                <Link href="/portfolio" className="btn btn-ghost shrink-0 !pl-0 sm:!pl-[14px]">
+                  All work
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              }
+            />
+          </ScrollReveal>
+          <div className="grid gap-[22px] [grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))]">
+            {work.map((project, i) => (
+              <ScrollReveal key={project.slug} delay={i}>
+                <ProjectCard project={project} />
+              </ScrollReveal>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Two ways to work together */}
+      <section className="max-w-[1200px] mx-auto px-5 sm:px-7 pt-20">
+        <ScrollReveal>
+          <SectionHeading eyebrow="Work with me" title="Two ways to work together" />
+        </ScrollReveal>
+        <div className="grid gap-[22px] grid-cols-1 md:grid-cols-2">
+          {WAYS.map((way, i) => (
+            <ScrollReveal key={way.title} delay={i}>
+              <Link
+                href={way.href}
+                className="glass glass-i group rounded-2xl p-7 h-full flex flex-col gap-3"
+              >
+                <h3 className="font-serif font-semibold text-[24px] tracking-tight text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors">
+                  {way.title}
+                </h3>
+                <p className="text-[15.5px] text-[var(--muted)] leading-[1.6] flex-1">
+                  {way.body}
+                </p>
+                <span className="inline-flex items-center gap-2 text-[13px] font-semibold text-[var(--accent)] pt-1">
+                  Learn more
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                </span>
+              </Link>
+            </ScrollReveal>
+          ))}
+        </div>
+      </section>
+
+      {/* Writing — only when posts exist */}
+      {writing.length > 0 && (
+        <section className="max-w-[1200px] mx-auto px-5 sm:px-7 pt-20">
+          <ScrollReveal>
+            <SectionHeading
+              eyebrow="Writing"
+              title="Latest writing"
+              action={
+                <Link href="/blog" className="btn btn-ghost shrink-0 !pl-0 sm:!pl-[14px]">
+                  All writing
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              }
+            />
+          </ScrollReveal>
+          <div className="grid gap-[22px] [grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr))]">
+            {writing.map((post, i) => (
               <ScrollReveal key={post.slug} delay={i}>
                 <Link
                   href={`/blog/${post.slug}`}
@@ -94,64 +211,15 @@ export default function Home() {
         </section>
       )}
 
-      {/* Selected Work */}
-      {work.length > 0 && (
-        <section className="max-w-[1200px] mx-auto px-5 sm:px-7 py-14 pb-24">
-          <ScrollReveal className="flex items-end justify-between gap-5 mb-[34px]">
-            <div>
-              <div className="font-mono text-xs tracking-[0.14em] uppercase text-[var(--accent)] mb-2.5">
-                Selected work
-              </div>
-              <h2 className="font-serif font-bold tracking-tight text-[clamp(28px,3.4vw,40px)] text-[var(--foreground)]">
-                Systems I&apos;ve shipped
-              </h2>
-            </div>
-            <Link href="/portfolio" className="btn btn-ghost shrink-0">
-              Full portfolio
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </ScrollReveal>
-
-          <div className="grid gap-[22px] [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
-            {work.map((proj, i) => (
-              <ScrollReveal key={proj.slug} delay={i}>
-                <Link
-                  href={`/portfolio/${proj.slug}`}
-                  className="glass glass-i group flex flex-col rounded-[18px] overflow-hidden h-full"
-                >
-                  <div className="h-[148px] relative border-b border-[var(--hair)] overflow-hidden bg-[linear-gradient(150deg,var(--accent-soft),transparent)]">
-                    <div
-                      className="absolute inset-0 opacity-60"
-                      style={{
-                        backgroundImage:
-                          "linear-gradient(var(--hair) 1px, transparent 1px), linear-gradient(90deg, var(--hair) 1px, transparent 1px)",
-                        backgroundSize: "22px 22px",
-                      }}
-                    />
-                    <Layers className="absolute left-5 top-5 w-[26px] h-[26px] text-[var(--accent)]" />
-                    <span className="absolute right-4 bottom-3.5 font-mono text-[11px] text-[var(--muted)]">
-                      {proj.stack?.slice(0, 2).join(" · ")}
-                    </span>
-                  </div>
-                  <div className="p-[22px] flex flex-col gap-2.5 flex-1">
-                    <div className="flex items-center justify-between gap-2.5">
-                      <h3 className="font-serif font-semibold text-[20px] tracking-tight text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors">
-                        {proj.title}
-                      </h3>
-                      <span className="font-mono text-[11px] text-[var(--accent)] border border-[var(--accent-line)] rounded-full px-2.5 py-[3px]">
-                        {proj.year}
-                      </span>
-                    </div>
-                    <p className="text-[14.5px] text-[var(--muted)] leading-[1.55] line-clamp-3">
-                      {proj.summary}
-                    </p>
-                  </div>
-                </Link>
-              </ScrollReveal>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Closing CTA */}
+      <section className="max-w-[1200px] mx-auto px-5 sm:px-7 pt-20 pb-24">
+        <ScrollReveal>
+          <CtaBand
+            title="Your AI works in the demo. Now it has to work in production."
+            body="The gap between a promising prototype and a system real teams rely on is where I do my best work."
+          />
+        </ScrollReveal>
+      </section>
     </div>
   );
 }
