@@ -7,26 +7,29 @@ import { site } from "@/config/site";
 export const ogSize = { width: 1200, height: 630 };
 export const ogContentType = "image/png";
 
-// Dark-theme token values from globals.css (.dark). ImageResponse can't read CSS vars.
+// Ink-band token values from globals.css (--inverse etc.). ImageResponse can't read CSS vars.
 const colors = {
-  background: "#0a0a0a",
-  foreground: "#ededed",
-  muted: "#a3a3a3",
-  accent: "#f59e0b",
-  hair: "rgba(255, 255, 255, 0.08)",
+  background: "#14212b",
+  foreground: "#ffffff",
+  muted: "rgba(255, 255, 255, 0.72)",
+  accent: "#8fd19e",
+  hair: "rgba(255, 255, 255, 0.18)",
+  tintBlue: "#dff0f3",
+  tintGreen: "#dcefd9",
 };
 
 const FONT_DIR = path.join(process.cwd(), "src/assets/fonts");
 
 export async function loadFonts() {
-  const [playfair, playfairItalic, mono] = await Promise.all([
-    readFile(path.join(FONT_DIR, "PlayfairDisplay-Bold.woff")),
-    readFile(path.join(FONT_DIR, "PlayfairDisplay-BoldItalic.woff")),
+  // Satori can't read variable woff2, so these are static 600-weight cuts.
+  const [serif, serifItalic, mono] = await Promise.all([
+    readFile(path.join(FONT_DIR, "SourceSerif4-SemiBold.woff")),
+    readFile(path.join(FONT_DIR, "SourceSerif4-SemiBoldItalic.woff")),
     readFile(path.join(FONT_DIR, "JetBrainsMono-Regular.woff")),
   ]);
   return [
-    { name: "Playfair", data: playfair, weight: 700 as const, style: "normal" as const },
-    { name: "Playfair", data: playfairItalic, weight: 700 as const, style: "italic" as const },
+    { name: "Serif", data: serif, weight: 600 as const, style: "normal" as const },
+    { name: "Serif", data: serifItalic, weight: 600 as const, style: "italic" as const },
     { name: "Mono", data: mono, weight: 400 as const, style: "normal" as const },
   ];
 }
@@ -58,10 +61,8 @@ export async function renderOgImage({
           justifyContent: "space-between",
           padding: "72px 80px",
           backgroundColor: colors.background,
-          backgroundImage:
-            "radial-gradient(900px 520px at 85% -10%, rgba(245, 158, 11, 0.16), transparent 70%)",
           color: colors.foreground,
-          fontFamily: "Playfair",
+          fontFamily: "Serif",
         }}
       >
         <div
@@ -86,15 +87,15 @@ export async function renderOgImage({
               display: "flex",
               flexWrap: "wrap",
               fontSize: headlineSize,
-              fontWeight: 700,
-              lineHeight: 1.08,
-              letterSpacing: -1.5,
+              fontWeight: 600,
+              lineHeight: 1.05,
+              letterSpacing: -2,
               maxWidth: 1040,
             }}
           >
             {headline}
           </div>
-          <div style={{ width: 120, height: 6, borderRadius: 3, background: colors.accent, margin: "40px 0 32px" }} />
+          <div style={{ width: 120, height: 5, borderRadius: 3, background: colors.accent, margin: "40px 0 32px" }} />
           <div style={{ display: "flex", flexWrap: "wrap", fontSize: 44, lineHeight: 1.25, color: colors.muted }}>
             {subline}
           </div>
@@ -120,7 +121,7 @@ export async function renderOgImage({
   );
 }
 
-/** Amber italic run inside an OG headline or subline (e.g. "holds up"). */
+/** Italic green run inside an OG headline or subline (e.g. "holds up"). */
 export function OgAccent({ children }: { children: ReactNode }) {
   return (
     <span style={{ fontStyle: "italic", color: colors.accent, margin: "0 0.25em" }}>
@@ -130,10 +131,10 @@ export function OgAccent({ children }: { children: ReactNode }) {
 }
 
 /**
- * Square "AO" monogram (favicon, apple-touch-icon): dark background,
- * amber Playfair letters over an amber accent rule.
+ * Site mark from the header: italic serif "a" on ink.
+ * "circle" for the favicon; "square" (full bleed) for apple-touch-icon, which iOS rounds itself.
  */
-export async function renderIconImage(px: number) {
+export async function renderIconImage(px: number, shape: "circle" | "square") {
   return new ImageResponse(
     (
       <div
@@ -141,28 +142,20 @@ export async function renderIconImage(px: number) {
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: colors.background,
-          color: colors.accent,
-          fontFamily: "Playfair",
-          fontWeight: 700,
-          fontSize: px * 0.5,
-          letterSpacing: -px * 0.01,
+          borderRadius: shape === "circle" ? "50%" : 0,
+          color: colors.foreground,
+          fontFamily: "Serif",
+          fontStyle: "italic",
+          fontWeight: 600,
+          fontSize: px * (shape === "circle" ? 0.62 : 0.56),
           lineHeight: 1,
+          paddingBottom: px * 0.08,
         }}
       >
-        <div style={{ display: "flex", marginTop: -px * 0.04 }}>AO</div>
-        <div
-          style={{
-            width: px * 0.36,
-            height: Math.max(2, Math.round(px * 0.045)),
-            borderRadius: px,
-            background: colors.accent,
-            marginTop: px * 0.07,
-          }}
-        />
+        a
       </div>
     ),
     { width: px, height: px, fonts: await loadFonts() },

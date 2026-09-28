@@ -4,5 +4,5 @@ import { renderIconImage } from "@/lib/og";
 export const dynamic = "force-static";
 
 export function GET() {
-  return renderIconImage(180);
+  return renderIconImage(180, "square");
 }
