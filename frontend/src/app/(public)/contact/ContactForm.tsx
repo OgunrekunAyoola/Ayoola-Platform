@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useToast } from "@/context/ToastContext";
-import { Check, Send } from "lucide-react";
 
 interface FormState {
   name: string;
@@ -70,9 +69,7 @@ export default function ContactForm() {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -80,146 +77,123 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="flex flex-col items-center text-center gap-3.5 py-9 px-3">
-        <span className="w-[58px] h-[58px] rounded-full bg-[var(--accent-soft)] text-[var(--accent)] flex items-center justify-center">
-          <Check className="w-7 h-7" />
+      <div className="flex flex-col items-start gap-4 py-10">
+        <span className="w-14 h-14 rounded-full bg-[var(--tint-green)] text-[var(--accent)] flex items-center justify-center text-2xl">
+          ✓
         </span>
-        <h2 className="font-serif font-semibold text-2xl text-[var(--foreground)]">
-          Message sent.
-        </h2>
-        <p className="text-sm text-[var(--muted)] max-w-[320px]">
+        <h2 className="text-[36px]">Message sent.</h2>
+        <p className="text-[16.5px] leading-[1.6] text-[var(--muted)] max-w-[340px]">
           Thanks for reaching out — I&apos;ll get back to you within two
           business days.
         </p>
-        <button
-          onClick={() => setStatus("idle")}
-          className="btn btn-secondary mt-1"
-        >
+        <button onClick={() => setStatus("idle")} className="btn btn-secondary">
           Send another
         </button>
       </div>
     );
   }
 
+  const label = "flex flex-col gap-2 text-[14px] font-semibold";
+
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      {/* Honeypot field — hidden from sighted users, catches bots that fill every input */}
-      <div className="absolute left-[-9999px]" aria-hidden="true">
-        <label htmlFor="company">Company</label>
-        <input
-          type="text"
-          id="company"
-          name="company"
-          tabIndex={-1}
-          autoComplete="off"
-          value={formData.company}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div className="flex flex-col gap-1.5">
-        <label
-          htmlFor="name"
-          className="text-[13px] font-semibold text-[var(--foreground)]"
-        >
-          Name
-        </label>
-        <input
-          className="field"
-          type="text"
-          id="name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          placeholder="Your name"
-        />
-      </div>
-
-      <div className="flex flex-col gap-1.5">
-        <label
-          htmlFor="email"
-          className="text-[13px] font-semibold text-[var(--foreground)]"
-        >
-          Email
-        </label>
-        <input
-          className="field"
-          type="email"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          placeholder="you@company.com"
-        />
-      </div>
-
-      <div className="flex flex-col gap-1.5">
-        <label
-          htmlFor="typeOfWork"
-          className="text-[13px] font-semibold text-[var(--foreground)]"
-        >
-          Inquiry type
-        </label>
-        <select
-          className="field appearance-none"
-          id="typeOfWork"
-          name="typeOfWork"
-          value={formData.typeOfWork}
-          onChange={handleChange}
-        >
-          {INQUIRY_TYPES.map((type) => (
-            <option key={type} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="flex flex-col gap-1.5">
-        <label
-          htmlFor="message"
-          className="text-[13px] font-semibold text-[var(--foreground)]"
-        >
-          What are you building?
-        </label>
-        <textarea
-          className="field resize-y"
-          id="message"
-          name="message"
-          rows={4}
-          value={formData.message}
-          onChange={handleChange}
-          required
-          placeholder="A few sentences about the system, the timeline, and where you're stuck…"
-        />
-      </div>
-
-      {status === "error" && (
-        <div
-          role="status"
-          aria-live="polite"
-          className="text-red-500 text-sm bg-red-500/10 p-3 rounded-lg border border-red-500/20"
-        >
-          {errorMessage}
+    <>
+      <h2 className="text-[28px] sm:text-[32px] mb-7">Or send a message</h2>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-[18px]">
+        {/* Honeypot field — hidden from sighted users, catches bots that fill every input */}
+        <div className="absolute left-[-9999px]" aria-hidden="true">
+          <label htmlFor="company">Company</label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            tabIndex={-1}
+            autoComplete="off"
+            value={formData.company}
+            onChange={handleChange}
+          />
         </div>
-      )}
 
-      <button
-        type="submit"
-        className="btn btn-primary w-full mt-1"
-        disabled={status === "submitting"}
-      >
-        {status === "submitting" ? (
-          "Sending..."
-        ) : (
-          <>
-            Send message
-            <Send className="w-[17px] h-[17px]" />
-          </>
+        <label className={label}>
+          Name
+          <input
+            className="field font-normal"
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            autoComplete="name"
+            placeholder="Your name"
+          />
+        </label>
+
+        <label className={label}>
+          Email
+          <input
+            className="field font-normal"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            autoComplete="email"
+            placeholder="you@company.com"
+          />
+        </label>
+
+        <fieldset className="flex flex-col gap-2.5">
+          <legend className="text-[14px] font-semibold mb-2.5">Inquiry type</legend>
+          <div className="flex flex-wrap gap-2">
+            {INQUIRY_TYPES.map((type) => (
+              <label
+                key={type}
+                className="inline-flex items-center h-[42px] px-[18px] rounded-full border-[1.5px] border-[var(--foreground)] bg-[var(--card)] text-[14.5px] cursor-pointer transition-colors has-checked:bg-[var(--btn)] has-checked:border-[var(--btn)] has-checked:text-[var(--btn-fg)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[var(--accent)]"
+              >
+                <input
+                  type="radio"
+                  name="typeOfWork"
+                  value={type}
+                  checked={formData.typeOfWork === type}
+                  onChange={handleChange}
+                  className="sr-only"
+                />
+                {type}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <label className={label}>
+          What are you building?
+          <textarea
+            className="field font-normal resize-y"
+            name="message"
+            rows={5}
+            value={formData.message}
+            onChange={handleChange}
+            required
+            placeholder="A few sentences about the system, the timeline, and where you're stuck…"
+          />
+        </label>
+
+        {status === "error" && (
+          <div
+            role="status"
+            aria-live="polite"
+            className="text-[15px] text-[var(--warn)] bg-[var(--gate)] px-4 py-3 rounded-[14px]"
+          >
+            {errorMessage}
+          </div>
         )}
-      </button>
-    </form>
+
+        <button
+          type="submit"
+          className="btn btn-primary btn-lg w-full mt-1"
+          disabled={status === "submitting"}
+        >
+          {status === "submitting" ? "Sending…" : "Send message →"}
+        </button>
+      </form>
+    </>
   );
 }

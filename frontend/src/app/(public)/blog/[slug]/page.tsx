@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
-import { ArrowLeft } from "lucide-react";
 import ShareButton from "@/components/ui/ShareButton";
 
 interface BlogPostPageProps {
@@ -58,29 +57,28 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <article className="max-w-[720px] mx-auto px-5 sm:px-7 pt-16 pb-24">
-      <Link href="/blog" className="btn btn-ghost !pl-0 mb-7">
-        <ArrowLeft className="w-4 h-4" />
-        All writing
+    <article className="max-w-[760px] mx-auto px-5 sm:px-7 pt-14 sm:pt-16 pb-24 sm:pb-[110px]">
+      <Link href="/blog" className="btn btn-ghost mb-10">
+        ← All writing
       </Link>
 
-      {/* Header */}
-      <div className="font-mono text-[11px] tracking-[0.1em] uppercase text-[var(--accent)] mb-3.5">
+      <div className="font-mono text-[12px] tracking-[0.1em] uppercase text-[var(--accent)] mb-[18px]">
         {post.tags?.[0] ?? "Writing"} · {post.readingTime} min read
       </div>
-      <h1 className="font-serif font-extrabold tracking-tight leading-[1.08] text-[clamp(32px,4.4vw,48px)] text-[var(--foreground)] mb-5">
+      <h1 className="text-[clamp(36px,5vw,60px)] leading-[1.08] tracking-[-0.02em] mb-7">
         {post.title}
       </h1>
 
-      <div className="flex items-center gap-3 pb-7 mb-9 border-b border-[var(--hair)]">
-        <span className="w-9 h-9 rounded-full bg-[var(--accent)] text-[var(--accent-contrast)] flex items-center justify-center font-serif font-bold text-[15px]">
-          A
+      <div className="flex items-center gap-3.5 pb-7 mb-10 border-b border-[var(--hair)]">
+        <span
+          aria-hidden="true"
+          className="w-10 h-10 shrink-0 rounded-full bg-[var(--btn)] text-[var(--btn-fg)] flex items-center justify-center font-serif italic text-[18px]"
+        >
+          a
         </span>
-        <span className="flex flex-col leading-[1.3]">
-          <span className="text-sm font-semibold text-[var(--foreground)]">
-            Ayoola Ogunrekun
-          </span>
-          <span className="font-mono text-xs text-[var(--muted)]">
+        <span className="flex flex-col gap-0.5">
+          <span className="text-[15px] font-semibold">Ayoola Ogunrekun</span>
+          <span className="font-mono text-[12px] text-[var(--muted)]">
             <time dateTime={post.date} suppressHydrationWarning>
               {new Date(post.date).toLocaleDateString("en-US", {
                 year: "numeric",
@@ -90,26 +88,22 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </time>
           </span>
         </span>
-        <div className="flex items-center gap-2 ml-auto">
-          <ShareButton title={post.title} text={post.excerpt} />
-        </div>
+        <ShareButton title={post.title} text={post.excerpt} className="ml-auto" />
       </div>
 
-      {/* Hero Image */}
       {post.heroImage && (
-        <div className="relative mb-10 aspect-[16/9] rounded-2xl overflow-hidden border border-[var(--card-border)]">
+        <div className="relative mb-10 aspect-[16/9] rounded-[22px] overflow-hidden">
           <Image
             src={post.heroImage}
             alt={post.title}
             fill
-            sizes="(max-width: 720px) 100vw, 720px"
+            sizes="(max-width: 760px) 100vw, 760px"
             className="object-cover"
           />
         </div>
       )}
 
-      {/* Content */}
-      <div className="prose prose-tokens prose-lg max-w-none prose-headings:font-serif prose-headings:tracking-tight prose-a:text-[var(--accent)] prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-blockquote:border-l-[var(--accent)] prose-blockquote:font-serif prose-blockquote:not-italic">
+      <div className="prose prose-tokens prose-lg max-w-none prose-p:leading-[1.75] prose-a:no-underline hover:prose-a:underline prose-img:rounded-[18px]">
         <ReactMarkdown>{post.content}</ReactMarkdown>
       </div>
     </article>

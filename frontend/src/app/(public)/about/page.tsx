@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { Download } from "lucide-react";
-import FramedPortrait from "@/components/ui/FramedPortrait";
+import Portrait from "@/components/ui/Portrait";
 import { site } from "@/config/site";
 
 export const metadata = {
@@ -11,34 +10,21 @@ export const metadata = {
 
 export default function About() {
   return (
-    <section className="max-w-[1100px] mx-auto px-5 sm:px-7 pt-16 sm:pt-20 pb-24">
-      <div className="font-mono text-xs tracking-[0.14em] uppercase text-[var(--accent)] mb-3.5">
-        About
-      </div>
-      <h1 className="font-serif font-extrabold tracking-tight leading-[1.05] text-[clamp(34px,4.6vw,56px)] text-[var(--foreground)] max-w-[18ch] mb-10 sm:mb-12">
-        The engineer behind the systems.
+    <section className="max-w-[1200px] mx-auto px-5 sm:px-7 pt-16 sm:pt-20 pb-24 sm:pb-[110px]">
+      <div className="eyebrow mb-6">About</div>
+      <h1 className="text-[clamp(44px,6vw,84px)] leading-[1.02] tracking-[-0.03em] max-w-[16ch] mb-12 sm:mb-16">
+        The engineer <em>behind the systems.</em>
       </h1>
 
-      <div className="grid grid-cols-1 lg:[grid-template-columns:0.85fr_1.15fr] gap-11 items-start">
-        {/* portrait */}
-        <div className="relative flex justify-center lg:justify-start items-start">
-          <div
-            className="absolute -inset-2 rounded-[28px] anim-glow pointer-events-none opacity-70"
-            style={{
-              background:
-                "radial-gradient(circle at 50% 30%, var(--glow), transparent 70%)",
-              filter: "blur(40px)",
-            }}
-          />
-          <FramedPortrait
-            priority
-            className="relative w-full max-w-[300px] sm:max-w-[380px] aspect-[4/5]"
-          />
-        </div>
+      <div className="grid gap-12 lg:gap-16 items-start [grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr))]">
+        <Portrait
+          variant="about"
+          priority
+          className="w-full max-w-[520px] lg:sticky lg:top-[110px]"
+        />
 
-        {/* bio */}
-        <div className="flex flex-col gap-5 text-[16.5px] sm:text-[17px] leading-[1.75] text-[var(--muted)]">
-          <p>
+        <div className="flex flex-col gap-[22px] text-[17px] sm:text-[18px] leading-[1.75] text-[var(--body)]">
+          <p className="font-serif text-[22px] sm:text-[26px] leading-[1.45] text-[var(--foreground)]">
             I&apos;m Ayoola, an AI systems engineer based in Lagos. I build AI
             that does real work in production: agent systems, LLM pipelines and
             the cloud infrastructure they run on, plus the controls that make
@@ -63,36 +49,33 @@ export default function About() {
             next engineer.
           </p>
 
-          {/* Experience */}
-          <div className="mt-4">
-            <h2 className="font-mono text-[11px] tracking-[0.1em] uppercase text-[var(--muted)] mb-4">
+          <div className="mt-6">
+            <h2 className="font-mono font-normal text-[12px] tracking-[0.1em] uppercase text-[var(--muted)] mb-2">
               Experience
             </h2>
-            <ol className="relative border-l border-[var(--hair)] ml-1.5 flex flex-col gap-6">
+            <ol>
               {site.experience.map((item) => (
-                <li key={item.role + item.org} className="pl-6 relative">
-                  <span
-                    aria-hidden="true"
-                    className="absolute -left-[5px] top-[9px] w-[9px] h-[9px] rounded-full bg-[var(--accent)]"
-                  />
-                  <div className="font-mono text-[12px] text-[var(--muted)] mb-0.5">
-                    {item.dates}
-                  </div>
-                  <div className="text-[16px] leading-[1.45] font-semibold text-[var(--foreground)]">
+                <li
+                  key={item.role + item.org}
+                  className="grid [grid-template-columns:minmax(0,1fr)_auto] gap-x-5 gap-y-1.5 py-5 border-t border-[var(--hair)]"
+                >
+                  <span className="font-serif text-[20px] sm:text-[22px] leading-[1.3] text-[var(--foreground)]">
                     {item.role}
-                  </div>
-                  <div className="text-[15px] leading-[1.5] text-[var(--muted)]">
+                  </span>
+                  <span className="font-mono text-[12.5px] text-[var(--muted)] pt-1.5">
+                    {item.dates}
+                  </span>
+                  <span className="text-[16px] leading-[1.5] text-[var(--muted)]">
                     {item.org}
-                  </div>
+                  </span>
                 </li>
               ))}
             </ol>
           </div>
 
-          <div className="flex flex-wrap gap-3.5 mt-4">
+          <div className="flex flex-wrap gap-3 mt-4">
             <a href={site.cvPath} download className="btn btn-primary">
-              Download CV
-              <Download className="w-[17px] h-[17px]" />
+              Download CV ↓
             </a>
             <Link href="/work-with-me" className="btn btn-secondary">
               Work with me

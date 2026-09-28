@@ -3,7 +3,6 @@ import ReactMarkdown from "react-markdown";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
-import { ArrowLeft } from "lucide-react";
 import ShareButton from "@/components/ui/ShareButton";
 import CtaBand from "@/components/ui/CtaBand";
 
@@ -49,42 +48,40 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   ].filter((m) => m.value);
 
   return (
-    <article className="max-w-[720px] mx-auto px-5 sm:px-7 pt-14 sm:pt-20 pb-24">
-      <Link href="/portfolio" className="btn btn-ghost !pl-0 mb-8">
-        <ArrowLeft className="w-4 h-4" />
-        All work
+    <article className="max-w-[760px] mx-auto px-5 sm:px-7 pt-14 sm:pt-16 pb-24 sm:pb-[110px]">
+      <Link href="/portfolio" className="btn btn-ghost mb-10">
+        ← All work
       </Link>
 
-      <header className="mb-12 border-b border-[var(--hair)] pb-10">
-        <h1 className="font-serif font-extrabold text-[clamp(32px,5vw,52px)] mb-5 text-[var(--foreground)] leading-[1.1] tracking-tight">
+      <header className="mb-10 pb-10 border-b border-[var(--hair)]">
+        <div className="eyebrow mb-[18px]">Case study</div>
+        <h1 className="text-[clamp(36px,5vw,60px)] leading-[1.08] tracking-[-0.02em] mb-6">
           {project.title}
         </h1>
 
         {project.summary && (
-          <p className="text-[18px] sm:text-[19px] text-[var(--muted)] mb-8 leading-[1.6]">
+          <p className="text-[18px] sm:text-[20px] leading-[1.6] text-[var(--muted)] mb-9">
             {project.summary}
           </p>
         )}
 
-        <dl className="grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-5 mb-7">
+        <dl className="grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-5 mb-8">
           {meta.map((m) => (
-            <div key={m.label}>
-              <dt className="font-mono text-[11px] tracking-[0.1em] uppercase text-[var(--muted)] mb-1.5">
+            <div key={m.label} className="border-t border-[var(--hair)] pt-3.5">
+              <dt className="font-mono text-[12px] tracking-[0.08em] uppercase text-[var(--muted)] mb-1.5">
                 {m.label}
               </dt>
-              <dd className="text-[var(--foreground)] font-medium text-[16px]">
-                {m.value}
-              </dd>
+              <dd className="font-serif text-[20px] leading-[1.3]">{m.value}</dd>
             </div>
           ))}
         </dl>
 
         {project.stack?.length > 0 && (
-          <ul className="flex gap-2 flex-wrap mb-7">
+          <ul className="flex flex-wrap gap-2.5 mb-8">
             {project.stack.map((tech) => (
               <li
                 key={tech}
-                className="font-mono text-[12px] text-[var(--accent)] bg-[var(--accent-soft)] px-3 py-1 rounded-full"
+                className="font-mono text-[12.5px] rounded-full bg-[var(--surface)] px-3.5 py-[7px]"
               >
                 {tech}
               </li>
@@ -94,22 +91,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-[15px]">
           {project.links?.live && (
-            <a
-              href={project.links.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="lk"
-            >
+            <a href={project.links.live} target="_blank" rel="noopener noreferrer" className="lk">
               Live ↗
             </a>
           )}
           {project.links?.repo && (
-            <a
-              href={project.links.repo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="lk"
-            >
+            <a href={project.links.repo} target="_blank" rel="noopener noreferrer" className="lk">
               GitHub ↗
             </a>
           )}
@@ -117,11 +104,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </div>
       </header>
 
-      <div className="prose prose-tokens prose-lg max-w-none prose-headings:font-serif prose-headings:tracking-tight prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-blockquote:font-serif prose-blockquote:not-italic">
+      <div className="prose prose-tokens prose-lg max-w-none prose-a:no-underline hover:prose-a:underline prose-img:rounded-[18px]">
         <ReactMarkdown>{project.content}</ReactMarkdown>
       </div>
 
-      <CtaBand title="Building something similar?" as="h2" className="mt-16" />
+      <CtaBand title="Building something similar?" className="mt-16" />
     </article>
   );
 }

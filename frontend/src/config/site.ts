@@ -7,6 +7,13 @@ export const site = {
   location: "Lagos, Nigeria · working with teams worldwide",
   timezone: "Lagos, Nigeria · WAT (UTC+1)",
 
+  // Ink announcement bar above the header. Set to null to hide it.
+  banner: {
+    text: "Open to full-time remote AI engineering roles",
+    detail: "Lagos → remote worldwide",
+    cta: { label: "Work with me", href: "/work-with-me" },
+  } as { text: string; detail: string; cta: { label: string; href: string } } | null,
+
   // TODO: replace with a real, deliverable inbox before launch.
   email: "TODO_REPLACE_EMAIL@example.com",
   // TODO: add a booking link (Calendly/Cal.com). "Book a call" falls back to /contact while empty.

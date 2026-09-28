@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Share2, Check, Clipboard } from "lucide-react";
 import { useToast } from "@/context/ToastContext";
 
 interface ShareButtonProps {
@@ -56,17 +55,11 @@ export default function ShareButton({
   return (
     <button
       onClick={handleShare}
-      className={`p-2 rounded-full hover:bg-[var(--muted)]/10 transition-colors ${className}`}
+      className={`btn btn-secondary !h-10 !px-[18px] !text-[14px] ${className}`}
       aria-label="Share"
       title="Share"
     >
-      {copied ? (
-        <Check className="w-5 h-5 text-green-500" />
-      ) : typeof navigator.share === "function" ? (
-        <Share2 className="w-5 h-5 text-[var(--muted)] hover:text-[var(--foreground)]" />
-      ) : (
-        <Clipboard className="w-5 h-5 text-[var(--muted)] hover:text-[var(--foreground)]" />
-      )}
+      {copied ? "Link copied" : "Share"}
     </button>
   );
 }

@@ -6,21 +6,19 @@ export default function NotFound() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-grow max-w-[720px] mx-auto px-5 sm:px-7 flex flex-col items-center justify-center min-h-[60vh] text-center">
-        <div className="font-mono text-xs tracking-[0.14em] uppercase text-[var(--accent)] mb-3.5">
-          404
-        </div>
-        <h1 className="font-serif font-extrabold tracking-tight text-[clamp(32px,4.4vw,48px)] text-[var(--foreground)] mb-4">
-          This page doesn&apos;t exist.
+      <main className="flex-grow max-w-[1200px] w-full mx-auto px-5 sm:px-7 py-20 sm:py-28 flex flex-col justify-center">
+        <div className="eyebrow mb-6">404</div>
+        <h1 className="text-[clamp(44px,6vw,84px)] leading-[1.02] tracking-[-0.03em] mb-6 max-w-[14ch]">
+          This page <em>doesn&apos;t exist.</em>
         </h1>
-        <p className="text-[var(--muted)] mb-8">
+        <p className="text-[17.5px] sm:text-[19px] leading-[1.6] text-[var(--muted)] mb-10">
           It may have moved during the rebuild.
         </p>
-        <div className="flex flex-wrap gap-3.5 justify-center">
-          <Link href="/" className="btn btn-primary">
+        <div className="flex flex-wrap gap-3.5">
+          <Link href="/" className="btn btn-primary btn-lg">
             Go home
           </Link>
-          <Link href="/portfolio" className="btn btn-secondary">
+          <Link href="/portfolio" className="btn btn-secondary btn-lg">
             See the work
           </Link>
         </div>

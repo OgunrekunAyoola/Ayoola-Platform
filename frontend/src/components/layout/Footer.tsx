@@ -1,52 +1,42 @@
 import Link from "next/link";
 import { site } from "@/config/site";
 
+const EXPLORE = [
+  { label: "Work", href: "/portfolio" },
+  { label: "Work with me", href: "/work-with-me" },
+  { label: "Writing", href: "/blog" },
+  { label: "About", href: "/about" },
+];
+
 export default function Footer() {
-  const exploreLinks = [
-    { label: "Work", href: "/portfolio" },
-    { label: "Work with me", href: "/work-with-me" },
-    { label: "Writing", href: "/blog" },
-    { label: "About", href: "/about" },
-  ];
+  const [first, ...rest] = site.name.split(" ");
 
   return (
-    <footer className="border-t border-[var(--hair)] bg-[var(--chrome)] backdrop-blur-[14px]">
-      <div className="max-w-[1200px] mx-auto px-5 sm:px-7 pt-14 pb-9">
-        <div className="grid gap-9 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))] items-start">
-          {/* Brand */}
-          <div className="flex flex-col gap-3.5 max-w-[300px]">
-            <div className="flex items-center gap-3">
-              <span className="w-[34px] h-[34px] rounded-[10px] bg-[var(--accent)] text-[var(--accent-contrast)] flex items-center justify-center font-serif font-extrabold text-[16px]">
-                AO
-              </span>
-              <span className="font-semibold text-[15px] text-[var(--foreground)]">
-                Ayoola Ogunrekun
-              </span>
-            </div>
-            <p className="text-sm text-[var(--muted)] leading-relaxed">
+    <footer className="border-t border-[var(--hair)] bg-[var(--background)]">
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-7 pt-16 sm:pt-[72px] pb-9">
+        <div className="grid gap-10 [grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))] items-start">
+          <div className="flex flex-col gap-4 max-w-[380px]">
+            <span className="serif-em font-serif font-semibold text-[30px] sm:text-[34px] tracking-[-0.02em] leading-[1.1]">
+              {first} <em>{rest.join(" ")}</em>
+            </span>
+            <p className="text-[16px] leading-[1.6] text-[var(--muted)]">
               AI systems engineer building production AI that real teams can
               rely on.
             </p>
-            <div className="flex items-center gap-5 text-sm text-[var(--muted)] font-medium pt-1">
-              <Link
-                href="/feed.xml"
-                className="hover:text-[var(--accent)] transition-colors"
-              >
-                RSS
-              </Link>
-            </div>
+            <Link href="/feed.xml" className="lk self-start text-[15px]">
+              RSS
+            </Link>
           </div>
 
-          {/* Explore */}
-          <div className="flex flex-col gap-2.5">
-            <span className="font-mono text-[11px] tracking-[0.1em] uppercase text-[var(--muted)] mb-1">
+          <div className="flex flex-col gap-3">
+            <span className="font-mono text-[12px] tracking-[0.1em] uppercase text-[var(--muted)] mb-1">
               Explore
             </span>
-            {exploreLinks.map((link) => (
+            {EXPLORE.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="navlink self-start"
+                className="self-start text-[16px] text-[var(--foreground)] hover:text-[var(--accent)] transition-colors"
               >
                 {link.label}
               </Link>
@@ -54,13 +44,11 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-3.5 mt-11 pt-6 border-t border-[var(--hair)]">
-          <span className="font-mono text-[12.5px] text-[var(--muted)]">
-            © {new Date().getFullYear()} Ayoola Ogunrekun
+        <div className="flex flex-wrap justify-between gap-3.5 mt-14 pt-6 border-t border-[var(--hair)] font-mono text-[12.5px] text-[var(--muted)]">
+          <span>
+            © {new Date().getFullYear()} {site.name}
           </span>
-          <span className="font-mono text-[12.5px] text-[var(--muted)]">
-            {site.location}
-          </span>
+          <span>{site.location}</span>
         </div>
       </div>
     </footer>

@@ -2,27 +2,29 @@ import { ReactNode } from "react";
 
 interface SectionHeadingProps {
   eyebrow: string;
+  /** May contain <em> for the italic green emphasis. */
   title: ReactNode;
-  /** Optional action (e.g. an "All work" link) aligned to the right on wider screens. */
+  /** Optional action (e.g. "All writing") aligned right on wider screens. */
   action?: ReactNode;
   className?: string;
+  /** Tailwind max-width for the heading, e.g. "max-w-[16ch]". */
+  titleClassName?: string;
 }
 
 export default function SectionHeading({
   eyebrow,
   title,
   action,
-  className = "mb-[34px]",
+  className = "mb-10 sm:mb-14",
+  titleClassName = "",
 }: SectionHeadingProps) {
   return (
     <div
-      className={`flex flex-wrap items-end justify-between gap-x-5 gap-y-3 ${className}`}
+      className={`flex flex-wrap items-end justify-between gap-x-5 gap-y-5 ${className}`}
     >
       <div>
-        <div className="font-mono text-xs tracking-[0.14em] uppercase text-[var(--accent)] mb-2.5">
-          {eyebrow}
-        </div>
-        <h2 className="font-serif font-bold tracking-tight text-[clamp(28px,3.4vw,40px)] leading-[1.15] text-[var(--foreground)]">
+        <div className="eyebrow mb-[18px]">{eyebrow}</div>
+        <h2 className={`text-[clamp(34px,4.4vw,60px)] leading-[1.06] tracking-[-0.02em] ${titleClassName}`}>
           {title}
         </h2>
       </div>

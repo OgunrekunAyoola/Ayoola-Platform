@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { bookingHref, bookingLinkProps } from "@/config/site";
 
 interface BookCallButtonProps {
@@ -9,12 +8,11 @@ interface BookCallButtonProps {
 
 export default function BookCallButton({
   label = "Book a call",
-  className = "btn btn-primary",
+  className = "btn btn-primary btn-lg",
 }: BookCallButtonProps) {
   return (
     <Link href={bookingHref} {...bookingLinkProps} className={className}>
-      {label}
-      <ArrowRight className="w-[17px] h-[17px]" />
+      {label} <span aria-hidden="true">→</span>
     </Link>
   );
 }

@@ -56,15 +56,15 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className={`
-              pointer-events-auto flex items-start gap-3 p-4 rounded-lg shadow-lg border backdrop-blur-md transition-all animate-in slide-in-from-right-full
-              ${toast.type === "success" ? "bg-green-500/10 border-green-500/20 text-green-500" : ""}
-              ${toast.type === "error" ? "bg-red-500/10 border-red-500/20 text-red-500" : ""}
-              ${toast.type === "warning" ? "bg-yellow-500/10 border-yellow-500/20 text-yellow-500" : ""}
-              ${toast.type === "info" ? "bg-blue-500/10 border-blue-500/20 text-blue-500" : ""}
-            `}
+            className="pointer-events-auto flex items-start gap-3 px-5 py-4 rounded-[18px] bg-[var(--inverse)] text-[var(--inverse-fg)] shadow-[0_20px_50px_-24px_var(--shadow)] animate-fade-in"
           >
-            <div className="flex-shrink-0 mt-0.5">
+            <div
+              className={`flex-shrink-0 mt-0.5 ${
+                toast.type === "error" || toast.type === "warning"
+                  ? "text-[#f0b184]"
+                  : "text-[var(--accent-bright)]"
+              }`}
+            >
               {toast.type === "success" && <CheckCircle2 className="w-5 h-5" />}
               {toast.type === "error" && <AlertCircle className="w-5 h-5" />}
               {toast.type === "warning" && <AlertCircle className="w-5 h-5" />}

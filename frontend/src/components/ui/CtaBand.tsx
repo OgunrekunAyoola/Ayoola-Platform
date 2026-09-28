@@ -2,39 +2,58 @@ import { ReactNode } from "react";
 import BookCallButton from "@/components/ui/BookCallButton";
 
 interface CtaBandProps {
-  title: string;
+  /** May contain <em> for the italic emphasis. */
+  title: ReactNode;
   body?: string;
-  /** Heading level; defaults to h2. */
+  /** "ink": navy band with a white pill; "green": tinted band with an ink pill. */
+  tone?: "ink" | "green";
   as?: "h2" | "h3";
-  /** Defaults to a "Book a call" button. */
   action?: ReactNode;
   className?: string;
 }
 
-/** Accent-tinted glass band used to close a page or section with one clear next step. */
+/** Closing band with one clear next step. */
 export default function CtaBand({
   title,
   body,
+  tone = "ink",
   as: Heading = "h2",
-  action = <BookCallButton />,
+  action,
   className = "",
 }: CtaBandProps) {
+  const ink = tone === "ink";
+
   return (
     <div
-      className={`glass rounded-[18px] p-7 sm:p-9 flex flex-col md:flex-row md:items-center md:justify-between gap-6 ${className}`}
-      style={{
-        background: "linear-gradient(150deg, var(--accent-soft), var(--card-bg))",
-      }}
+      className={`rounded-[32px] flex flex-wrap justify-between ${
+        ink
+          ? "on-inverse bg-[var(--inverse)] text-[var(--inverse-fg)] items-end gap-9 p-[clamp(32px,6vw,80px)]"
+          : "bg-[var(--tint-green)] text-[var(--foreground)] items-center gap-7 p-[clamp(32px,5vw,64px)]"
+      } ${className}`}
     >
-      <div className="max-w-[620px]">
-        <Heading className="font-serif font-bold text-[clamp(24px,2.8vw,32px)] leading-[1.2] tracking-tight text-[var(--foreground)] mb-2">
+      <div className={ink ? "max-w-[720px]" : "max-w-[620px]"}>
+        <Heading
+          className={`leading-[1.08] tracking-[-0.02em] ${ink ? "text-balance" : ""} ${
+            ink ? "text-[clamp(32px,4.2vw,56px)]" : "text-[clamp(28px,3.4vw,44px)]"
+          } ${body ? "mb-4 sm:mb-5" : ""}`}
+        >
           {title}
         </Heading>
         {body && (
-          <p className="text-[15.5px] text-[var(--muted)] leading-[1.6]">{body}</p>
+          <p
+            className={`leading-[1.6] ${
+              ink
+                ? "text-[17px] sm:text-[18px] max-w-[56ch] text-[var(--inverse-muted)]"
+                : "text-[17px] text-[var(--body)]"
+            }`}
+          >
+            {body}
+          </p>
         )}
       </div>
-      <div className="shrink-0">{action}</div>
+      {action ?? (
+        <BookCallButton className={`btn btn-lg ${ink ? "btn-inverse" : "btn-primary"}`} />
+      )}
     </div>
   );
 }
