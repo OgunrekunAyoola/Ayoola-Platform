@@ -58,7 +58,10 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Ayoola Ogunrekun" }],
   creator: "Ayoola Ogunrekun",
+  // Listing icons here overrides Next's auto-injected link for app/icon.tsx,
+  // so both generated icons are declared explicitly.
   icons: {
+    icon: [{ url: "/icon", type: "image/png", sizes: "64x64" }],
     apple: "/apple-touch-icon.png",
   },
   alternates: {

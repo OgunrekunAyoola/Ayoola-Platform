@@ -18,7 +18,7 @@ const colors = {
 
 const FONT_DIR = path.join(process.cwd(), "src/assets/fonts");
 
-async function loadFonts() {
+export async function loadFonts() {
   const [playfair, playfairItalic, mono] = await Promise.all([
     readFile(path.join(FONT_DIR, "PlayfairDisplay-Bold.woff")),
     readFile(path.join(FONT_DIR, "PlayfairDisplay-BoldItalic.woff")),
@@ -126,5 +126,45 @@ export function OgAccent({ children }: { children: ReactNode }) {
     <span style={{ fontStyle: "italic", color: colors.accent, margin: "0 0.25em" }}>
       {children}
     </span>
+  );
+}
+
+/**
+ * Square "AO" monogram (favicon, apple-touch-icon): dark background,
+ * amber Playfair letters over an amber accent rule.
+ */
+export async function renderIconImage(px: number) {
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: colors.background,
+          color: colors.accent,
+          fontFamily: "Playfair",
+          fontWeight: 700,
+          fontSize: px * 0.5,
+          letterSpacing: -px * 0.01,
+          lineHeight: 1,
+        }}
+      >
+        <div style={{ display: "flex", marginTop: -px * 0.04 }}>AO</div>
+        <div
+          style={{
+            width: px * 0.36,
+            height: Math.max(2, Math.round(px * 0.045)),
+            borderRadius: px,
+            background: colors.accent,
+            marginTop: px * 0.07,
+          }}
+        />
+      </div>
+    ),
+    { width: px, height: px, fonts: await loadFonts() },
   );
 }
