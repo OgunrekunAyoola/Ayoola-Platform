@@ -17,3 +17,7 @@ coverage/
 # OS / editor junk
 .DS_Store
 *.log
+
+# Local tooling and design explorations
+.claude/
+design/
