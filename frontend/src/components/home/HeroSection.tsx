@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Code, TrendingUp, Terminal, ArrowRight } from "lucide-react";
+import { Code, Terminal, ArrowRight } from "lucide-react";
 import { fadeUp } from "@/lib/motion";
 import FramedPortrait from "@/components/ui/FramedPortrait";
 
@@ -88,16 +88,7 @@ export default function HeroSection() {
               /systems/core
             </span>
           </div>
-          <div className="glass anim-floaty-b absolute bottom-14 -right-2.5 z-[3] rounded-[13px] px-[15px] py-3 hidden lg:flex flex-col gap-0.5">
-            <span className="font-mono text-[11px] text-[var(--muted)] flex items-center gap-1.5">
-              <TrendingUp className="w-3.5 h-3.5 text-[var(--accent)]" />
-              uptime
-            </span>
-            <span className="font-mono text-[20px] font-semibold text-[var(--foreground)]">
-              99.98%
-            </span>
-          </div>
-          <div className="glass anim-floaty absolute top-28 -right-0.5 z-[1] rounded-xl w-[46px] h-[46px] hidden lg:flex items-center justify-center text-[var(--accent)]">
+          <div className="glass anim-floaty-b absolute top-28 -right-0.5 z-[1] rounded-xl w-[46px] h-[46px] hidden lg:flex items-center justify-center text-[var(--accent)]">
             <Terminal className="w-5 h-5" />
           </div>
 

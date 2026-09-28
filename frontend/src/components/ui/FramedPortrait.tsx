@@ -77,12 +77,6 @@ export default function FramedPortrait({
               backgroundSize: "26px 26px",
             }}
           />
-          {!showPhoto && (
-            <div className="absolute left-4 bottom-4 font-mono text-[11px] text-[var(--muted)] tracking-[0.04em]">
-              {"// add your portrait"}
-            </div>
-          )}
-
           {showPhoto && (
             <Image
               src={src}

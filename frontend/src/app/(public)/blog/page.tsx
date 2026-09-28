@@ -1,27 +1,15 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { fetchPosts, Post } from "@/lib/api-client";
-import ReadingPathBuilder from "@/components/blog/ReadingPathBuilder";
+import { getAllWriting } from "@/lib/content";
 import { Metadata } from "next";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
-  title: "Blog | Ayoola",
+  title: "Blog",
   description: "Thoughts on software engineering, design, and technology.",
 };
 
-export default async function BlogPage() {
-  let posts: Post[] = [];
-  let error: string | null = null;
-
-  try {
-    const response = await fetchPosts(1, 100);
-    posts = response.data;
-  } catch (err) {
-    console.error("Failed to fetch posts:", err);
-    error = "Failed to load posts. Please try again later.";
-  }
+export default function BlogPage() {
+  const posts = getAllWriting();
 
   return (
     <section className="max-w-[920px] mx-auto px-5 sm:px-7 pt-20 pb-24">
@@ -36,13 +24,7 @@ export default async function BlogPage() {
         you didn&apos;t write.
       </p>
 
-      <ReadingPathBuilder postCount={posts.length} />
-
-      {error ? (
-        <div className="text-center py-20 glass rounded-2xl border border-red-500/20">
-          <p className="text-red-500">{error}</p>
-        </div>
-      ) : posts.length === 0 ? (
+      {posts.length === 0 ? (
         <div className="text-center py-20 glass rounded-2xl">
           <p className="text-[var(--muted)] text-lg">
             No posts published yet. Check back soon!
@@ -52,13 +34,13 @@ export default async function BlogPage() {
         <div className="flex flex-col">
           {posts.map((post) => (
             <Link
-              key={post._id}
+              key={post.slug}
               href={`/blog/${post.slug}`}
               className="group flex gap-6 items-start border-t border-[var(--hair)] py-6 px-1.5 transition-[padding] duration-300 hover:pl-3.5"
             >
               <span className="font-mono text-xs text-[var(--muted)] shrink-0 w-[60px] pt-1.5">
-                <time dateTime={post.publishedAt} suppressHydrationWarning>
-                  {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                <time dateTime={post.date} suppressHydrationWarning>
+                  {new Date(post.date).toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
                   })}
@@ -68,14 +50,14 @@ export default async function BlogPage() {
                 <span className="font-mono text-[11px] tracking-[0.08em] uppercase text-[var(--accent)]">
                   {post.tags?.[0] ?? "Writing"}
                 </span>
-                <span className="font-serif font-semibold text-[24px] leading-[1.18] tracking-tight text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors">
+                <h2 className="font-serif font-semibold text-[24px] leading-[1.18] tracking-tight text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors">
                   {post.title}
-                </span>
+                </h2>
                 <span className="text-[15px] text-[var(--muted)] leading-[1.55] line-clamp-2">
                   {post.excerpt}
                 </span>
                 <span className="font-mono text-xs text-[var(--muted)]">
-                  {post.readingTime} min read · {post.likeCount} likes
+                  {post.readingTime} min read
                 </span>
               </span>
               <ArrowUpRight className="w-5 h-5 text-[var(--accent)] shrink-0 mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity" />

@@ -1,4 +1,3 @@
-import NewsletterForm from "../newsletter/NewsletterForm";
 import Link from "next/link";
 
 export default function Footer() {
@@ -29,12 +28,6 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-5 text-sm text-[var(--muted)] font-medium pt-1">
               <Link
-                href="/admin/login"
-                className="hover:text-[var(--accent)] transition-colors"
-              >
-                Admin
-              </Link>
-              <Link
                 href="/feed.xml"
                 className="hover:text-[var(--accent)] transition-colors"
               >
@@ -57,18 +50,6 @@ export default function Footer() {
                 {link.label}
               </Link>
             ))}
-          </div>
-
-          {/* Newsletter */}
-          <div className="glass rounded-2xl p-[22px] max-w-[340px] w-full">
-            <h4 className="font-serif font-semibold text-[18px] text-[var(--foreground)] mb-1.5">
-              The systems notebook
-            </h4>
-            <p className="text-[13.5px] text-[var(--muted)] leading-snug mb-3.5">
-              Occasional notes on building durable software. No spam,
-              unsubscribe anytime.
-            </p>
-            <NewsletterForm source="footer" />
           </div>
         </div>
 

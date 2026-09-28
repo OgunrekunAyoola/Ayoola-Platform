@@ -1,19 +1,12 @@
 import Link from "next/link";
-import { Project } from "@/lib/api-client";
-import { ArrowUpRight, FolderGit2, Layers, FlaskConical } from "lucide-react";
+import { WorkEntry } from "@/lib/content";
+import { ArrowUpRight, Layers } from "lucide-react";
 
 interface ProjectCardProps {
-  project: Project;
+  project: WorkEntry;
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
-  const Icon =
-    project.category === "systems"
-      ? Layers
-      : project.category === "experiments"
-        ? FlaskConical
-        : FolderGit2;
-
   return (
     <Link
       href={`/portfolio/${project.slug}`}
@@ -29,9 +22,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             backgroundSize: "22px 22px",
           }}
         />
-        <Icon className="absolute left-[22px] top-[22px] w-[26px] h-[26px] text-[var(--accent)]" />
+        <Layers className="absolute left-[22px] top-[22px] w-[26px] h-[26px] text-[var(--accent)]" />
         <span className="absolute right-[18px] bottom-4 font-mono text-[11px] text-[var(--muted)]">
-          {project.techStack?.slice(0, 3).join(" · ")}
+          {project.stack?.slice(0, 3).join(" · ")}
         </span>
         <ArrowUpRight className="absolute right-4 top-4 w-5 h-5 text-[var(--muted)] group-hover:text-[var(--accent)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300" />
       </div>
@@ -42,7 +35,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             {project.title}
           </h3>
           <span className="font-mono text-[11px] text-[var(--accent)] border border-[var(--accent-line)] rounded-full px-2.5 py-[3px] shrink-0">
-            {new Date(project.createdAt).getFullYear()}
+            {project.year}
           </span>
         </div>
 

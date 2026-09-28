@@ -1,9 +1,9 @@
 import RSS from "rss";
-import { Post } from "@/lib/api-client";
+import { getAllWriting } from "@/lib/content";
+import { getSiteUrl } from "@/lib/site-url";
 
 export async function GET() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
+  const baseUrl = getSiteUrl();
 
   const feed = new RSS({
     title: "Ayoola Ogunrekun",
@@ -15,23 +15,15 @@ export async function GET() {
     pubDate: new Date(),
   });
 
-  try {
-    const res = await fetch(`${apiUrl}/posts?limit=20`);
-    const data = await res.json();
-    const posts = data.data || [];
-
-    posts.forEach((post: Post) => {
-      feed.item({
-        title: post.title,
-        description: post.excerpt,
-        url: `${baseUrl}/blog/${post.slug}`,
-        date: post.publishedAt || post.createdAt || new Date().toISOString(),
-        author: "Ayoola Ogunrekun",
-        categories: post.tags,
-      });
+  for (const post of getAllWriting()) {
+    feed.item({
+      title: post.title,
+      description: post.excerpt,
+      url: `${baseUrl}/blog/${post.slug}`,
+      date: post.date,
+      author: "Ayoola Ogunrekun",
+      categories: post.tags,
     });
-  } catch (error) {
-    console.error("RSS: Error fetching posts", error);
   }
 
   return new Response(feed.xml({ indent: true }), {

@@ -1,15 +1,11 @@
-import { fetchPost, fetchComments, Comment } from "@/lib/api-client";
+import { getAllWriting, getWritingBySlug } from "@/lib/content";
 import ReactMarkdown from "react-markdown";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Metadata } from "next";
 import { ArrowLeft } from "lucide-react";
-import LikeButton from "@/components/blog/LikeButton";
 import ShareButton from "@/components/ui/ShareButton";
-import CommentList from "@/components/blog/CommentList";
-import CommentForm from "@/components/blog/CommentForm";
-import NewsletterForm from "@/components/newsletter/NewsletterForm";
-import AskAyoolaWidget from "@/components/blog/AskAyoolaWidget";
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -17,52 +13,42 @@ interface BlogPostPageProps {
   }>;
 }
 
+export function generateStaticParams() {
+  return getAllWriting().map((post) => ({ slug: post.slug }));
+}
+
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
-  try {
-    const post = await fetchPost(slug);
-    return {
-      title: `${post.title} | Ayoola`,
-      description: post.excerpt,
-      openGraph: {
-        title: post.title,
-        description: post.excerpt,
-        type: "article",
-        publishedTime: post.publishedAt,
-        authors: ["Ayoola Ogunrekun"],
-        tags: post.tags,
-        images: post.heroImage ? [post.heroImage] : undefined,
-      },
-      twitter: {
-        card: "summary_large_image",
-        title: post.title,
-        description: post.excerpt,
-        images: post.heroImage ? [post.heroImage] : undefined,
-      },
-    };
-  } catch {
-    return {
-      title: "Post Not Found | Ayoola",
-    };
+  const post = getWritingBySlug(slug);
+  if (!post) {
+    return { title: "Post Not Found" };
   }
+  return {
+    title: post.title,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: "article",
+      publishedTime: post.date,
+      authors: ["Ayoola Ogunrekun"],
+      tags: post.tags,
+      images: post.heroImage ? [post.heroImage] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: post.heroImage ? [post.heroImage] : undefined,
+    },
+  };
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  let post;
-  let comments: Comment[] = [];
-
-  try {
-    post = await fetchPost(slug);
-    if (post) {
-      comments = await fetchComments(post._id);
-    }
-  } catch (error) {
-    console.error("Error fetching post:", error);
-    notFound();
-  }
+  const post = getWritingBySlug(slug);
 
   if (!post) {
     notFound();
@@ -92,8 +78,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             Ayoola Ogunrekun
           </span>
           <span className="font-mono text-xs text-[var(--muted)]">
-            <time dateTime={post.publishedAt} suppressHydrationWarning>
-              {new Date(post.publishedAt).toLocaleDateString("en-US", {
+            <time dateTime={post.date} suppressHydrationWarning>
+              {new Date(post.date).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
@@ -102,44 +88,27 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </span>
         </span>
         <div className="flex items-center gap-2 ml-auto">
-          <LikeButton postId={post._id} initialLikes={post.likeCount} />
           <ShareButton title={post.title} text={post.excerpt} />
         </div>
       </div>
 
       {/* Hero Image */}
       {post.heroImage && (
-        <div className="mb-10 rounded-2xl overflow-hidden border border-[var(--card-border)]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+        <div className="relative mb-10 aspect-[16/9] rounded-2xl overflow-hidden border border-[var(--card-border)]">
+          <Image
             src={post.heroImage}
             alt={post.title}
-            className="w-full h-auto object-cover max-h-[500px]"
+            fill
+            sizes="(max-width: 720px) 100vw, 720px"
+            className="object-cover"
           />
         </div>
       )}
 
       {/* Content */}
       <div className="prose dark:prose-invert prose-lg max-w-none prose-headings:font-serif prose-headings:tracking-tight prose-a:text-[var(--accent)] prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-blockquote:border-l-[var(--accent)] prose-blockquote:font-serif prose-blockquote:not-italic">
-        <ReactMarkdown>{post.content || ""}</ReactMarkdown>
+        <ReactMarkdown>{post.content}</ReactMarkdown>
       </div>
-
-      {/* AI Widget */}
-      <AskAyoolaWidget postId={post._id} />
-
-      {/* Newsletter Signup */}
-      <div className="my-14 glass rounded-2xl p-8">
-        <NewsletterForm source="blog_post_footer" />
-      </div>
-
-      {/* Comments */}
-      <footer className="mt-14 pt-8 border-t border-[var(--hair)]">
-        <h3 className="font-serif text-2xl font-bold text-[var(--foreground)] mb-5">
-          Comments ({post.commentCount})
-        </h3>
-        <CommentList comments={comments} />
-        <CommentForm postId={post._id} />
-      </footer>
     </article>
   );
 }
