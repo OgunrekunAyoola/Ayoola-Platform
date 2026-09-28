@@ -13,6 +13,9 @@ interface ProjectPageProps {
   }>;
 }
 
+// Only pre-built slugs exist; anything else (including drafts in production) is a real 404.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getAllWork().map((project) => ({ slug: project.slug }));
 }

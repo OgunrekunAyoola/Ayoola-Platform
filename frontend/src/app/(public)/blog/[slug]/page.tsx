@@ -13,6 +13,9 @@ interface BlogPostPageProps {
   }>;
 }
 
+// Only pre-built slugs exist; anything else (including drafts in production) is a real 404.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getAllWriting().map((post) => ({ slug: post.slug }));
 }
