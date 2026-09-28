@@ -5,6 +5,7 @@ import "./globals.css";
 import { ToastProvider } from "@/context/ToastContext";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { getSiteUrl } from "@/lib/site-url";
+import { site } from "@/config/site";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,14 +33,14 @@ export const metadata: Metadata = {
     default: "Ayoola Ogunrekun",
     template: "%s | Ayoola Ogunrekun",
   },
-  description: "Writer, Software Engineer, Expert, Entrepreneur, Creator",
+  description: site.description,
   keywords: [
     "Ayoola Ogunrekun",
-    "Software Engineer",
-    "Writer",
-    "Entrepreneur",
-    "Blog",
-    "Portfolio",
+    "AI Systems Engineer",
+    "Production AI",
+    "Multi-agent systems",
+    "LLM pipelines",
+    "AWS",
   ],
   authors: [{ name: "Ayoola Ogunrekun" }],
   creator: "Ayoola Ogunrekun",
@@ -57,7 +58,7 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "Ayoola Ogunrekun",
     title: "Ayoola Ogunrekun",
-    description: "Writer, Software Engineer, Expert, Entrepreneur, Creator",
+    description: site.description,
     images: [
       {
         url: "/og-image.jpg",
@@ -70,7 +71,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Ayoola Ogunrekun",
-    description: "Writer, Software Engineer, Expert, Entrepreneur, Creator",
+    description: site.description,
     images: ["/og-image.jpg"],
   },
   robots: {

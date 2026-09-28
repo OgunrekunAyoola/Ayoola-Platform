@@ -20,7 +20,7 @@ export default function Home() {
     name: site.name,
     url: siteUrl || undefined,
     jobTitle: site.jobTitle,
-    sameAs: [site.socials.github, site.socials.linkedin].filter(Boolean),
+    sameAs: [site.githubUrl, site.linkedinUrl].filter(Boolean),
   };
 
   return (

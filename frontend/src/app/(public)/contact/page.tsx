@@ -10,9 +10,9 @@ export const metadata = {
 
 export default function Contact() {
   const socialLinks = [
-    { href: site.socials.github, Icon: Github, label: "GitHub" },
-    ...(site.socials.linkedin
-      ? [{ href: site.socials.linkedin, Icon: Linkedin, label: "LinkedIn" }]
+    { href: site.githubUrl, Icon: Github, label: "GitHub" },
+    ...(site.linkedinUrl
+      ? [{ href: site.linkedinUrl, Icon: Linkedin, label: "LinkedIn" }]
       : []),
   ];
 

@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { site } from "@/config/site";
 
 export default function Footer() {
   const exploreLinks = [
-    { label: "Portfolio", href: "/portfolio" },
-    { label: "Services", href: "/services" },
-    { label: "Blog", href: "/blog" },
+    { label: "Work", href: "/portfolio" },
+    { label: "Work with me", href: "/work-with-me" },
+    { label: "Writing", href: "/blog" },
     { label: "About", href: "/about" },
   ];
 
@@ -23,8 +24,8 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm text-[var(--muted)] leading-relaxed">
-              Writer, software engineer, and creator. Building systems that ship
-              — and keep shipping.
+              AI systems engineer building production AI that real teams can
+              rely on.
             </p>
             <div className="flex items-center gap-5 text-sm text-[var(--muted)] font-medium pt-1">
               <Link
@@ -58,7 +59,7 @@ export default function Footer() {
             © {new Date().getFullYear()} Ayoola Ogunrekun
           </span>
           <span className="font-mono text-[12.5px] text-[var(--muted)]">
-            Built with intent · Lagos 🇳🇬
+            {site.location}
           </span>
         </div>
       </div>

@@ -1,13 +1,14 @@
 import RSS from "rss";
 import { getAllWriting } from "@/lib/content";
 import { getSiteUrl } from "@/lib/site-url";
+import { site } from "@/config/site";
 
 export async function GET() {
   const baseUrl = getSiteUrl();
 
   const feed = new RSS({
     title: "Ayoola Ogunrekun",
-    description: "Writer, Software Engineer, Expert, Entrepreneur, Creator",
+    description: site.description,
     site_url: baseUrl,
     feed_url: `${baseUrl}/feed.xml`,
     copyright: `${new Date().getFullYear()} Ayoola Ogunrekun`,

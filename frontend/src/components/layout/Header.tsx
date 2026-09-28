@@ -5,18 +5,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
+import { site, bookingHref, bookingLinkProps } from "@/config/site";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
   const navItems = [
-    { label: "Home", href: "/" },
+    { label: "Work", href: "/portfolio" },
+    { label: "Work with me", href: "/work-with-me" },
+    { label: "Writing", href: "/blog" },
     { label: "About", href: "/about" },
-    { label: "Portfolio", href: "/portfolio" },
-    { label: "Services", href: "/services" },
-    { label: "Blog", href: "/blog" },
-    { label: "Contact", href: "/contact" },
   ];
 
   const isActive = (href: string) =>
@@ -39,7 +38,7 @@ export default function Header() {
               Ayoola Ogunrekun
             </span>
             <span className="font-mono text-[11px] text-[var(--muted)] tracking-[0.02em]">
-              systems · writing · craft
+              {site.tagline}
             </span>
           </span>
         </Link>
@@ -63,10 +62,11 @@ export default function Header() {
         <div className="flex items-center gap-2.5">
           <ThemeToggle />
           <Link
-            href="/contact"
+            href={bookingHref}
+            {...bookingLinkProps}
             className="btn btn-primary hidden sm:inline-flex !px-[18px] !py-2.5 !text-sm"
           >
-            Start a project
+            Book a call
           </Link>
 
           {/* Mobile menu toggle */}
@@ -111,11 +111,12 @@ export default function Header() {
             ))}
             <li className="px-6 pt-3 pb-1">
               <Link
-                href="/contact"
+                href={bookingHref}
+                {...bookingLinkProps}
                 className="btn btn-primary w-full"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Start a project
+                Book a call
               </Link>
             </li>
           </ul>
