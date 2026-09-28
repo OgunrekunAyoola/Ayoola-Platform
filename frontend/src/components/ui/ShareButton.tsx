@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ShareIcon, CheckIcon, ClipboardDocumentIcon } from "@heroicons/react/24/outline";
+import { Share2, Check, Clipboard } from "lucide-react";
 import { useToast } from "@/context/ToastContext";
 
 interface ShareButtonProps {
@@ -61,11 +61,11 @@ export default function ShareButton({
       title="Share"
     >
       {copied ? (
-        <CheckIcon className="w-5 h-5 text-green-500" />
+        <Check className="w-5 h-5 text-green-500" />
       ) : typeof navigator.share === "function" ? (
-        <ShareIcon className="w-5 h-5 text-[var(--muted)] hover:text-[var(--foreground)]" />
+        <Share2 className="w-5 h-5 text-[var(--muted)] hover:text-[var(--foreground)]" />
       ) : (
-        <ClipboardDocumentIcon className="w-5 h-5 text-[var(--muted)] hover:text-[var(--foreground)]" />
+        <Clipboard className="w-5 h-5 text-[var(--muted)] hover:text-[var(--foreground)]" />
       )}
     </button>
   );
