@@ -20,6 +20,8 @@ export interface WorkFrontmatter {
   featured: boolean;
   order: number;
   links?: WorkLinks;
+  /** Drafts render in `next dev` only. */
+  draft?: boolean;
 }
 
 export interface WorkEntry extends WorkFrontmatter {
@@ -35,13 +37,28 @@ export interface WritingFrontmatter {
   readingTime: number;
   /** Optional hero image path; not part of the required schema. */
   heroImage?: string;
+  /** Drafts render in `next dev` only. */
+  draft?: boolean;
 }
 
 export interface WritingEntry extends WritingFrontmatter {
   content: string;
 }
 
-function readMdxEntries<T>(dirName: string): (T & { content: string })[] {
+/**
+ * Drafts are visible in development and hidden everywhere in production:
+ * listings, detail pages, the sitemap and RSS all read through here.
+ */
+export function isPublished(
+  frontmatter: { draft?: unknown },
+  nodeEnv: string | undefined = process.env.NODE_ENV,
+): boolean {
+  return nodeEnv !== "production" || frontmatter.draft !== true;
+}
+
+function readMdxEntries<T extends { draft?: boolean }>(
+  dirName: string,
+): (T & { content: string })[] {
   const dir = path.join(CONTENT_DIR, dirName);
   if (!fs.existsSync(dir)) return [];
 
@@ -52,7 +69,8 @@ function readMdxEntries<T>(dirName: string): (T & { content: string })[] {
       const raw = fs.readFileSync(path.join(dir, file), "utf8");
       const { data, content } = matter(raw);
       return { ...(data as T), content: content.trim() };
-    });
+    })
+    .filter((entry) => isPublished(entry));
 }
 
 /** Featured case studies first, then by `order`. */
