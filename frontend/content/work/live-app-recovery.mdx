@@ -1,0 +1,94 @@
+---
+title: Taking over a live booking app with no source repository
+slug: live-app-recovery
+summary: "A salon-booking marketplace was live with no source repository, no schema and no way into its database. I got the code back, proved it matched production, and closed two account-takeover paths."
+client: Salon marketplace, via an agency
+role: Sole engineer
+year: 2026
+status: Recovered, secured and switched over
+stack:
+  - Next.js
+  - React
+  - TypeScript
+  - Supabase
+  - PostgreSQL (RLS)
+  - Stripe
+  - Vercel
+  - GitHub Actions
+featured: true
+order: 3
+facts:
+  - value: "2"
+    label: live account-takeover paths closed, plus one blocked before it shipped
+  - value: "51"
+    label: row-level security policies, checked by 47 adversarial tests in CI
+  - value: "5,438"
+    label: lines of dead or fabricated code removed
+  - value: "20 days"
+    label: and 26 pull requests, from recovered source to handover
+diagram:
+  caption: "No AI in the product. Recovery, the schema, the new database and the auth fixes all landed in the first three days."
+  stages:
+    - label: Live deployment
+      nodes: [The hosting platform's copy, Original database]
+    - label: Recover source
+      nodes: [Deployment-files API, New git repository, Commit match and live probes]
+    - label: Rebuild the schema
+      nodes: [Every query call mined, "Columns tagged written, read or guessed"]
+    - label: New database
+      nodes: [21 tables, 51 RLS policies, 47 adversarial tests in CI]
+    - label: Harden auth
+      nodes: [Cookie sessions, Identity from the session only, Role-gated middleware]
+    - label: Switch over
+      nodes: [Point at the new database, Import data, Rotate credentials]
+# Anonymised: don't add client, product or agency names without their OK.
+---
+
+## Context
+
+A salon-booking marketplace was live: customers search salons and book services, owners manage staff and bookings, with Stripe subscriptions and email on top. It ran on Next.js and Supabase, hosted on Vercel.
+
+There was no source repository, no copy of the database schema, and no way into the database's admin dashboard. The client asked me to take it over and make it safe to keep running.
+
+## My role
+
+I was the only engineer, on contract through an agency, working with a coding agent. I ran the recovery, made the decisions, and reviewed and merged every change.
+
+## The problem
+
+With no repository, nothing could be changed safely. The database was the only thing standing between users: the browser held the public key, the middleware did nothing, and the original row-level security policies were part of what had been lost.
+
+So I had to get the code back, prove it was what was actually running, and work out a schema nobody could see.
+
+<!-- diagram -->
+
+## Key decisions
+
+**Recover the source from the hosting platform.** We still had the hosting account, and that turned out to be enough. The app had been deployed from the command line, so the platform had kept the uploaded files, and its API lists a deployment's file tree and returns each file. I wrote a short script that found the latest production deployment and wrote every file to disk. There were no bundles to de-minify. After our first merges, the live deployment's commit matched our main branch, and three probes behaved the way only our code would.
+
+**Rebuild the schema from the code, and don't guess what the code can't prove.** I parsed every query call and collected the columns it selected, filtered on, inserted and updated. Then I tagged each column as written by the app, read by it, or only inferred. That found 24 tables. Hand-written SQL scripts that survived in the deployment agreed with it on the two main tables. Status columns stayed unconstrained, because one constraint guessed from observed values would have broken the payment webhook.
+
+**Build a new database next to the old one** instead of patching a schema nobody could see. It has 21 tables, with row-level security written from scratch as the only isolation. Cross-table checks live in security-definer functions so the policies don't recurse.
+
+**Prove the policies with no credentials.** A script builds the database in a throwaway container and runs adversarial tests: clients reading other clients' bookings, owners editing other salons, users raising their own role. Positive controls stop the suite from passing by denying everything. It runs in CI.
+
+**Keep the scope tight on a site with no staging.** Branch protection with three required checks, and no rewrite of the two huge dashboard components. I removed 5,438 lines of dead code, including admin pages that displayed invented numbers.
+
+## The hard part
+
+Mapping the schema turned up two ways to take over accounts:
+
+- admin routes that ran with full database privileges took the acting admin's identity from a field in the request body;
+- sign-up stored passwords with reversible "encryption", and the email-verification endpoint sent the plaintext password back to the browser.
+
+Fixing the first needed something nobody had noticed. Sessions lived in browser storage, so the server could never tell who was calling: server-side authorization wasn't just missing, it was impossible.
+
+I moved sessions to cookies and made every admin route take identity from the validated session. I deleted the password flow in favour of a magic link, and made the middleware gate pages by role. A static check of ten rules keeps it that way, because CI has no running server to test against.
+
+Later, before switching on social sign-in, I closed a hole the new flow would have opened: a first-time Google user could have created their own profile with an admin role.
+
+## Where it stands
+
+The recovery is finished. Production runs on the new database, behind the rebuilt policies and their tests. The repository serves the live site, and every merge deploys through required checks.
+
+One surprise came in the third week: the old database could be read after all, through the hosting environment. It had 30 tables, nine more than my rebuild, so the data import had to account for what the code alone hadn't shown.

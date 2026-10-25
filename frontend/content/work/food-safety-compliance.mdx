@@ -1,0 +1,113 @@
+---
+title: Food-safety logbooks that have to feel like three taps
+slug: food-safety-compliance
+summary: "A compliance SaaS for food businesses, built to a public pilot in six weeks. The database refuses deletes, the AI only proposes, and a named person confirms every record."
+client: Food-safety SaaS, via an agency
+role: Sole engineer, directing coding agents
+year: 2026
+status: Public pilot; no customers yet
+stack:
+  - TypeScript
+  - NestJS
+  - Prisma
+  - PostgreSQL 17
+  - Redis
+  - BullMQ
+  - S3-compatible storage
+  - React 19 PWA
+  - Docker
+featured: true
+order: 2
+facts:
+  - value: "6 weeks"
+    label: from first commit to a public pilot on its own domain
+  - value: "1,833"
+    label: integration tests in the last full run, against real Postgres, Redis and storage
+  - value: "199"
+    label: pull requests merged
+  - value: "9 of 26"
+    label: critical readiness items met, by my own checklist
+diagram:
+  caption: "The model can only propose. Nothing becomes a record until a named person confirms it, and once it's a record the database won't let anyone edit or delete it."
+  stages:
+    - label: Capture
+      nodes: [Phone web app that works offline, Photo or PDF, Outbox with device-made IDs]
+    - label: Intake
+      nodes: [NestJS API, Write-once storage for the original, Job queue]
+    - label: Reading
+      nodes: [Vision model behind a port, Shrunk copy only, Raw answer kept as a proposal]
+      marker: model
+    - label: Confirm
+      nodes: [Supplier and item matching, Warnings for warm or expired goods, Every guess answered]
+      marker: human
+    - label: Record store
+      nodes: [Postgres with RLS per company, Versioned records with no deletes, Insert-only audit log]
+    - label: Reports
+      nodes: [Logbook PDFs, Read-only inspection mode, Full ZIP export]
+# Anonymised: don't add client, product or agency names without their OK.
+# Don't name the country either.
+---
+
+## Context
+
+Food businesses have to keep self-control logbooks: what was delivered and at what temperature, fridge readings, cleaning, pest control, training, disposal. Most keep them on paper.
+
+The client wanted a phone app where a cook photographs a delivery note, the system reads it, and a person confirms it in under thirty seconds. Every logbook also had to be printable for an inspector.
+
+## My role
+
+I was the only engineer, on contract through an agency, and I ran the work as a team of coding agents:
+
+- a lead session planned the work and kept the status file;
+- builder agents worked in parallel, each on its own branch with its own database, so an unmerged migration never reached another lane;
+- reviewer agents checked every pull request against a fixed brief. They re-ran the tests and reverted each fix to prove its new test failed without it.
+
+The agents couldn't merge or touch the server. I directed the architecture and wrote the review brief. I also made the product and operational calls, merged every pull request, ran every deploy, and decided when something was done.
+
+## The problem
+
+The app has two jobs that pull against each other. It has to be quick, and it has to produce records an inspector will believe:
+
+- it should feel like three taps, but nothing is recorded without a named person confirming it;
+- the AI should do the typing, but its raw output has to survive uncorrected;
+- people must be able to fix mistakes, but no record can ever be edited or deleted;
+- the phone has to work with no signal, and the system still has to prove when an entry arrived.
+
+<!-- diagram -->
+
+## Key decisions
+
+**Immutability lives in the database.** The app's database role has no DELETE or TRUNCATE grant, and the audit log is insert-only. A correction inserts a new version with a reason, and a partial unique index keeps exactly one live version per record. One careless code path could undo a rule kept only in application code. A grant holds anyway.
+
+**Tenant isolation is row-level security plus an explicit company filter on every query.** In a compliance product, one leaked row is a trust problem you don't recover from. Filtering in code alone is one forgotten clause away from that.
+
+**The AI only proposes.** Document reading runs in the background behind a port, with fixture, manual-entry and model adapters, so the product was built and demonstrated before a provider was chosen. The original photo is stored untouched, the model gets a shrunk copy, and its raw answer is kept exactly as it came back. No code path runs from a reading to a record, and an integration test checks that. Auto-saving high-confidence readings was ruled out from the start.
+
+**Offline writes carry an ID made on the device, and every write is idempotent.** A queue replayed twice makes one record. A replay with different content becomes a correction, and the conflict is shown.
+
+**The incoming-goods logbook is a view over documents and batches, not its own table.** That way it can't disagree with the traceability chain that disposal records depend on.
+
+## The hard part
+
+Row-level security didn't isolate everything. Three read policies deliberately span every company a person belongs to, because sign-in and the site switcher need that. During review of the reports work, a reviewer found that someone in two companies could read one company's site through the other's pages. It was live on the test server, with test data only.
+
+We pinned every such query to the request's company, background jobs included. Then I added a gate with two halves:
+
+- a database half that lists every policy not tied to the current company, and fails if a new one appears;
+- a source half that parses the code with the TypeScript compiler, and fails any site or membership query that doesn't name its company.
+
+The commit records eight deliberate breaks, and each one turned the gate red. A QA pass had earlier found the write-side version of the same mistake. Database triggers on every table that carries both a site and a company now block it.
+
+## Where it stands
+
+It has run on its own domain with HTTPS since October 2026 as a pilot, and the client has tested it there. It isn't ready for real customer data, and my own readiness checklist says so: 9 of 26 critical items are met.
+
+Still to do:
+
+- a dedicated server, backups with a tested restore, and alerting;
+- encryption at rest;
+- real email and password reset;
+- the legal paperwork;
+- testing on real phones.
+
+The accuracy targets haven't been measured yet, because they need a hundred real supplier documents from the client. No pilot sites have started.

@@ -1,0 +1,81 @@
+---
+title: Turning an agency CRM into a SaaS
+slug: agency-crm
+summary: "Taking a CRM one agency ran its business on and getting it ready for strangers to pay for: tenant isolation by default, and subscription billing that survives Stripe's retries."
+client: Digital agency client
+role: Lead engineer
+year: 2026
+status: In use; billing not yet live
+stack:
+  - C#
+  - .NET 8
+  - ASP.NET Core
+  - EF Core
+  - PostgreSQL
+  - Hangfire
+  - Stripe
+  - Next.js
+featured: false
+order: 6
+facts:
+  - value: "149"
+    label: xUnit tests, including cross-tenant read, update and delete checks
+  - value: "20"
+    label: billing failure modes found in my review of the first version
+  - value: "18 of 19"
+    label: client-reported issues verified end to end on the live build
+diagram:
+  caption: "No AI. The tenant filter sits under every query, and Stripe's own records are the final word on who has access."
+  stages:
+    - label: Agency user
+      nodes: [Next.js app, httpOnly cookies]
+    - label: API edge
+      nodes: [ASP.NET Core, 15-minute access tokens, Subscription gate]
+    - label: Application and domain
+      nodes: [CRM and deals, Projects and time, Contracts and invoices]
+    - label: Tenant-scoped data
+      nodes: [EF Core global filter, PostgreSQL]
+    - label: Billing loop
+      nodes: [Signed webhooks, Event dedupe table, Ordering guard, Daily reconciliation]
+# Anonymised: don't add client, product or agency names without their OK.
+---
+
+## Context
+
+This started as the CRM one digital agency used to run its own work: clients and leads, proposals, projects and time tracking, contracts with e-signature, and invoicing. In 2026 the agency decided to sell it to other agencies as a self-serve product, with a free trial and a monthly plan per workspace.
+
+## My role
+
+I was the lead engineer, through an agency engagement, and wrote most of the code. Another developer worked on auth and the frontend for a week in April. I worked with coding agents and owned the design and the reviews. It's a .NET 8 API in a clean-architecture layout, with a Next.js front end.
+
+## The problem
+
+Turning a working single-agency tool into something strangers pay for comes down to three things. Tenant isolation people can trust. Billing that can't grant or revoke access by mistake. And an access gate that follows the billing state.
+
+<!-- diagram -->
+
+## Key decisions
+
+**Isolation as the default.** Every business record carries a tenant ID. An EF Core global query filter applies it to every query, and the tenant is stamped on insert from the signed-in user's token, so no developer has to remember it. Skipping the filter has to be written out explicitly, and that happens in three places. Integration tests sign in as one tenant and try to read, update and delete another tenant's records by ID. They expect a 404 and no change.
+
+**Short-lived sessions.** Access tokens last 15 minutes and refresh tokens 7 days, both in httpOnly cookies that browser JavaScript can't read. Every refresh rotates the token and revokes the old one.
+
+**Stripe as the source of truth.** A webhook is treated as a hint. A daily job asks Stripe for each workspace's real subscription state and corrects any drift, so a missed webhook heals within a day instead of meaning free access forever.
+
+## The hard part
+
+Stripe delivers webhooks at least once and not always in order. A careless handler grants access before payment clears, or lets a late event bring a cancelled workspace back to life. My review of the first billing version found 20 problems of this kind. The rework:
+
+- records every event ID under a unique index and skips duplicates inside a transaction;
+- applies a state change only if the event is newer than the last one applied;
+- activates a workspace only when the checkout is actually paid;
+- returns a 500 on transient errors so Stripe retries, and a 400 on bad signatures;
+- gives past-due workspaces a grace window before they lock.
+
+One race is documented rather than fixed: two different events for the same subscription arriving at the same instant. The ordering guard and the daily reconciliation converge it, and the full fix was deferred.
+
+## Where it stands
+
+The app is deployed and the agency uses it every day. In July I worked through 19 issues the client had reported, and verified 18 of them end to end on the live build.
+
+Billing isn't switched on in production yet. The hardened webhook handling is written but still on a branch. It needs webhook tests, updates to two unit tests that still assert the old entitlement rules, and a merge before real cards go through it. Tax handling and plan selection are still to do, and I want the integration suite back in CI, which currently runs only the unit tests.

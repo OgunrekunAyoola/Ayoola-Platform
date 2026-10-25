@@ -1,0 +1,86 @@
+---
+title: "OpsFlow: a WhatsApp order desk where the AI never touches the money"
+slug: opsflow
+summary: "My own product for Lagos vendors who sell on WhatsApp. Fixed code runs before and after the model, so it can answer customers but can never confirm a payment."
+client: My own product
+role: Founder and sole engineer
+year: 2026
+status: Pre-pilot; not deployed
+stack:
+  - TypeScript
+  - Node.js
+  - MongoDB Atlas
+  - Atlas Vector Search
+  - Redis
+  - BullMQ
+  - Claude on Bedrock
+  - AWS Lambda
+  - Next.js
+  - Expo
+featured: false
+order: 5
+facts:
+  - value: "24 of 24"
+    label: scripted conversations passed in the latest eval run
+  - value: "5 of 5"
+    label: required escalations caught, with zero over-promises
+  - value: "1,014"
+    label: backend tests passing at the last code release
+  - value: "80"
+    label: architecture decision records
+diagram:
+  caption: "The model runs in one stage only. Fixed code sits on both sides of it, and anything about money ends with a person."
+  stages:
+    - label: Inbound
+      nodes: [WhatsApp Cloud API, Lambda gateway, Signature check]
+    - label: Intake
+      nodes: [Dedupe, Consent and kill switch, Vendor takeover]
+    - label: Fence
+      nodes: [Opt-outs, Distress goes straight to a person]
+    - label: Conversation
+      nodes: [Claude on Bedrock, PII masked first, Catalog search, No money tools]
+      marker: model
+    - label: Output gate
+      nodes: [Hold payment claims, Hold money commitments, Outbound checks]
+    - label: Vendor desk
+      nodes: [Web desk, Expo mobile app, Held drafts reviewed]
+      marker: human
+---
+
+## Context
+
+In Lagos a lot of retail runs through WhatsApp and Instagram. Vendors answer every chat themselves, or hire someone to, and they lose sales after hours. Prices often live in the vendor's head. Payment is a bank transfer plus a screenshot, which software should never pretend to verify.
+
+OpsFlow is my attempt at that job. It learns the vendor's prices and stock, answers customers, and hands the hard cases to a person.
+
+## My role
+
+It's my own product. I own the product decisions, the architecture and all of the code, written with coding agents that I direct, review and test. The reasoning lives in 80 architecture decision records.
+
+It's six TypeScript repositories. A small AWS Lambda gateway receives WhatsApp webhooks. A core service holds the API, the workers, a web desk and an Expo mobile app. Four shared libraries cover contracts, the data and LLM layer, the conversation orchestrator, and a vendor "domain pack". Data lives in MongoDB with Atlas Vector Search, and the model is Claude on AWS Bedrock.
+
+<!-- diagram -->
+
+## Key decisions
+
+**A gateway with no business logic.** The Lambda checks the webhook signature, looks up the tenant, normalises the message, queues it and answers Meta straight away. WhatsApp access tokens never leave core, so a compromised gateway yields nothing useful.
+
+**Fixed code on both sides of the model.** Every message runs through the same sequence: a fence, the model, then an output gate. The fence sends opt-outs and signs of real distress to a person before any model call. If the model or the gate fails, the conversation escalates instead of sending.
+
+**A written failure policy.** Every side effect is classed as fail-closed, must-be-visible or fail-open. Masking personal data before anything goes to the model is fail-closed: if masking fails, the call is blocked. So is the daily spend cap. Over budget, work queues instead of being dropped.
+
+## The hard part
+
+Stopping the AI from ever confirming a payment. Customers ask about money in endless ways, in English, Pidgin and Yoruba, with typos: "did my money enter?" A keyword filter on incoming messages leaks and can be beaten by rephrasing, so I retired the one I had. Money safety now comes from three layers:
+
+1. **No capability.** Payment and order tools are marked human-only and stripped from the model's toolset, and that's checked at startup. The model has nothing to confirm a payment with.
+2. **Instruction.** The prompt tells it to defer and escalate money and order questions, in any language.
+3. **A deterministic output gate.** The bot's draft reply is checked for payment claims, money commitments and claims the vendor hasn't backed, and anything flagged waits for a person. Checking what the bot is about to say is much harder to get around than guessing what the customer meant.
+
+I measure this with 24 scripted conversations, graded on outcomes: did it escalate when it had to, hold back when it shouldn't, and never over-promise? The latest run passed all 24, caught all 5 required escalations and made no over-promises, for about 12 cents. The eval is wired into CI as a manual job, because every run costs real money.
+
+## Where it stands
+
+OpsFlow isn't deployed and has no vendors yet. In June 2026 Meta launched its own AI agent for WhatsApp businesses. In August I tried it as a customer of a real Lagos vendor, and it couldn't price a product from that vendor's own ad. That changed the plan. Answering is becoming free, so OpsFlow has to own what comes after: setting up the catalog with the vendor, and taking a chat all the way to a confirmed order.
+
+That order loop isn't built yet: the receipt, a one-tap confirmation from the vendor, then the AI collecting the address. The gateway doesn't pass receipt images through yet either. Talking to vendors comes first, then that build.
