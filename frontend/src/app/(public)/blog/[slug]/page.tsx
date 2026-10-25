@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
 import ShareButton from "@/components/ui/ShareButton";
+import { getSite } from "@/lib/site-content";
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -35,7 +36,7 @@ export async function generateMetadata({
       description: post.excerpt,
       type: "article",
       publishedTime: post.date,
-      authors: ["Ayoola Ogunrekun"],
+      authors: [getSite().name],
       tags: post.tags,
       images: post.heroImage ? [post.heroImage] : undefined,
     },
@@ -77,7 +78,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           a
         </span>
         <span className="flex flex-col gap-0.5">
-          <span className="text-[15px] font-semibold">Ayoola Ogunrekun</span>
+          <span className="text-[15px] font-semibold">{getSite().name}</span>
           <span className="font-mono text-[12px] text-[var(--muted)]">
             <time dateTime={post.date} suppressHydrationWarning>
               {new Date(post.date).toLocaleDateString("en-US", {

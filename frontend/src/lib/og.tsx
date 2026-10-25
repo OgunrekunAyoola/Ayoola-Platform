@@ -2,7 +2,8 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { ImageResponse } from "next/og";
 import { ReactNode } from "react";
-import { site } from "@/config/site";
+import { getSite } from "@/lib/site-content";
+import { richParts } from "@/components/ui/Rich";
 
 export const ogSize = { width: 1200, height: 630 };
 export const ogContentType = "image/png";
@@ -50,6 +51,8 @@ export async function renderOgImage({
   subline,
   headlineSize = 88,
 }: OgCardProps) {
+  const site = getSite();
+
   return new ImageResponse(
     (
       <div
@@ -113,7 +116,7 @@ export async function renderOgImage({
           }}
         >
           <span>{site.name}</span>
-          <span>{site.tagline}</span>
+          <span>{site.role}</span>
         </div>
       </div>
     ),
@@ -121,12 +124,34 @@ export async function renderOgImage({
   );
 }
 
-/** Italic green run inside an OG headline or subline (e.g. "holds up"). */
-export function OgAccent({ children }: { children: ReactNode }) {
+/**
+ * Content copy for an OG card: `*phrase*` becomes the italic green run.
+ * Satori drops spaces between flex children, so the run carries its own
+ * margin on whichever side had a space in the copy.
+ */
+export function OgRich({ text }: { text: string }) {
+  const parts = richParts(text);
   return (
-    <span style={{ fontStyle: "italic", color: colors.accent, margin: "0 0.25em" }}>
-      {children}
-    </span>
+    <>
+      {parts.map((part, i) => {
+        if (i % 2 === 0) return part.trim() ? <span key={i}>{part.trim()}</span> : null;
+        const before = /\s$/.test(parts[i - 1] ?? "");
+        const after = /^\s/.test(parts[i + 1] ?? "");
+        return (
+          <span
+            key={i}
+            style={{
+              fontStyle: "italic",
+              color: colors.accent,
+              marginLeft: before ? "0.25em" : 0,
+              marginRight: after ? "0.25em" : 0,
+            }}
+          >
+            {part}
+          </span>
+        );
+      })}
+    </>
   );
 }
 

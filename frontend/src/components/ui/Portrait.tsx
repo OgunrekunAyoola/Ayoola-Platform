@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import Image from "next/image";
 import { ReactNode } from "react";
-import { site } from "@/config/site";
+import { getSite } from "@/lib/site-content";
 
 const PORTRAIT_SRC = "/ayoola-portrait.jpg";
 
@@ -32,7 +32,7 @@ export default function Portrait({
   const photo = hasPortrait ? (
     <Image
       src={PORTRAIT_SRC}
-      alt={site.name}
+      alt={getSite().name}
       fill
       priority={priority}
       sizes={hero ? "(max-width: 1024px) 70vw, 420px" : "(max-width: 1024px) 86vw, 480px"}

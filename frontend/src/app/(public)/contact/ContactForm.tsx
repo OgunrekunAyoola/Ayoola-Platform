@@ -12,24 +12,27 @@ interface FormState {
   company: string;
 }
 
-const INQUIRY_TYPES = [
-  "Full-time role",
-  "AI Readiness Review",
-  "Production AI Build",
-  "Something else",
-] as const;
+interface ContactFormProps {
+  title: string;
+  inquiryTypes: string[];
+  messagePlaceholder: string;
+}
 
-const INITIAL_STATE: FormState = {
+const emptyState = (typeOfWork: string): FormState => ({
   name: "",
   email: "",
   message: "",
-  typeOfWork: INQUIRY_TYPES[0],
+  typeOfWork,
   company: "",
-};
+});
 
-export default function ContactForm() {
+export default function ContactForm({
+  title,
+  inquiryTypes,
+  messagePlaceholder,
+}: ContactFormProps) {
   const { addToast } = useToast();
-  const [formData, setFormData] = useState<FormState>(INITIAL_STATE);
+  const [formData, setFormData] = useState<FormState>(() => emptyState(inquiryTypes[0]));
   const [status, setStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
@@ -55,7 +58,7 @@ export default function ContactForm() {
       }
 
       setStatus("success");
-      setFormData(INITIAL_STATE);
+      setFormData(emptyState(inquiryTypes[0]));
     } catch (err) {
       console.error("Contact submission error:", err);
       setStatus("error");
@@ -97,7 +100,7 @@ export default function ContactForm() {
 
   return (
     <>
-      <h2 className="text-[28px] sm:text-[32px] mb-7">Or send a message</h2>
+      <h2 className="text-[28px] sm:text-[32px] mb-7">{title}</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-[18px]">
         {/* Honeypot field — hidden from sighted users, catches bots that fill every input */}
         <div className="absolute left-[-9999px]" aria-hidden="true">
@@ -144,7 +147,7 @@ export default function ContactForm() {
         <fieldset className="flex flex-col gap-2.5">
           <legend className="text-[14px] font-semibold mb-2.5">Inquiry type</legend>
           <div className="flex flex-wrap gap-2">
-            {INQUIRY_TYPES.map((type) => (
+            {inquiryTypes.map((type) => (
               <label
                 key={type}
                 className="inline-flex items-center h-[42px] px-[18px] rounded-full border-[1.5px] border-[var(--foreground)] bg-[var(--card)] text-[14.5px] cursor-pointer transition-colors has-checked:bg-[var(--btn)] has-checked:border-[var(--btn)] has-checked:text-[var(--btn-fg)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[var(--accent)]"
@@ -172,7 +175,7 @@ export default function ContactForm() {
             value={formData.message}
             onChange={handleChange}
             required
-            placeholder="A few sentences about the system, the timeline, and where you're stuck…"
+            placeholder={messagePlaceholder}
           />
         </label>
 

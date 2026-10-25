@@ -1,14 +1,8 @@
 import Link from "next/link";
-import { site } from "@/config/site";
-
-const EXPLORE = [
-  { label: "Work", href: "/portfolio" },
-  { label: "Work with me", href: "/work-with-me" },
-  { label: "Writing", href: "/blog" },
-  { label: "About", href: "/about" },
-];
+import { getSite } from "@/lib/site-content";
 
 export default function Footer() {
+  const site = getSite();
   const [first, ...rest] = site.name.split(" ");
 
   return (
@@ -20,8 +14,7 @@ export default function Footer() {
               {first} <em>{rest.join(" ")}</em>
             </span>
             <p className="text-[16px] leading-[1.6] text-[var(--muted)]">
-              AI systems engineer building production AI that real teams can
-              rely on.
+              {site.footer.blurb}
             </p>
             <Link href="/feed.xml" className="lk self-start text-[15px]">
               RSS
@@ -32,7 +25,7 @@ export default function Footer() {
             <span className="font-mono text-[12px] tracking-[0.1em] uppercase text-[var(--muted)] mb-1">
               Explore
             </span>
-            {EXPLORE.map((link) => (
+            {site.nav.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}

@@ -1,18 +1,17 @@
-import { OgAccent, ogContentType, ogSize, renderOgImage } from "@/lib/og";
-import { site } from "@/config/site";
+import { OgRich, ogContentType, ogSize, renderOgImage } from "@/lib/og";
+import { plainText } from "@/components/ui/Rich";
+import { getSite } from "@/lib/site-content";
 
-export const alt = `${site.name}: AI that holds up in production.`;
+const site = getSite();
+
+export const alt = `${site.name}: ${plainText(site.share.subline)}`;
 export const size = ogSize;
 export const contentType = ogContentType;
 
 export default function Image() {
   return renderOgImage({
-    eyebrow: site.jobTitle,
+    eyebrow: site.role,
     headline: site.name,
-    subline: (
-      <>
-        AI that<OgAccent>holds up</OgAccent>in production.
-      </>
-    ),
+    subline: <OgRich text={site.share.subline} />,
   });
 }

@@ -1,44 +1,74 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { z } from "zod";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
-export interface WorkLinks {
-  live?: string;
-  repo?: string;
-}
+const text = z.string().trim().min(1);
 
-export interface WorkFrontmatter {
-  title: string;
-  slug: string;
-  summary: string;
-  role: string;
-  client: string;
-  year: number;
-  stack: string[];
-  featured: boolean;
-  order: number;
-  links?: WorkLinks;
+// gray-matter turns unquoted YAML dates into Date objects; normalise to YYYY-MM-DD.
+const isoDate = z.union([
+  text,
+  z.date().transform((d) => d.toISOString().slice(0, 10)),
+]);
+
+const workFrontmatterSchema = z.strictObject({
+  title: text,
+  slug: text,
+  summary: text,
+  /** Who it was for. Anonymised ("Accounting firm, via a consultancy") until naming is cleared. */
+  client: text,
+  role: text,
+  year: z.number().int(),
+  /** Honest state of the system: "Live", "Built, not yet enabled", "Pre-pilot". */
+  status: text,
+  stack: z.array(text).min(1),
+  featured: z.boolean(),
+  order: z.number(),
+  links: z
+    .strictObject({ live: z.url().optional(), repo: z.url().optional() })
+    .optional(),
+  /** Headline numbers shown under the header. */
+  facts: z.array(z.strictObject({ value: text, label: text })).optional(),
+  /** Architecture flow in order, drawn top to bottom; `marker` flags where a person or the model sits. */
+  diagram: z
+    .strictObject({
+      caption: text,
+      stages: z
+        .array(
+          z.strictObject({
+            label: text,
+            nodes: z.array(text).min(1),
+            marker: z.enum(["human", "model"]).optional(),
+          }),
+        )
+        .min(2),
+    })
+    .optional(),
   /** Drafts render in `next dev` only. */
-  draft?: boolean;
-}
+  draft: z.boolean().optional(),
+});
+
+const writingFrontmatterSchema = z.strictObject({
+  title: text,
+  slug: text,
+  excerpt: text,
+  date: isoDate,
+  tags: z.array(text),
+  readingTime: z.number().positive(),
+  /** Optional hero image path. */
+  heroImage: text.optional(),
+  /** Drafts render in `next dev` only. */
+  draft: z.boolean().optional(),
+});
+
+export type WorkFrontmatter = z.infer<typeof workFrontmatterSchema>;
+export type WritingFrontmatter = z.infer<typeof writingFrontmatterSchema>;
+export type WorkDiagram = NonNullable<WorkFrontmatter["diagram"]>;
 
 export interface WorkEntry extends WorkFrontmatter {
   content: string;
-}
-
-export interface WritingFrontmatter {
-  title: string;
-  slug: string;
-  excerpt: string;
-  date: string;
-  tags: string[];
-  readingTime: number;
-  /** Optional hero image path; not part of the required schema. */
-  heroImage?: string;
-  /** Drafts render in `next dev` only. */
-  draft?: boolean;
 }
 
 export interface WritingEntry extends WritingFrontmatter {
@@ -56,9 +86,14 @@ export function isPublished(
   return nodeEnv !== "production" || frontmatter.draft !== true;
 }
 
-function readMdxEntries<T extends { draft?: boolean }>(
+/**
+ * Every file is validated, drafts included, so a bad field fails the build
+ * even while the entry is hidden. `slug` must match the file name.
+ */
+function readMdxEntries<S extends z.ZodType<{ slug: string; draft?: boolean }>>(
   dirName: string,
-): (T & { content: string })[] {
+  schema: S,
+): (z.infer<S> & { content: string })[] {
   const dir = path.join(CONTENT_DIR, dirName);
   if (!fs.existsSync(dir)) return [];
 
@@ -68,14 +103,26 @@ function readMdxEntries<T extends { draft?: boolean }>(
     .map((file) => {
       const raw = fs.readFileSync(path.join(dir, file), "utf8");
       const { data, content } = matter(raw);
-      return { ...(data as T), content: content.trim() };
+      const result = schema.safeParse(data);
+      if (!result.success) {
+        throw new Error(
+          `content/${dirName}/${file} has invalid frontmatter:\n${z.prettifyError(result.error)}`,
+        );
+      }
+      const expected = file.replace(/\.mdx$/, "");
+      if (result.data.slug !== expected) {
+        throw new Error(
+          `content/${dirName}/${file}: slug "${result.data.slug}" must match the file name "${expected}".`,
+        );
+      }
+      return { ...result.data, content: content.trim() };
     })
     .filter((entry) => isPublished(entry));
 }
 
 /** Featured case studies first, then by `order`. */
 export function getAllWork(): WorkEntry[] {
-  return readMdxEntries<WorkFrontmatter>("work").sort(
+  return readMdxEntries("work", workFrontmatterSchema).sort(
     (a, b) => Number(b.featured) - Number(a.featured) || a.order - b.order,
   );
 }
@@ -85,7 +132,7 @@ export function getWorkBySlug(slug: string): WorkEntry | undefined {
 }
 
 export function getAllWriting(): WritingEntry[] {
-  return readMdxEntries<WritingFrontmatter>("writing").sort(
+  return readMdxEntries("writing", writingFrontmatterSchema).sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 }

@@ -115,7 +115,7 @@ body {
   p {
     text-wrap: pretty;
   }
-  /* Italic green emphasis inside headings ("AI that <em>holds up</em>…") */
+  /* Italic green emphasis inside headings ("I build the software businesses <em>run on</em>.") */
   :where(h1, h2, h3, h4, .serif-em) em {
     font-style: italic;
     color: var(--accent);

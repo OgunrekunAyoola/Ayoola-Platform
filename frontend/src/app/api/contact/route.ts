@@ -60,7 +60,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         message:
-          "The contact form isn't configured yet. Please email directly instead.",
+          "The contact form isn't set up yet. Please reach out through the links on this page for now.",
       },
       { status: 503 },
     );

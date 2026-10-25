@@ -1,0 +1,11 @@
+# 404 page. Wrap a phrase in *asterisks* for the italic serif emphasis.
+
+eyebrow: "404"
+title: This page *doesn't exist.*
+body: It may have moved during the rebuild.
+primary:
+  label: Go home
+  href: /
+secondary:
+  label: See the work
+  href: /portfolio

@@ -1,34 +1,32 @@
 import Link from "next/link";
 import { getAllWriting } from "@/lib/content";
 import { Metadata } from "next";
+import Rich from "@/components/ui/Rich";
+import { getWriting } from "@/lib/site-content";
 
-export const metadata: Metadata = {
-  title: "Writing",
-  description:
-    "Notes on building systems, the discipline of shipping, and reading code you didn't write.",
-};
+export const generateMetadata = (): Metadata => getWriting().meta;
 
 export default function BlogPage() {
+  const page = getWriting();
   const posts = getAllWriting();
 
   return (
     <section className="max-w-[1000px] mx-auto px-5 sm:px-7 pt-16 sm:pt-20 pb-24 sm:pb-[110px]">
-      <div className="eyebrow mb-6">Blog</div>
+      <div className="eyebrow mb-6">{page.eyebrow}</div>
       <h1 className="text-[clamp(44px,6vw,84px)] leading-[1.02] tracking-[-0.03em] mb-6">
-        <em>Writing.</em>
+        <Rich text={page.title} />
       </h1>
       <p className="text-[17.5px] sm:text-[19px] leading-[1.6] text-[var(--muted)] max-w-[540px] mb-12 sm:mb-16">
-        Notes on building systems, the discipline of shipping, and reading code
-        you didn&apos;t write.
+        {page.sub}
       </p>
 
       {posts.length === 0 ? (
         <div className="rounded-[28px] bg-[var(--surface)] grid [grid-template-columns:10%_1fr] overflow-hidden min-h-[220px]">
           <div className="bg-[var(--tint-green)]" />
           <div className="flex flex-col items-start justify-center gap-[18px] p-7 sm:p-14">
-            <span className="font-mono text-[12.5px] text-[var(--muted)]">{"// in progress"}</span>
+            <span className="font-mono text-[12.5px] text-[var(--muted)]">{page.empty.label}</span>
             <p className="font-serif font-medium text-[26px] sm:text-[32px] leading-[1.2] max-w-[22ch]">
-              No posts published yet. Check back soon.
+              {page.empty.body}
             </p>
           </div>
         </div>

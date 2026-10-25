@@ -1,0 +1,51 @@
+# Identity, navigation and site-wide copy.
+# Wrap a phrase in *asterisks* for the italic serif emphasis.
+
+name: Ayoola Ogunrekun
+role: Software Engineer
+
+# Search results and share previews.
+description: >-
+  Ayoola Ogunrekun is a software engineer in Lagos who designs, builds and runs
+  the systems businesses depend on: accounting pipelines, payment platforms,
+  compliance tools and SaaS products.
+
+keywords:
+  - Ayoola Ogunrekun
+  - Software Engineer
+  - Backend Engineer
+  - Full-Stack Engineer
+  - Platform Engineer
+  - TypeScript
+  - Python
+  - PostgreSQL
+  - AWS
+  - Lagos
+
+location: Lagos, Nigeria · working with teams worldwide
+timezone: Lagos, Nigeria · WAT (UTC+1)
+
+# Ink bar above the header. Replace the whole block with `banner: null` to hide it.
+banner:
+  text: Open to full-time remote software engineering roles
+  detail: Lagos → remote worldwide
+  cta:
+    label: Work with me
+    href: /work-with-me
+
+# Header and footer navigation.
+nav:
+  - label: Work
+    href: /portfolio
+  - label: Work with me
+    href: /work-with-me
+  - label: Writing
+    href: /blog
+  - label: About
+    href: /about
+
+footer:
+  blurb: Software engineer in Lagos, building the software businesses run on.
+
+share:
+  subline: I build the software businesses *run on*.

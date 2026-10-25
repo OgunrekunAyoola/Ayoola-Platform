@@ -5,16 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
-import { site, bookingHref, bookingLinkProps } from "@/config/site";
+import { bookingHref, bookingLinkProps } from "@/config/site";
+import type { SiteContent } from "@/lib/site-content";
 
-const NAV = [
-  { label: "Work", href: "/portfolio" },
-  { label: "Work with me", href: "/work-with-me" },
-  { label: "Writing", href: "/blog" },
-  { label: "About", href: "/about" },
-];
+type HeaderProps = Pick<SiteContent, "name" | "banner" | "nav">;
 
-export default function Header() {
+export default function Header({ name, banner, nav }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
@@ -25,25 +21,25 @@ export default function Header() {
 
   return (
     <>
-      {site.banner && (
+      {banner && (
         <div className="on-inverse bg-[var(--inverse)] text-[var(--inverse-fg)] text-[14px] sm:text-[15px]">
           <div className="max-w-[1200px] mx-auto px-5 sm:px-7 py-[11px] sm:py-[13px] flex flex-wrap items-center justify-center gap-x-[18px] gap-y-1.5 text-center">
             <span aria-hidden="true" className="hidden sm:inline text-[var(--accent-bright)]">
               ✦
             </span>
-            <span>{site.banner.text}</span>
+            <span>{banner.text}</span>
             <span aria-hidden="true" className="hidden sm:inline w-px h-4 bg-white/40" />
             <span className="hidden sm:inline text-[var(--inverse-muted)]">
-              {site.banner.detail}
+              {banner.detail}
             </span>
             <span aria-hidden="true" className="hidden sm:inline text-[var(--accent-bright)]">
               ✦
             </span>
             <Link
-              href={site.banner.cta.href}
+              href={banner.cta.href}
               className="font-medium text-[var(--accent-bright)] hover:underline underline-offset-4"
             >
-              {site.banner.cta.label} →
+              {banner.cta.label} →
             </Link>
           </div>
         </div>
@@ -63,12 +59,12 @@ export default function Header() {
               a
             </span>
             <span className="font-serif font-semibold text-[19px] sm:text-[23px] tracking-[-0.01em] whitespace-nowrap">
-              {site.name}
+              {name}
             </span>
           </Link>
 
           <nav aria-label="Main" className="hidden md:flex items-center gap-[34px]">
-            {NAV.map((item) => (
+            {nav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -109,7 +105,7 @@ export default function Header() {
             className="md:hidden absolute w-full left-0 border-t border-b border-[var(--hair)] bg-[var(--background)] shadow-[0_24px_40px_-24px_var(--shadow)]"
           >
             <ul className="flex flex-col px-5 py-3">
-              {NAV.map((item) => (
+              {nav.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}

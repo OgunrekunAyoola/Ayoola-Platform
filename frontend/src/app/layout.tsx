@@ -5,7 +5,7 @@ import "./globals.css";
 import { ToastProvider } from "@/context/ToastContext";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { getSiteUrl } from "@/lib/site-url";
-import { site } from "@/config/site";
+import { getSite } from "@/lib/site-content";
 
 // Self-hosted (latin, variable) so builds never depend on Google Fonts.
 const hanken = localFont({
@@ -49,52 +49,48 @@ const jetbrainsMono = localFont({
 
 const siteUrl = getSiteUrl();
 
-export const metadata: Metadata = {
-  metadataBase: siteUrl ? new URL(siteUrl) : undefined,
-  title: {
-    default: "Ayoola Ogunrekun",
-    template: "%s | Ayoola Ogunrekun",
-  },
-  description: site.description,
-  keywords: [
-    "Ayoola Ogunrekun",
-    "AI Systems Engineer",
-    "Production AI",
-    "Multi-agent systems",
-    "LLM pipelines",
-    "AWS",
-  ],
-  authors: [{ name: "Ayoola Ogunrekun" }],
-  creator: "Ayoola Ogunrekun",
-  // Listing icons here overrides Next's auto-injected link for app/icon.tsx,
-  // so both generated icons are declared explicitly.
-  icons: {
-    icon: [{ url: "/icon", type: "image/png", sizes: "64x64" }],
-    apple: "/apple-touch-icon.png",
-  },
-  alternates: {
-    types: {
-      "application/rss+xml": "/feed.xml",
+export function generateMetadata(): Metadata {
+  const site = getSite();
+  return {
+    metadataBase: siteUrl ? new URL(siteUrl) : undefined,
+    title: {
+      default: site.name,
+      template: `%s | ${site.name}`,
     },
-  },
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "/",
-    siteName: "Ayoola Ogunrekun",
-    title: "Ayoola Ogunrekun",
     description: site.description,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Ayoola Ogunrekun",
-    description: site.description,
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+    keywords: site.keywords,
+    authors: [{ name: site.name }],
+    creator: site.name,
+    // Listing icons here overrides Next's auto-injected link for app/icon.tsx,
+    // so both generated icons are declared explicitly.
+    icons: {
+      icon: [{ url: "/icon", type: "image/png", sizes: "64x64" }],
+      apple: "/apple-touch-icon.png",
+    },
+    alternates: {
+      types: {
+        "application/rss+xml": "/feed.xml",
+      },
+    },
+    openGraph: {
+      type: "website",
+      locale: "en_US",
+      url: "/",
+      siteName: site.name,
+      title: site.name,
+      description: site.description,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: site.name,
+      description: site.description,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: [
