@@ -1,0 +1,116 @@
+---
+title: The platform under an AI month-end close
+slug: month-end-close
+summary: "On an agentic close platform for an accounting firm, I built the human-approval system that pauses and resumes runs, hardened the first pipeline to reach production, and wrote the payroll pipeline, where every figure is computed in code."
+client: Accounting firm, via a consultancy
+role: Contract engineer
+year: 2026
+status: 3 pipelines live; payroll in staging
+stack:
+  - Python
+  - LangGraph
+  - Bedrock AgentCore
+  - AWS Lambda
+  - API Gateway
+  - SQS
+  - PostgreSQL (RLS)
+  - S3 + KMS
+  - CloudFormation
+  - Slack Block Kit
+featured: true
+order: 1
+facts:
+  - value: "4 repos"
+    label: spanned by the approval-and-resume system I built
+  - value: "6 stages"
+    label: in the payroll pipeline I wrote alone, with about 600 test functions
+  - value: "67 of 67"
+    label: accounting checks passed by payroll on synthetic test data
+diagram:
+  caption: "The model works inside one stage, on what the rules couldn't resolve. People decide twice: on each flagged item in Slack, and on what reaches the ledger."
+  stages:
+    - label: Request
+      nodes: [Slack command, API Gateway, SQS queue]
+    - label: Govern
+      nodes: [Orchestrator on Lambda, Tenant and role checks, Postgres control plane]
+    - label: Run pipeline
+      nodes: [Rules compute every figure, Model classifies leftovers and writes prose, Tenant-scoped tools]
+      marker: model
+    - label: Check and package
+      nodes: [Contract self-validation, Flags, Review workbook and import file]
+    - label: Review
+      nodes: ["Approve, reject or modify each item", One recorded decision per item]
+      marker: human
+    - label: Resume
+      nodes: [Child run rebuilt from stored decisions, One per parent, Chain capped at three]
+    - label: Post
+      nodes: [Accountant imports by hand, No automated ledger writes]
+      marker: human
+# Anonymised: don't add client, product or agency names without their OK.
+# Under an assumed NDA: also no consultancy, colleague or internal pipeline names.
+---
+
+## Context
+
+An accounting firm is building a platform to run the month-end close for its client companies. Each close area, such as bank reconciliation, payables or payroll, is a LangGraph pipeline on Bedrock AgentCore. A governance orchestrator on Lambda dispatches runs per tenant, a Postgres control plane with row-level security records them, and outputs land in an S3 data lake. Accountants start runs and review what the pipelines flag in Slack.
+
+In the first phase nothing is written to the accounting system automatically. Each pipeline produces a review workbook and a QuickBooks import file, and an accountant decides what reaches the ledger.
+
+## My role
+
+I've worked on the platform since March 2026 as a contract engineer, through a consultancy, alongside the client's own engineers. My part is mostly the platform underneath the AI:
+
+- the human-approval-and-resume system, across four repositories;
+- the tenant-scoped tools library that pipelines use for reads and writes. I designed its interface in a doc the client reviewed, then built it;
+- most of the hardening on the first pipeline to reach production, bank reconciliation, after it went live in August;
+- the payroll pipeline, which I wrote alone.
+
+Coding agents do much of my typing. The designs, the decisions and the verification are mine.
+
+## The problem
+
+A close has to be right to the cent, and a language model isn't. The platform's answer is deterministic rules first, the model only for what the rules can't resolve, and a person in the loop.
+
+My job was making that last part dependable under real conditions. Slack delivers events at least once. Two reviewers can click at the same moment. Lambda can run the same async job twice. And a reviewer might not answer for a day.
+
+<!-- diagram -->
+
+## Key decisions
+
+**Agents read; tools write.** I proposed that pipelines get no direct database or storage clients, and that every write goes through a tool that enforces the tenant. The alternative left tenant isolation up to every pipeline author.
+
+**A decision resumes the run as a new child run, rebuilt from the database.** Each flagged item gets its own approve, reject or modify decision. Once every item is decided, the orchestrator starts a child run whose inputs are re-read from Postgres rather than taken from the Slack payload, and the pipeline reruns from the affected stage. This replaced my own first version, which approved or rejected a whole job at once.
+
+**A finished child completes its parent; a failed child fails it.** I wrote up three options for how parent and child run statuses relate, the client chose this one, and I built it. The main alternative, a new terminal status, would have made every consumer learn a new state.
+
+**Staging and production run the same code.** They differ only in where the data comes from. A staging-only config path would have meant staging never tested what production runs.
+
+## The hard part
+
+In August, in staging, approving everything worked. Rejecting everything brought back a fresh approval form two seconds later. A mix of decisions just failed.
+
+It was three defects in a chain:
+
+1. The reconciliation stage subtracted a rejected, held transaction from a ledger balance that already included it. The rerun failed by exactly that amount and flagged the item again as new.
+2. The orchestrator opened an approval whenever a run had flags, even when the run had failed.
+3. Each resume is itself a parent, so the rule of one resume per parent couldn't stop the loop.
+
+I made held transactions their own explained category and stopped failed runs from asking for approval. I also suppressed flags already decided anywhere up the resume chain, capped chains at three, and let a resume retry after a failure instead of stranding the reviewer's decisions.
+
+The concurrency cases got the same treatment. Two reviewers clicking at once are serialised by a row lock and a conditional update per decision. Two deliveries of the same resume collide on a partial unique index, and the second becomes a no-op. We retested mixed decisions in staging the following week.
+
+## Payroll
+
+I built the payroll pipeline in about five and a half weeks: six stages, around 8,500 lines and about 600 test functions. It checks the payroll provider's postings against the general ledger by department, reconciles cash, and books accruals under ASC 710, 420 and 712.
+
+Every figure is computed in code. Only the last two stages call a model, and only to write sentences. If the model fails, the finding survives with a plain sentence.
+
+The bank pipeline taught me something here. Its model once reported high confidence on a transaction it had misclassified. So in payroll, model confidence never decides whether a person sees a finding: every anomaly the arithmetic finds is flagged.
+
+A separate checker I wrote recomputes every figure from the raw files, independent of the pipeline code. It passes 67 of 67 accounting checks on synthetic test data.
+
+## Where it stands
+
+Bank reconciliation has run in production since August 2026, and two more pipelines have followed it. Approval-and-resume is live on the bank pipeline. The client specified four review patterns, and only the "decide" pattern is built so far. I documented the gaps against the requirements so they're tracked, not forgotten.
+
+Payroll was switched on in staging in October 2026 and isn't enabled in production yet. Two known gaps block go-live, some fixes are waiting for review, and it hasn't run on real client data.

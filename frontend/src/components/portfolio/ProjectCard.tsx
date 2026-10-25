@@ -1,60 +1,45 @@
 import Link from "next/link";
-import { Project } from "@/lib/api-client";
-import { ArrowUpRight, FolderGit2, Layers, FlaskConical } from "lucide-react";
+import { WorkEntry } from "@/lib/content";
 
 interface ProjectCardProps {
-  project: Project;
+  project: WorkEntry;
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
-  const Icon =
-    project.category === "systems"
-      ? Layers
-      : project.category === "experiments"
-        ? FlaskConical
-        : FolderGit2;
-
   return (
     <Link
       href={`/portfolio/${project.slug}`}
-      className="group glass glass-i flex flex-col rounded-[18px] overflow-hidden h-full"
+      className="group flex flex-col gap-3.5 h-full rounded-[22px] border border-[var(--hair)] bg-[var(--card)] p-7 transition-colors hover:border-[var(--foreground)]"
     >
-      {/* Visual header */}
-      <div className="h-40 relative border-b border-[var(--hair)] overflow-hidden bg-[linear-gradient(150deg,var(--accent-soft),transparent)]">
-        <div
-          className="absolute inset-0 opacity-60"
-          style={{
-            backgroundImage:
-              "linear-gradient(var(--hair) 1px, transparent 1px), linear-gradient(90deg, var(--hair) 1px, transparent 1px)",
-            backgroundSize: "22px 22px",
-          }}
-        />
-        <Icon className="absolute left-[22px] top-[22px] w-[26px] h-[26px] text-[var(--accent)]" />
-        <span className="absolute right-[18px] bottom-4 font-mono text-[11px] text-[var(--muted)]">
-          {project.techStack?.slice(0, 3).join(" · ")}
+      <div className="flex items-center justify-between gap-2.5 font-mono text-[11.5px]">
+        <span className="tracking-[0.08em] uppercase text-[var(--accent)]">
+          {project.client}
         </span>
-        <ArrowUpRight className="absolute right-4 top-4 w-5 h-5 text-[var(--muted)] group-hover:text-[var(--accent)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300" />
+        <span className="text-[var(--muted)]">{project.year}</span>
       </div>
 
-      <div className="p-6 flex flex-col gap-3 flex-1">
-        <div className="flex items-center justify-between gap-2.5">
-          <h3 className="font-serif font-semibold text-[22px] tracking-tight text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors">
-            {project.title}
-          </h3>
-          <span className="font-mono text-[11px] text-[var(--accent)] border border-[var(--accent-line)] rounded-full px-2.5 py-[3px] shrink-0">
-            {new Date(project.createdAt).getFullYear()}
-          </span>
-        </div>
+      <h3 className="text-[25px] leading-[1.2]">{project.title}</h3>
 
-        <p className="text-[15px] text-[var(--muted)] leading-[1.6] line-clamp-3 flex-1">
-          {project.summary}
-        </p>
+      <p className="text-[15.5px] leading-[1.55] text-[var(--muted)] line-clamp-3 flex-1">
+        {project.summary}
+      </p>
 
-        <div className="mt-1 pt-3.5 border-t border-[var(--hair)] flex items-center gap-2 text-xs font-medium text-[var(--accent)]/80 group-hover:text-[var(--accent)] transition-colors">
-          View case study
-          <ArrowUpRight className="w-3.5 h-3.5" />
-        </div>
-      </div>
+      {project.stack?.length > 0 && (
+        <ul className="flex flex-wrap gap-2">
+          {project.stack.map((tech) => (
+            <li
+              key={tech}
+              className="font-mono text-[12px] rounded-full bg-[var(--surface)] px-3 py-1.5"
+            >
+              {tech}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <span className="mt-1 pt-4 border-t border-[var(--hair)] text-[15px] group-hover:text-[var(--accent)] transition-colors">
+        Read case study →
+      </span>
     </Link>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useCallback, ReactNode } from "react";
-import { XMarkIcon, CheckCircleIcon, ExclamationCircleIcon, InformationCircleIcon } from "@heroicons/react/24/outline";
+import { X, CheckCircle2, AlertCircle, Info } from "lucide-react";
 
 export type ToastType = "success" | "error" | "info" | "warning";
 
@@ -48,30 +48,35 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={{ addToast, removeToast }}>
       {children}
-      <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 w-full max-w-sm pointer-events-none">
+      <div
+        role="status"
+        aria-live="polite"
+        className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 w-full max-w-sm pointer-events-none"
+      >
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className={`
-              pointer-events-auto flex items-start gap-3 p-4 rounded-lg shadow-lg border backdrop-blur-md transition-all animate-in slide-in-from-right-full
-              ${toast.type === "success" ? "bg-green-500/10 border-green-500/20 text-green-500" : ""}
-              ${toast.type === "error" ? "bg-red-500/10 border-red-500/20 text-red-500" : ""}
-              ${toast.type === "warning" ? "bg-yellow-500/10 border-yellow-500/20 text-yellow-500" : ""}
-              ${toast.type === "info" ? "bg-blue-500/10 border-blue-500/20 text-blue-500" : ""}
-            `}
+            className="pointer-events-auto flex items-start gap-3 px-5 py-4 rounded-[18px] bg-[var(--inverse)] text-[var(--inverse-fg)] shadow-[0_20px_50px_-24px_var(--shadow)] animate-fade-in"
           >
-            <div className="flex-shrink-0 mt-0.5">
-              {toast.type === "success" && <CheckCircleIcon className="w-5 h-5" />}
-              {toast.type === "error" && <ExclamationCircleIcon className="w-5 h-5" />}
-              {toast.type === "warning" && <ExclamationCircleIcon className="w-5 h-5" />}
-              {toast.type === "info" && <InformationCircleIcon className="w-5 h-5" />}
+            <div
+              className={`flex-shrink-0 mt-0.5 ${
+                toast.type === "error" || toast.type === "warning"
+                  ? "text-[#f0b184]"
+                  : "text-[var(--accent-bright)]"
+              }`}
+            >
+              {toast.type === "success" && <CheckCircle2 className="w-5 h-5" />}
+              {toast.type === "error" && <AlertCircle className="w-5 h-5" />}
+              {toast.type === "warning" && <AlertCircle className="w-5 h-5" />}
+              {toast.type === "info" && <Info className="w-5 h-5" />}
             </div>
             <div className="flex-1 text-sm font-medium">{toast.message}</div>
             <button
               onClick={() => removeToast(toast.id)}
+              aria-label="Dismiss notification"
               className="flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity"
             >
-              <XMarkIcon className="w-4 h-4" />
+              <X className="w-4 h-4" />
             </button>
           </div>
         ))}

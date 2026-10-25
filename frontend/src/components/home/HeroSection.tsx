@@ -2,113 +2,61 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Code, TrendingUp, Terminal, ArrowRight } from "lucide-react";
 import { fadeUp } from "@/lib/motion";
-import FramedPortrait from "@/components/ui/FramedPortrait";
+import Rich from "@/components/ui/Rich";
+import type { HomeContent } from "@/lib/site-content";
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  hero: HomeContent["hero"];
+  visual: React.ReactNode;
+}
+
+export default function HeroSection({ hero, visual }: HeroSectionProps) {
   return (
-    <section className="max-w-[1200px] mx-auto px-5 sm:px-7 pt-16 lg:pt-20 pb-16">
-      <div className="grid grid-cols-1 lg:[grid-template-columns:1.05fr_0.95fr] gap-12 items-center">
-        {/* Copy */}
+    <section className="max-w-[1200px] mx-auto px-5 sm:px-7 pt-12 sm:pt-16 pb-10 grid gap-12 lg:gap-14 items-center lg:grid-cols-2">
+      <motion.div
+        className="flex flex-col"
+        initial="hidden"
+        animate="visible"
+        variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
+      >
         <motion.div
-          className="order-2 lg:order-1 text-center lg:text-left"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.1 } },
-          }}
+          variants={fadeUp}
+          className="eyebrow flex items-center gap-2.5 mb-6 sm:mb-7"
         >
-          <motion.div
-            variants={fadeUp}
-            className="inline-flex items-center gap-2.5 font-mono text-xs tracking-[0.14em] uppercase text-[var(--accent)] mb-5"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] anim-blink" />
-            Ayoola Ogunrekun
-          </motion.div>
-
-          <motion.h1
-            variants={fadeUp}
-            className="font-serif font-extrabold tracking-tight leading-[1.03] text-[clamp(40px,5.4vw,68px)] text-[var(--foreground)] mb-6"
-          >
-            I build intelligent{" "}
-            <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] to-[#f59e0b]">
-              systems
-            </span>{" "}
-            that ship — and keep shipping.
-          </motion.h1>
-
-          <motion.p
-            variants={fadeUp}
-            className="text-[18.5px] text-[var(--muted)] max-w-[540px] mx-auto lg:mx-0 leading-[1.65] mb-[34px]"
-          >
-            Software engineer, writer, and operator. I design resilient
-            platforms, weave in AI where it earns its place, and write about what
-            I learn along the way.
-          </motion.p>
-
-          <motion.div
-            variants={fadeUp}
-            className="flex flex-wrap gap-3.5 justify-center lg:justify-start mb-[30px]"
-          >
-            <Link href="/portfolio" className="btn btn-primary">
-              View systems
-              <ArrowRight className="w-[17px] h-[17px]" />
-            </Link>
-            <Link href="/contact" className="btn btn-secondary">
-              Start a project
-            </Link>
-          </motion.div>
-
-          <motion.div
-            variants={fadeUp}
-            className="font-mono text-[13px] text-[var(--muted)]"
-          >
-            {"// available for select engagements · 2026"}
-          </motion.div>
+          <span className="w-[7px] h-[7px] rounded-full bg-[var(--accent)] shrink-0" />
+          {hero.eyebrow}
         </motion.div>
 
-        {/* Portrait */}
-        <div className="order-1 lg:order-2 relative flex items-center justify-center min-h-[420px] lg:min-h-[520px]">
-          {/* glow */}
-          <div
-            className="absolute -inset-3 rounded-[34px] anim-glow pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(circle at 50% 40%, var(--glow), transparent 70%)",
-              filter: "blur(46px)",
-            }}
-          />
+        <motion.h1
+          variants={fadeUp}
+          className="text-balance text-[clamp(46px,6.6vw,92px)] leading-[1.02] tracking-[-0.03em] mb-7 sm:mb-[30px]"
+        >
+          <Rich text={hero.title} />
+        </motion.h1>
 
-          {/* ambient signal chips */}
-          <div className="glass anim-floaty absolute top-4 -left-1.5 z-[1] rounded-[13px] px-3.5 py-2.5 hidden lg:flex items-center gap-2.5 opacity-95">
-            <Code className="w-[18px] h-[18px] text-[var(--accent)]" />
-            <span className="font-mono text-[12.5px] text-[var(--foreground)]">
-              /systems/core
-            </span>
-          </div>
-          <div className="glass anim-floaty-b absolute bottom-14 -right-2.5 z-[3] rounded-[13px] px-[15px] py-3 hidden lg:flex flex-col gap-0.5">
-            <span className="font-mono text-[11px] text-[var(--muted)] flex items-center gap-1.5">
-              <TrendingUp className="w-3.5 h-3.5 text-[var(--accent)]" />
-              uptime
-            </span>
-            <span className="font-mono text-[20px] font-semibold text-[var(--foreground)]">
-              99.98%
-            </span>
-          </div>
-          <div className="glass anim-floaty absolute top-28 -right-0.5 z-[1] rounded-xl w-[46px] h-[46px] hidden lg:flex items-center justify-center text-[var(--accent)]">
-            <Terminal className="w-5 h-5" />
-          </div>
+        <motion.p
+          variants={fadeUp}
+          className="text-[17.5px] sm:text-[19px] leading-[1.6] text-[var(--muted)] max-w-[540px] mb-9 sm:mb-11"
+        >
+          {hero.sub}
+        </motion.p>
 
-          {/* framed portrait */}
-          <FramedPortrait
-            priority
-            float
-            className="relative z-[2] w-[min(420px,82vw)] aspect-[4/5]"
-          />
-        </div>
-      </div>
+        <motion.div variants={fadeUp} className="flex flex-wrap gap-3.5 mb-[30px]">
+          <Link href={hero.primary.href} className="btn btn-primary btn-lg">
+            {hero.primary.label} <span aria-hidden="true">→</span>
+          </Link>
+          <Link href={hero.secondary.href} className="btn btn-secondary btn-lg">
+            {hero.secondary.label}
+          </Link>
+        </motion.div>
+
+        <motion.div variants={fadeUp} className="font-mono text-[13px] text-[var(--muted)]">
+          {hero.footnote}
+        </motion.div>
+      </motion.div>
+
+      {visual}
     </section>
   );
 }

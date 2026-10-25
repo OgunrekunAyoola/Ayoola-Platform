@@ -1,85 +1,74 @@
-import { fetchProjects, Project } from "@/lib/api-client";
+import { getAllWork } from "@/lib/content";
+import { getWorkPage } from "@/lib/site-content";
 import ProjectCard from "@/components/portfolio/ProjectCard";
+import Rich from "@/components/ui/Rich";
 
-export const dynamic = "force-dynamic";
+export const generateMetadata = () => getWorkPage().meta;
 
-export const metadata = {
-  title: "Portfolio | Ayoola Ogunrekun",
-  description: "Selected works and case studies.",
-};
-
-export default async function PortfolioPage() {
-  let projects: Project[] = [];
-  let error: string | null = null;
-
-  try {
-    projects = await fetchProjects();
-  } catch (err) {
-    console.error("Failed to fetch projects:", err);
-    error = "Failed to load projects. Please try again later.";
-  }
-
-  // Group projects by category
-  const systems = projects.filter((p) => p.category === "systems");
-  const tools = projects.filter((p) => p.category === "tools");
-  const experiments = projects.filter(
-    (p) => p.category === "experiments" || !p.category,
-  ); // Default fallback
-
-  const hasProjects = projects.length > 0;
-
-  const sections = [
-    { key: "systems", label: "High-value platforms", items: systems },
-    { key: "tools", label: "Utilities & libraries", items: tools },
-    { key: "experiments", label: "Prototypes & concepts", items: experiments },
-  ].filter((s) => s.items.length > 0);
+export default function PortfolioPage() {
+  const page = getWorkPage();
+  const projects = getAllWork();
+  const { alsoBuilt } = page;
 
   return (
-    <section className="max-w-[1200px] mx-auto px-5 sm:px-7 pt-20 pb-24">
-      <div className="font-mono text-xs tracking-[0.14em] uppercase text-[var(--accent)] mb-3.5">
-        Portfolio
-      </div>
-      <h1 className="font-serif font-extrabold tracking-tight leading-[1.05] text-[clamp(34px,4.6vw,56px)] text-[var(--foreground)] mb-3.5">
-        Systems, shipped.
+    <section className="max-w-[1200px] mx-auto px-5 sm:px-7 pt-16 sm:pt-20 pb-24 sm:pb-[110px]">
+      <div className="eyebrow mb-6">{page.eyebrow}</div>
+      <h1 className="text-[clamp(44px,6vw,84px)] leading-[1.02] tracking-[-0.03em] mb-6">
+        <Rich text={page.title} />
       </h1>
-      <p className="text-[18px] text-[var(--muted)] max-w-[560px] mb-12">
-        A selection of the platforms, tools, and experiments I&apos;ve designed,
-        built, and kept running.
+      <p className="text-[17.5px] sm:text-[19px] leading-[1.6] text-[var(--muted)] max-w-[600px] mb-12 sm:mb-16">
+        {page.sub}
       </p>
 
-      {error && (
-        <div className="text-red-500 bg-red-500/10 p-4 rounded-xl border border-red-500/20 text-center mb-12">
-          {error}
-        </div>
-      )}
-
-      {!hasProjects && !error && (
-        <div className="text-center py-20 glass rounded-2xl">
-          <p className="text-[var(--muted)]">No projects found.</p>
-        </div>
-      )}
-
-      {sections.map((section) => (
-        <section
-          key={section.key}
-          id={section.key}
-          className="mb-16 scroll-mt-24"
-        >
-          <div className="flex items-end gap-4 mb-7 border-b border-[var(--hair)] pb-4">
-            <h2 className="font-serif font-bold text-[28px] tracking-tight text-[var(--foreground)] capitalize">
-              {section.key}
-            </h2>
-            <span className="text-[var(--muted)] pb-1 font-mono text-xs uppercase tracking-wider">
-              {section.label}
-            </span>
+      {projects.length === 0 ? (
+        <div className="rounded-[28px] bg-[var(--surface)] grid [grid-template-columns:10%_1fr] overflow-hidden min-h-[240px] sm:min-h-[280px]">
+          <div className="bg-[var(--tint-blue)]" />
+          <div className="flex flex-col items-start justify-center gap-[18px] p-7 sm:p-14">
+            <span className="font-mono text-[12.5px] text-[var(--muted)]">{page.empty.label}</span>
+            <p className="font-serif font-medium text-[26px] sm:text-[32px] leading-[1.2] max-w-[22ch]">
+              {page.empty.body}
+            </p>
           </div>
-          <div className="grid gap-[22px] [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
-            {section.items.map((project) => (
-              <ProjectCard key={project._id} project={project} />
+        </div>
+      ) : (
+        <div className="grid gap-[22px] [grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr))]">
+          {projects.map((project) => (
+            <ProjectCard key={project.slug} project={project} />
+          ))}
+        </div>
+      )}
+
+      {alsoBuilt.items.length > 0 && (
+        <section className="mt-24 sm:mt-[110px]">
+          <h2 className="text-[clamp(30px,3.6vw,46px)] leading-[1.1] tracking-[-0.02em] mb-8 sm:mb-10">
+            <Rich text={alsoBuilt.title} />
+          </h2>
+          <ul className="border-b border-[var(--hair)]">
+            {alsoBuilt.items.map((item) => (
+              <li
+                key={item.title}
+                className="grid gap-x-10 gap-y-2.5 py-6 sm:py-7 border-t border-[var(--hair)] md:[grid-template-columns:minmax(0,1fr)_minmax(0,1.7fr)]"
+              >
+                <div className="flex flex-col gap-1.5">
+                  <h3 className="text-[22px] sm:text-[24px] leading-[1.25]">
+                    {item.href ? (
+                      <a href={item.href} target="_blank" rel="noopener noreferrer" className="lk">
+                        {item.title} ↗
+                      </a>
+                    ) : (
+                      item.title
+                    )}
+                  </h3>
+                  <span className="font-mono text-[12px] text-[var(--muted)]">
+                    {item.descriptor} · {item.year}
+                  </span>
+                </div>
+                <p className="text-[16px] leading-[1.6] text-[var(--muted)]">{item.body}</p>
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
-      ))}
+      )}
     </section>
   );
 }

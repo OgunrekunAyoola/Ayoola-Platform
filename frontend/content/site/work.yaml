@@ -1,0 +1,76 @@
+# Work listing, the "Also built" list and labels shared by every case study.
+# Case studies themselves live in content/work/*.mdx.
+# Wrap a phrase in *asterisks* for the italic serif emphasis.
+
+meta:
+  title: Work
+  description: >-
+    Case studies in accounting pipelines, compliance SaaS, payments and
+    system recovery: the problem, the decisions, the hard part and an honest
+    status for each.
+
+eyebrow: Work
+title: The work, *in detail.*
+sub: >-
+  Each case study covers the problem, the decisions I made, the hardest part
+  and where the system stands today. Client names are withheld where I don't
+  have permission to share them.
+
+empty:
+  label: "// in progress"
+  body: Case studies are being written up. Check back soon.
+
+# `draft: true` hides an item in production until it's cleared to publish.
+alsoBuilt:
+  title: Also built
+  items:
+    - title: agent-governor
+      descriptor: Python · Postgres · own project
+      body: >-
+        A governance control plane for AI agents. Every proposed action passes
+        through nine gates, from a kill-switch check to a single transactional
+        commit. Policy is versioned data and every decision lands in an
+        append-only audit trail. Phases 0–11 of 16 are done.
+      year: 2026
+      # The repo is private. Add `href:` once it's public.
+    - title: Subscription outage on a course platform
+      descriptor: Laravel · PHP · SeerBit
+      body: >-
+        Took over a live course platform from its original developer, built
+        its affiliate programme and moved its subscriptions and affiliate
+        payouts onto SeerBit. When new subscriptions started failing, I traced the cause
+        to a payment-provider validation rule whose error three layers of code
+        were discarding.
+      year: 2026
+    - title: HR and relocation CRM
+      descriptor: NestJS · TypeORM · PostgreSQL · React
+      body: >-
+        An internal CRM for an HR and workforce-relocation agency: clients,
+        candidates, visa and document pipelines, invoices and an activity
+        timeline, behind 99 API endpoints with MFA.
+      year: 2026
+    - title: Cleaning company website
+      descriptor: Next.js · paid client
+      body: >-
+        A paid client site, designed and delivered in six days. It's now on a
+        maintenance contract.
+      year: 2026
+    - title: Payout service
+      descriptor: Django · Next.js · take-home
+      body: >-
+        A cross-border payout service: an explicit transfer state machine,
+        idempotent creates, and signed provider webhooks deduplicated by event
+        ID, covered by 95 tests.
+      year: 2026
+      # Check the take-home's terms before publishing.
+      draft: true
+
+caseStudy:
+  eyebrow: Case study
+  back: ← All work
+  diagramTitle: How it fits together
+  markers:
+    human: A person approves
+    model: The model works here
+  closing:
+    title: Building something similar?

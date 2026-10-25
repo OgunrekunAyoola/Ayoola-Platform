@@ -1,0 +1,82 @@
+---
+title: Money controls for a QR tipping platform
+slug: tipping-platform
+summary: "A tipping product on Stripe Connect where the platform never holds the money. The work was keeping an exact copy of it, and controlling who can move it."
+client: Startup client, via an agency
+role: Sole backend engineer
+year: 2026
+status: Live; payments in test mode
+stack:
+  - TypeScript
+  - NestJS
+  - PostgreSQL
+  - Prisma
+  - Redis
+  - BullMQ
+  - Stripe Connect
+  - React
+  - Docker
+featured: false
+order: 4
+facts:
+  - value: "2 people"
+    label: to approve any refund, enforced in code and by a database constraint
+  - value: "144"
+    label: test files, including property-based tests on the money type
+  - value: "66 of 72"
+    label: first-round QA findings resolved, 47 of them with code fixes
+diagram:
+  caption: "No AI anywhere. People sit at both ends: the guest who pays, and two operators for every refund."
+  stages:
+    - label: Guest pays
+      nodes: [Tip page, Card or wallet form]
+    - label: Charge created
+      nodes: [NestJS API, Provider port with 13 operations, Idempotency key]
+    - label: Stripe Connect
+      nodes: [Direct charge on the worker's account, Hosted KYC, 7-day payout hold]
+    - label: Mirror and check
+      nodes: [Signed webhooks, Postgres mirror, Nightly reconciliation, Fraud scan]
+    - label: Ops controls
+      nodes: [Two-person refunds, Authenticator step-up, Hash-chained audit log]
+      marker: human
+# Anonymised: don't add client, product or agency names without their OK.
+---
+
+## Context
+
+A guest scans a worker's QR code, picks an amount and pays by card or wallet. The charge is created directly on the worker's own Stripe Connect account, and the platform takes its fee from that charge. The platform never holds tip money, which keeps it clear of the licensing that comes with holding other people's funds.
+
+That moves the hard work to two places: keeping an exact copy of money that lives on Stripe, and controlling who can move it.
+
+## My role
+
+I built it for a startup client through an agency, from July to October 2026. I was the only engineer on the backend and wrote nearly all of the frontend: a NestJS modular monolith, Postgres, Redis queues, and one React app with four surfaces (guest page, worker app, venue console, ops console). I worked with coding agents throughout and owned the design, the reviews and the checks. I also wrote the client's technical overview and the QA remediation plan.
+
+<!-- diagram -->
+
+## Key decisions
+
+**One exact money type.** Every amount is an integer in minor units, with each currency's own exponent. There is one rounding rule, and splits use a largest-remainder method, so the parts always add back to the total. Adding two currencies throws, and the type refuses silent coercion, so `a + b` can't quietly become a float. Property-based tests hammer all of this.
+
+**An audit log the app can't edit.** Every privileged or financial action writes to an append-only, hash-chained log in the same transaction as the action. Only a database function can write to it, the app's own database user can't update or delete rows, and a nightly job re-walks the chain. Two appends at the same moment could fork the chain, and a fork looks exactly like tampering, so appends take a transaction-scoped lock. A test fires 16 concurrent appends across 8 connections and checks the chain stays straight.
+
+**A mirror that gets checked.** Signed Stripe webhooks are deduplicated on insert and fed through a queue into the Postgres mirror. A nightly job compares the mirror with Stripe and reports any drift.
+
+**All provider code behind one port.** The client hadn't chosen its live payment provider, so every Stripe call sits behind a 13-operation interface. CI fails if anything outside that module imports Stripe.
+
+## The hard part
+
+Refunds. One operator requests a refund, and a different operator approves it after entering a fresh authenticator code. Only then is Stripe called. The order of steps carries the correctness:
+
+1. Check the request is still pending and the approver isn't the requester.
+2. Re-check the refundable balance at approval time, because a refund made directly in Stripe may have landed in between.
+3. Call Stripe outside the database transaction, with an idempotency key derived from the request, so a retry or a double click lands on the same refund.
+4. Mark the request approved only if it's still pending. If two approvers race, the loser is told it was already decided.
+
+If the Stripe call fails, the request stays pending, so nothing is lost. "A different person" is enforced in code and again by a database constraint. The same authenticator step-up guards the other writes that decide who gets paid: KYC decisions and fee changes.
+
+## Where it stands
+
+The site is live on the client's domain, but payments run in Stripe's test mode. Real money waits on the client's company registration, its choice of provider and the fee rate.
+
+The client's first QA round raised 72 findings. I resolved 66: 47 with code fixes, and the rest with written answers or evidence that they weren't defects or sat with Stripe. The second round said the back office had solid foundations. The same report flagged money totals on some screens that didn't add up yet, and I'm working through those fixes now.

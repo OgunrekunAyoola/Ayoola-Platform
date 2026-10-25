@@ -5,122 +5,137 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
+import { bookingHref, bookingLinkProps } from "@/config/site";
+import type { SiteContent } from "@/lib/site-content";
 
-export default function Header() {
+type HeaderProps = Pick<SiteContent, "name" | "banner" | "nav">;
+
+export default function Header({ name, banner, nav }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  const navItems = [
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Portfolio", href: "/portfolio" },
-    { label: "Services", href: "/services" },
-    { label: "Blog", href: "/blog" },
-    { label: "Contact", href: "/contact" },
-  ];
-
   const isActive = (href: string) =>
-    pathname === href || (href !== "/" && pathname?.startsWith(href));
+    pathname === href || pathname?.startsWith(`${href}/`);
+
+  const close = () => setIsMobileMenuOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--hair)] bg-[var(--chrome)] backdrop-blur-[14px] transition-colors duration-300">
-      <div className="max-w-[1200px] mx-auto px-5 sm:px-7 h-16 flex items-center justify-between gap-6">
-        {/* Brand */}
-        <Link
-          href="/"
-          className="flex items-center gap-3 group"
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          <span className="w-[38px] h-[38px] rounded-[11px] bg-[var(--accent)] text-white flex items-center justify-center font-serif font-extrabold text-[18px] tracking-tight shadow-sm">
-            AO
-          </span>
-          <span className="hidden sm:flex flex-col items-start leading-[1.15]">
-            <span className="font-semibold text-[15.5px] text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors">
-              Ayoola Ogunrekun
+    <>
+      {banner && (
+        <div className="on-inverse bg-[var(--inverse)] text-[var(--inverse-fg)] text-[14px] sm:text-[15px]">
+          <div className="max-w-[1200px] mx-auto px-5 sm:px-7 py-[11px] sm:py-[13px] flex flex-wrap items-center justify-center gap-x-[18px] gap-y-1.5 text-center">
+            <span aria-hidden="true" className="hidden sm:inline text-[var(--accent-bright)]">
+              ✦
             </span>
-            <span className="font-mono text-[11px] text-[var(--muted)] tracking-[0.02em]">
-              systems · writing · craft
+            <span>{banner.text}</span>
+            <span aria-hidden="true" className="hidden sm:inline w-px h-4 bg-white/40" />
+            <span className="hidden sm:inline text-[var(--inverse-muted)]">
+              {banner.detail}
             </span>
-          </span>
-        </Link>
-
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-[26px]">
-          {navItems.map((item) => (
+            <span aria-hidden="true" className="hidden sm:inline text-[var(--accent-bright)]">
+              ✦
+            </span>
             <Link
-              key={item.href}
-              href={item.href}
-              data-active={isActive(item.href) ? "true" : undefined}
-              aria-current={isActive(item.href) ? "page" : undefined}
-              className="navlink"
+              href={banner.cta.href}
+              className="font-medium text-[var(--accent-bright)] hover:underline underline-offset-4"
             >
-              {item.label}
+              {banner.cta.label} →
             </Link>
-          ))}
-        </nav>
+          </div>
+        </div>
+      )}
 
-        {/* Right actions */}
-        <div className="flex items-center gap-2.5">
-          <ThemeToggle />
+      <header className="sticky top-0 z-50 border-b border-[var(--hair)] bg-[var(--chrome)] backdrop-blur-[12px]">
+        <div className="max-w-[1200px] mx-auto px-5 sm:px-7 h-16 md:h-[76px] flex items-center justify-between gap-6">
           <Link
-            href="/contact"
-            className="btn btn-primary hidden sm:inline-flex !px-[18px] !py-2.5 !text-sm"
+            href="/"
+            className="flex items-center gap-3 text-[var(--foreground)] min-w-0"
+            onClick={close}
           >
-            Start a project
+            <span
+              aria-hidden="true"
+              className="w-[34px] h-[34px] shrink-0 rounded-full bg-[var(--btn)] text-[var(--btn-fg)] flex items-center justify-center font-serif italic text-[17px]"
+            >
+              a
+            </span>
+            <span className="font-serif font-semibold text-[19px] sm:text-[23px] tracking-[-0.01em] whitespace-nowrap">
+              {name}
+            </span>
           </Link>
 
-          {/* Mobile menu toggle */}
-          <button
-            className="md:hidden w-10 h-10 rounded-[11px] border border-[var(--card-border)] bg-[var(--card-bg)] backdrop-blur-md text-[var(--foreground)] flex items-center justify-center hover:border-[var(--accent)] transition-colors"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
-            aria-expanded={isMobileMenuOpen}
-            aria-controls="mobile-menu"
-          >
-            {isMobileMenuOpen ? (
-              <X className="w-5 h-5" />
-            ) : (
-              <Menu className="w-5 h-5" />
-            )}
-          </button>
-        </div>
-      </div>
+          <nav aria-label="Main" className="hidden md:flex items-center gap-[34px]">
+            {nav.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                data-active={isActive(item.href) ? "true" : undefined}
+                aria-current={isActive(item.href) ? "page" : undefined}
+                className="navlink"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
 
-      {/* Mobile Nav */}
-      {isMobileMenuOpen && (
-        <nav
-          id="mobile-menu"
-          className="md:hidden border-t border-[var(--hair)] bg-[var(--background)] absolute w-full left-0 shadow-xl"
-        >
-          <ul className="flex flex-col py-3">
-            {navItems.map((item) => (
-              <li key={item.href}>
+          <div className="flex items-center gap-2.5 shrink-0">
+            <ThemeToggle />
+            <Link
+              href={bookingHref}
+              {...bookingLinkProps}
+              className="btn btn-primary btn-sm hidden sm:inline-flex"
+            >
+              Book a call
+            </Link>
+            <button
+              className="md:hidden w-11 h-11 rounded-full border-[1.5px] border-[var(--foreground)] text-[var(--foreground)] flex items-center justify-center"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
+            >
+              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+        </div>
+
+        {isMobileMenuOpen && (
+          <nav
+            id="mobile-menu"
+            aria-label="Main"
+            className="md:hidden absolute w-full left-0 border-t border-b border-[var(--hair)] bg-[var(--background)] shadow-[0_24px_40px_-24px_var(--shadow)]"
+          >
+            <ul className="flex flex-col px-5 py-3">
+              {nav.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    aria-current={isActive(item.href) ? "page" : undefined}
+                    className={`flex items-center justify-between py-4 border-b border-[var(--hair)] font-serif text-[22px] ${
+                      isActive(item.href) ? "text-[var(--accent)]" : "text-[var(--foreground)]"
+                    }`}
+                    onClick={close}
+                  >
+                    {item.label}
+                    <span aria-hidden="true" className="text-[var(--subtle)] text-base">
+                      →
+                    </span>
+                  </Link>
+                </li>
+              ))}
+              <li className="pt-5 pb-2">
                 <Link
-                  href={item.href}
-                  aria-current={isActive(item.href) ? "page" : undefined}
-                  className={`block px-6 py-3.5 text-base transition-colors ${
-                    isActive(item.href)
-                      ? "text-[var(--accent)] font-semibold bg-[var(--accent-soft)]"
-                      : "text-[var(--muted)] hover:bg-[var(--card-bg)] hover:text-[var(--accent)]"
-                  }`}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  href={bookingHref}
+                  {...bookingLinkProps}
+                  className="btn btn-primary w-full"
+                  onClick={close}
                 >
-                  {item.label}
+                  Book a call
                 </Link>
               </li>
-            ))}
-            <li className="px-6 pt-3 pb-1">
-              <Link
-                href="/contact"
-                className="btn btn-primary w-full"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Start a project
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      )}
-    </header>
+            </ul>
+          </nav>
+        )}
+      </header>
+    </>
   );
 }

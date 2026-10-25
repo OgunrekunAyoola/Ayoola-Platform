@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { ShareIcon, CheckIcon, ClipboardDocumentIcon } from "@heroicons/react/24/outline";
 import { useToast } from "@/context/ToastContext";
 
 interface ShareButtonProps {
@@ -56,17 +55,11 @@ export default function ShareButton({
   return (
     <button
       onClick={handleShare}
-      className={`p-2 rounded-full hover:bg-[var(--muted)]/10 transition-colors ${className}`}
+      className={`btn btn-secondary !h-10 !px-[18px] !text-[14px] ${className}`}
       aria-label="Share"
       title="Share"
     >
-      {copied ? (
-        <CheckIcon className="w-5 h-5 text-green-500" />
-      ) : typeof navigator.share === "function" ? (
-        <ShareIcon className="w-5 h-5 text-[var(--muted)] hover:text-[var(--foreground)]" />
-      ) : (
-        <ClipboardDocumentIcon className="w-5 h-5 text-[var(--muted)] hover:text-[var(--foreground)]" />
-      )}
+      {copied ? "Link copied" : "Share"}
     </button>
   );
 }

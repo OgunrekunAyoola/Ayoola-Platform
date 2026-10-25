@@ -1,0 +1,146 @@
+# Home page. Wrap a phrase in *asterisks* for the italic serif emphasis.
+
+hero:
+  eyebrow: Software Engineer · Lagos → remote worldwide
+  title: I build the software businesses *run on*.
+  sub: >-
+    Accounting pipelines, payment platforms, compliance tools and SaaS
+    products, designed, built and run end to end, often as the only engineer.
+  primary:
+    label: See the work
+    href: /portfolio
+  secondary:
+    label: Work with me
+    href: /work-with-me
+  footnote: "// WAT (UTC+1) · full overlap with UK & EU · mornings for US East"
+
+# Decorative log card over the portrait. Generic on purpose: no client names,
+# internal pipeline names or real figures.
+runLog:
+  file: close-run.log
+  status: live
+  caption: Illustrative
+  lines:
+    - text: run 0917 · month-end close · started
+      tone: muted
+    - text: └ bank reconciliation · 1,284 lines matched
+      tone: ok
+      indent: true
+    - text: └ 3 ACH items · carried to next period
+      tone: flag
+      indent: true
+    - text: ⏸ APPROVAL · waiting on reviewer in Slack
+      tone: gate
+    - text: ✓ approved · resumed as child run · logged
+      tone: ok
+    - text: run 0917 · workbook ready for QuickBooks
+      tone: muted
+
+proof:
+  items:
+    - Lead engineer on 8 client products in 2026
+    - Month-end close pipelines for an accounting firm
+    - Compliance SaaS to a public pilot in 6 weeks
+    - From schema to deploy to the 2am fix
+  stack:
+    - TypeScript
+    - Python
+    - C#
+    - PHP
+    - PostgreSQL
+    - NestJS
+    - Next.js
+    - .NET
+    - Laravel
+    - AWS
+
+principles:
+  eyebrow: Principles
+  title: How I build software *people rely on*
+  items:
+    - title: The rules live in the system
+      body: >-
+        If a record must never be deleted, the database refuses the delete. If
+        a refund needs two people, the code won't move money with one.
+        Correctness shouldn't depend on everyone remembering.
+    - title: I own it after launch
+      body: >-
+        Schema, infrastructure, deploys, monitoring and the fix at 2am. Most of
+        my work has been as the only engineer, so nothing is someone else's
+        problem.
+    - title: AI never signs off
+      body: >-
+        Where a product uses AI, the model reads and drafts. It doesn't approve
+        payments or post figures. Numbers come from code, and a person approves
+        anything that matters.
+    - title: Shown, not claimed
+      body: >-
+        Integration tests that boot the real app, audits of my own work, and
+        status notes that say what isn't finished. The case studies work the
+        same way.
+
+work:
+  eyebrow: Selected work
+  title: The work, *in detail*
+  action:
+    label: All work →
+    href: /portfolio
+
+# Paraphrased from real feedback, in reported speech: no direct quotes, no
+# names, nothing the person didn't actually say. Sources are tracked privately.
+feedback:
+  eyebrow: Feedback
+  title: What clients and teams *have said*
+  note: Paraphrased from real feedback. Names withheld.
+  items:
+    - said: >-
+        Singled out my work on the tools SDK, said I'd been doing a lot of the
+        heavy lifting, and on go-live day confirmed every output from the first
+        production pipeline was in place.
+      who: Engineering lead, client team
+      where: Accounting close platform
+    - said: >-
+        Credited me with keeping the bank reconciliation pipeline moving, and
+        with building the parts nobody sees but everybody leans on.
+      who: Engineer, client team
+      where: Accounting close platform
+    - said: >-
+        Described the back office as having solid foundations, naming the
+        step-up verification on fee and KYC changes, the two-person refunds and
+        the hash-chained audit log.
+      who: Client QA review
+      where: Tipping platform
+
+ways:
+  eyebrow: Work with me
+  title: Two ways to *work together*
+  action: Learn more →
+  items:
+    - key: A
+      title: Full-time remote
+      body: >-
+        Joining your team as a backend, full-stack or platform engineer,
+        applied AI included. I'm strongest where the software handles money,
+        compliance or customer data.
+      href: /work-with-me#roles
+      tint: blue
+    - key: B
+      title: Contract builds
+      body: >-
+        Fixed-scope projects: a new product built end to end, or a rescue of a
+        live system that's broken or inherited.
+      href: /work-with-me#builds
+      tint: green
+
+writing:
+  eyebrow: Writing
+  title: Latest writing
+  action:
+    label: All writing →
+    href: /blog
+
+closing:
+  title: Building something that *has to be right?*
+  body: >-
+    Payments, compliance records, other people's data. Tell me what you're
+    building and I'll tell you honestly whether I can help.

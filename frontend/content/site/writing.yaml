@@ -1,0 +1,16 @@
+# Writing (blog) index. Posts live in content/writing/*.mdx.
+
+meta:
+  title: Writing
+  description: >-
+    Notes on building systems, the discipline of shipping, and reading code
+    you didn't write.
+
+eyebrow: Blog
+title: "*Writing.*"
+sub: >-
+  Notes on building systems, the discipline of shipping, and reading code you
+  didn't write.
+empty:
+  label: "// in progress"
+  body: No posts published yet. Check back soon.
