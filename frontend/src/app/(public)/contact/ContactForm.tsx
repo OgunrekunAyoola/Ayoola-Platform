@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Rich from "@/components/ui/Rich";
-import { useToast } from "@/context/ToastContext";
 import type { ContactContent } from "@/lib/site-content";
 
 interface FormState {
@@ -30,7 +29,6 @@ export default function ContactForm({
   messagePlaceholder,
   sent,
 }: ContactFormProps) {
-  const { addToast } = useToast();
   const [formData, setFormData] = useState<FormState>(() => emptyState(inquiryTypes[0]));
   const [status, setStatus] = useState<
     "idle" | "submitting" | "success" | "error"
@@ -59,14 +57,13 @@ export default function ContactForm({
       setStatus("success");
       setFormData(emptyState(inquiryTypes[0]));
     } catch (err) {
-      console.error("Contact submission error:", err);
+      // Shown inline beside the button (and announced), so no toast on top of it.
       setStatus("error");
       const msg =
         err instanceof Error
           ? err.message
           : "Something went wrong. Please try again.";
       setErrorMessage(msg);
-      addToast(msg, "error");
     }
   };
 
