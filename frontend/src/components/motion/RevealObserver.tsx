@@ -5,9 +5,6 @@ import { usePathname } from "next/navigation";
 
 const SELECTOR = "[data-reveal], main h2, main figure";
 
-/** Inline <head> script: opts the page into reveals before first paint. */
-export const revealBootScript = `(function(){try{var d=document.documentElement;if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('reveal');setTimeout(function(){if(!window.__revealReady)d.classList.remove('reveal')},4000)}}catch(e){}})();`;
-
 /**
  * Unclips each reveal target the first time 8% of it is inside the viewport.
  * Re-scans on every route change and whenever new targets are added (e.g. the
