@@ -236,6 +236,8 @@ export const contactSchema = z.strictObject({
     title: text,
     inquiryTypes: z.array(text).min(1),
     messagePlaceholder: text,
+    /** Shown when the server can't send: opens the visitor's mail app, prefilled. */
+    fallbackCta: text,
     sent: z.strictObject({ title: text, body: text, again: text }),
   }),
 });

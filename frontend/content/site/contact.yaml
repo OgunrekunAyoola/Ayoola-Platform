@@ -23,6 +23,9 @@ form:
     - AI build or review
     - Something else
   messagePlaceholder: A few sentences about the system, the timeline, and where you're stuck…
+  # If the form can't send (not configured, provider down), this button opens the
+  # visitor's mail app with their message already written, so nothing is lost.
+  fallbackCta: Send it by email instead →
   sent:
     title: Message *sent.*
     body: Thanks for reaching out. I'll get back to you within two business days.

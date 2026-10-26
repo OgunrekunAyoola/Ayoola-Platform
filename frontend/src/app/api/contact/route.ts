@@ -60,7 +60,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         message:
-          "The contact form isn't set up yet. Please reach out through the links on this page for now.",
+          "The form can't send right now. Your message is still here, so you can send it by email instead.",
       },
       { status: 503 },
     );
@@ -83,7 +83,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         message:
-          "Something went wrong sending your message. Please try again.",
+          "The form couldn't send your message. It's still here, so you can try again or send it by email instead.",
       },
       { status: 502 },
     );
