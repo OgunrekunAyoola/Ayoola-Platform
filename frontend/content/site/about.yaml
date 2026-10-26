@@ -22,34 +22,51 @@ lead: >-
   compliance tools and SaaS products.
 
 storyTitle: The story so far
+# The first paragraph is set large, as the lead line.
 story:
   - >-
-    I started in 2022 as an intern at Broadcaad in Lagos, building Node.js
-    APIs, and was taken on full-time within six months. Next I spent a year
-    and a half as the only engineer on a booking platform for a services
-    company. Contract work since then has taken me into Python, C# and PHP as
-    well as TypeScript. Most of what I know I taught myself while doing the
-    job.
+    On one job, the first thing I had to do was find a live app's source
+    code. There was no repository, no schema and no way into the database.
   - >-
-    Today I split my time between two contracts and my own product. On an
-    agentic month-end-close platform for an accounting firm, I built the
-    human-approval system and several of the close pipelines underneath the
-    AI. For a software agency, I'm the lead
-    engineer on client products: a food-safety compliance SaaS, a tipping
-    platform on Stripe Connect, a multi-tenant CRM and more. And I'm building
-    OpsFlow, my own order desk for Lagos vendors who sell on WhatsApp.
+    It was a salon-booking marketplace with real bookings going through it. I
+    pulled the code back out of the hosting platform, proved it matched what
+    was running, and rebuilt the database schema from the queries in the code.
+    Along the way I found two ways accounts could be taken over. Both were
+    closed within days.
   - >-
-    The part I enjoy most is the work nobody sees but everybody leans on:
-    *schemas that refuse bad data, money logic that adds up, and systems that
-    keep running after I hand them over.*
+    Four years earlier, my first public code was a set of CSS exercises. That
+    year I joined Broadcaad in Lagos as an intern writing Node.js APIs, and I
+    was full-time within six months. Then I spent a year and a half as the
+    only engineer at a services company, running its booking platform. When
+    every outage is yours, you stop building things that only work in the
+    demo.
   - >-
-    I use coding agents heavily, and I'm open about it. They let one engineer
-    deliver what used to take a team. The architecture, the decisions and the
-    verification stay with me: integration tests that boot the real app,
-    audits of my own work, and written status that says what isn't done yet.
+    These days I work in three very different places at once.
   - >-
-    In 2024 I spoke at GDG Lagos DevFest on building high-performance APIs
-    with gRPC.
+    On an AI platform that runs the month-end close for an accounting firm, I
+    built the step where a person approves what the AI flags. Then I watched a
+    model say it was 95% sure about a transaction it had got wrong. So in the
+    payroll pipeline I wrote, the model's confidence decides nothing. Every
+    figure comes from code, every anomaly reaches a person, and the model only
+    writes the sentences.
+  - >-
+    For an agency, I took a food-safety compliance product from first commit
+    to a public pilot in six weeks, running a team of coding agents. They
+    wrote most of the code. I set the direction, wrote the brief their
+    reviewers followed, merged every change and ran every deploy. Nothing in
+    it can be quietly deleted: the database itself refuses, because an
+    inspector has to be able to trust every record.
+  - >-
+    And I'm building OpsFlow, my own order desk for Lagos vendors who sell on
+    WhatsApp. When Meta launched its own WhatsApp AI, I tried it as a customer
+    of a real Lagos vendor. It couldn't tell me the price of a product in the
+    vendor's own ad. Answering is the easy part. Getting a chat to a confirmed
+    order is the job.
+  - >-
+    Three different worlds, one thread: the work nobody sees but everybody
+    leans on. *Schemas that refuse bad data, money logic that adds up, systems
+    that keep running after I've handed them over.* If you're building
+    something that has to be right, I'd like to hear about it.
 
 experienceTitle: Experience
 # Client and agency names stay out until naming is cleared.
@@ -66,6 +83,9 @@ experience:
   - role: Full-Stack Software Engineer
     org: Talent Group Services · sole engineer on a booking platform
     dates: Aug 2024 – Mar 2026
+  - role: Speaker, GDG Lagos DevFest
+    org: Building high-performance APIs with gRPC
+    dates: "2024"
   - role: Full-Stack Software Engineer
     org: Broadcaad, Lagos · intern, then full-time
     dates: Jun 2022 – Jul 2024

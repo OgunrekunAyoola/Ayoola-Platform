@@ -46,8 +46,15 @@ export default function About() {
       <section data-reveal className={row}>
         <h2 className={rowLabel}>{about.storyTitle}</h2>
         <div className={`${rowBody} flex flex-col gap-[22px] text-[18px] leading-[1.75] text-[var(--body)] max-w-[68ch]`}>
-          {about.story.map((paragraph) => (
-            <p key={paragraph} className="em-display m-0">
+          {about.story.map((paragraph, i) => (
+            <p
+              key={paragraph}
+              className={
+                i === 0
+                  ? "display m-0 text-[clamp(22px,2.1vw,30px)] leading-[1.25] text-[var(--foreground)]"
+                  : "em-display m-0"
+              }
+            >
               <Rich text={paragraph} />
             </p>
           ))}
