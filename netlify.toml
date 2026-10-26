@@ -3,5 +3,12 @@
   command = "npm run build"
   publish = ".next"
 
+[build.environment]
+  # Netlify fails a deploy when a secret variable's value appears in the
+  # build output. These two are public by design (the contact address is
+  # printed on the site; the site URL is the site), so don't scan for them.
+  # RESEND_API_KEY is still scanned.
+  SECRETS_SCAN_OMIT_KEYS = "CONTACT_TO_EMAIL,NEXT_PUBLIC_SITE_URL"
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"
