@@ -1,4 +1,4 @@
-# Work with me page. Wrap a phrase in *asterisks* for the italic serif emphasis.
+# Work with me page. Wrap a phrase in *asterisks* for the green emphasis.
 
 meta:
   title: Work with me
@@ -54,7 +54,6 @@ builds:
         - Required checks, so every change ships safely
         - A written record of everything I found
     - title: Product build
-      featured: true
       body: >-
         I design, build and deploy your product end to end, then hand it over
         with everything your team needs to run it.
@@ -65,9 +64,19 @@ builds:
         - Integration tests against the running app
         - CI/CD and infrastructure as code
         - Handoff docs, runbooks and a walkthrough
+  # Green card linking to the AI page.
+  specialism:
+    title: Production AI
+    badge: Specialism
+    body: >-
+      Approval steps, money logic computed in code, evals and an audit trail
+      around the model, so AI can do real work without having the final say.
+    cta:
+      label: See AI systems →
+      href: /ai
 
 process:
-  title: How it works
+  title: How it *works.*
   steps:
     - title: Discovery
       body: A 30-minute call about the problem, not a sales pitch.
@@ -79,7 +88,7 @@ process:
       body: Documentation, runbooks and a walkthrough for your team.
 
 closing:
-  title: Not sure which fits?
+  title: Not sure *which fits?*
   body: >-
     Tell me what you're building. I'll tell you honestly whether and how I can
     help.

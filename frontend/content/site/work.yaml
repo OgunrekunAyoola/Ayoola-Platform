@@ -1,6 +1,6 @@
 # Work listing, the "Also built" list and labels shared by every case study.
 # Case studies themselves live in content/work/*.mdx.
-# Wrap a phrase in *asterisks* for the italic serif emphasis.
+# Wrap a phrase in *asterisks* for the green emphasis.
 
 meta:
   title: Work

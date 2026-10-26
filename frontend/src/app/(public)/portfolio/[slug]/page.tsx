@@ -5,8 +5,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
 import ShareButton from "@/components/ui/ShareButton";
-import CtaBand from "@/components/ui/CtaBand";
-import Rich from "@/components/ui/Rich";
+import ClosingRow from "@/components/ui/ClosingRow";
 import WorkDiagram from "@/components/portfolio/WorkDiagram";
 import { getWorkPage } from "@/lib/site-content";
 
@@ -63,37 +62,34 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   ];
 
   return (
-    <article className="max-w-[760px] mx-auto px-5 sm:px-7 pt-14 sm:pt-16 pb-24 sm:pb-[110px]">
-      <Link href="/portfolio" className="btn btn-ghost mb-10">
+    <article className="max-w-[808px] mx-auto px-6 pt-[clamp(48px,6vw,72px)] pb-[clamp(72px,9vw,120px)]">
+      <Link
+        href="/portfolio"
+        className="inline-flex items-center gap-2 text-[15px] no-underline text-[var(--foreground)] hover:text-[var(--accent)] transition-colors mb-10"
+      >
         {labels.back}
       </Link>
 
       <header className="mb-10 pb-10 border-b border-[var(--hair)]">
         <div className="eyebrow mb-[18px]">{labels.eyebrow}</div>
-        <h1 className="text-[clamp(36px,5vw,60px)] leading-[1.08] tracking-[-0.02em] mb-6">
-          {project.title}
-        </h1>
+        <h1 className="text-[clamp(31px,4.21vw,53px)] leading-[1.06] m-0 mb-7">{project.title}</h1>
 
-        <p className="text-[18px] sm:text-[20px] leading-[1.6] text-[var(--muted)] mb-9">
-          {project.summary}
-        </p>
+        <p className="text-[18px] sm:text-[19px] leading-[1.6] text-[var(--muted)] m-0 mb-9">{project.summary}</p>
 
-        <dl className="grid grid-cols-2 sm:grid-cols-4 gap-x-8 gap-y-5 mb-8">
+        <dl className="grid grid-cols-2 sm:grid-cols-4 gap-x-8 gap-y-5 m-0 mb-8">
           {meta.map((m) => (
             <div key={m.label} className="border-t border-[var(--hair)] pt-3.5">
-              <dt className="font-mono text-[12px] tracking-[0.08em] uppercase text-[var(--muted)] mb-1.5">
-                {m.label}
-              </dt>
-              <dd className="font-serif text-[20px] leading-[1.3]">{m.value}</dd>
+              <dt className="label text-[11.5px] mb-1.5">{m.label}</dt>
+              <dd className="display m-0 text-[18px] leading-[1.3]">{m.value}</dd>
             </div>
           ))}
         </dl>
 
-        <ul className="flex flex-wrap gap-2.5 mb-8">
+        <ul className="list-none m-0 mb-8 p-0 flex flex-wrap gap-1.5">
           {project.stack.map((tech) => (
             <li
               key={tech}
-              className="font-mono text-[12.5px] rounded-full bg-[var(--surface)] px-3.5 py-[7px]"
+              className="font-mono text-[11.5px] text-[var(--body)] border border-[var(--chip-border)] rounded-full px-[11px] py-1.5"
             >
               {tech}
             </li>
@@ -116,14 +112,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       </header>
 
       {project.facts && (
-        <dl className="grid gap-px bg-[var(--hair)] border-y border-[var(--hair)] mb-12 [grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr))]">
+        <dl className="grid gap-px bg-[var(--hair)] border-y border-[var(--hair)] m-0 mb-12 [grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr))]">
           {project.facts.map((fact) => (
             <div
               key={fact.label}
-              className="bg-[var(--background)] py-5 pr-4 flex flex-col-reverse justify-end gap-1.5"
+              className="bg-[var(--background)] py-5 pr-4 flex flex-col-reverse justify-end gap-2"
             >
               <dt className="text-[14.5px] leading-[1.45] text-[var(--muted)]">{fact.label}</dt>
-              <dd className="font-serif font-medium text-[30px] sm:text-[34px] leading-[1.1]">
+              <dd className="display m-0 text-[clamp(27px,2.6vw,36px)] leading-none text-[var(--accent)]">
                 {fact.value}
               </dd>
             </div>
@@ -142,11 +138,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </Fragment>
       ))}
 
-      <CtaBand
-        title={<Rich text={labels.closing.title} />}
-        body={labels.closing.body}
-        className="mt-16"
-      />
+      <ClosingRow title={labels.closing.title} body={labels.closing.body} className="mt-16" />
     </article>
   );
 }

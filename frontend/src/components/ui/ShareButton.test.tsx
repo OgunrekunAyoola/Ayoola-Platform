@@ -1,7 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import ShareButton from "./ShareButton";
-import { ToastProvider } from "@/context/ToastContext";
 
 // Mock ToastContext
 const mockAddToast = vi.fn();

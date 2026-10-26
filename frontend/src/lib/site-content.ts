@@ -28,51 +28,72 @@ const meta = z.strictObject({ title: text, description: text });
 /** List items that can be hidden from production with `draft: true`. */
 const draftable = { draft: z.boolean().optional() };
 
+/** Decorative run-log card: shown on the AI page. */
+const runLog = z.strictObject({
+  file: text,
+  status: text,
+  lines: z
+    .array(
+      z.strictObject({
+        text,
+        tone: z.enum(["muted", "ok", "flag", "gate"]),
+        indent: z.boolean().optional(),
+      }),
+    )
+    .min(1),
+});
+
+const fact = z.strictObject({ value: text, label: text });
+
+/** An offer card. `featured` renders it as the green card. */
+const offer = z.strictObject({
+  title: text,
+  body: text,
+  includes: z.array(text).optional(),
+  featured: z.boolean().optional(),
+});
+
 export const siteSchema = z.strictObject({
   name: text,
   role: text,
+  /** Small green tag after the name in the header ("— engineer"). */
+  headerTag: text,
+  /** Status line in the hero and the mobile menu card. */
+  availability: text,
   description: text,
   keywords: z.array(text).min(1),
   location: text,
   timezone: text,
-  banner: z
-    .strictObject({ text, detail: text, cta: link })
-    .nullable(),
-  nav: z.array(link).min(1),
-  footer: z.strictObject({ blurb: text }),
+  /** Header, footer and mobile-menu navigation; `desc` shows in the mobile menu. */
+  nav: z.array(z.strictObject({ label: text, href: text, desc: text })).min(1),
+  menuCard: z.strictObject({ title: text }),
+  footer: z.strictObject({
+    cta: text,
+    tagline: text,
+    basedIn: z.array(text).min(1),
+  }),
   /** Share-card (Open Graph) line under the name or case-study title. */
   share: z.strictObject({ subline: text }),
 });
 
 export const homeSchema = z.strictObject({
   hero: z.strictObject({
-    eyebrow: text,
     title: text,
     sub: text,
     primary: link,
     secondary: link,
-    footnote: text,
   }),
-  runLog: z.strictObject({
-    file: text,
-    status: text,
-    caption: text,
-    lines: z
-      .array(
-        z.strictObject({
-          text,
-          tone: z.enum(["muted", "ok", "flag", "gate"]),
-          indent: z.boolean().optional(),
-        }),
-      )
-      .min(1),
+  /** Big Syne words scrolling under the hero. */
+  marquee: z.array(text).min(2),
+  intro: z.strictObject({
+    statement: text,
+    /** Line under the name on the portrait card. */
+    portraitLine: text,
+    facts: z.array(fact).min(1),
   }),
-  proof: z.strictObject({
-    items: z.array(text).min(1),
-    stack: z.array(text).min(1),
-  }),
-  principles: heading.extend({
-    items: z.array(z.strictObject({ title: text, body: text })).min(1),
+  services: heading.extend({
+    aside: text,
+    items: z.array(z.strictObject({ title: text, body: text, href: text })).min(1),
   }),
   work: heading.extend({ action: link }),
   /**
@@ -85,22 +106,28 @@ export const homeSchema = z.strictObject({
       z.strictObject({ said: text, who: text, where: text, ...draftable }),
     ),
   }),
-  ways: heading.extend({
-    items: z
+  /** Mono tech names scrolling the other way. */
+  stack: z.array(text).min(2),
+  principles: heading.extend({
+    items: z.array(z.strictObject({ title: text, body: text })).min(1),
+  }),
+  /** "Two ways to work together": a two-tab toggle. */
+  hire: heading.extend({
+    body: text,
+    tabs: z
       .array(
         z.strictObject({
-          key: text,
+          label: text,
           title: text,
           body: text,
-          href: text,
-          tint: z.enum(["blue", "green"]),
+          points: z.array(text).min(1),
+          cta: link,
+          tone: z.enum(["tint", "tint-2"]),
         }),
       )
-      .min(1),
-    action: text,
+      .length(2),
   }),
   writing: heading.extend({ action: link }),
-  closing,
 });
 
 export const workWithMeSchema = z.strictObject({
@@ -117,21 +144,35 @@ export const workWithMeSchema = z.strictObject({
     title: text,
     tagline: text,
     body: text,
-    offers: z
-      .array(
-        z.strictObject({
-          title: text,
-          body: text,
-          includes: z.array(text).optional(),
-          /** Rendered as the dark card. */
-          featured: z.boolean().optional(),
-        }),
-      )
-      .min(1),
+    offers: z.array(offer).min(1),
+    /** Green card linking to the AI page. */
+    specialism: z.strictObject({ title: text, badge: text, body: text, cta: link }),
   }),
   process: z.strictObject({
     title: text,
     steps: z.array(z.strictObject({ title: text, body: text })).min(1),
+  }),
+  closing,
+});
+
+export const aiSchema = z.strictObject({
+  meta,
+  hero: z.strictObject({
+    eyebrow: text,
+    title: text,
+    sub: text,
+    points: z.array(text).min(1),
+    primary: link,
+    secondary: link,
+  }),
+  principles: heading.extend({
+    items: z.array(z.strictObject({ title: text, body: text })).min(1),
+  }),
+  practice: heading.extend({ body: text, log: runLog }),
+  builds: heading.extend({
+    tagline: text,
+    body: text,
+    offers: z.array(offer).min(1),
   }),
   closing,
 });
@@ -141,6 +182,9 @@ export const aboutSchema = z.strictObject({
   eyebrow: text,
   title: text,
   lead: text,
+  /** Pills over the portrait. The last one is green. */
+  chips: z.array(text).min(1),
+  storyTitle: text,
   story: z.array(text).min(1),
   experienceTitle: text,
   experience: z
@@ -148,6 +192,9 @@ export const aboutSchema = z.strictObject({
       z.strictObject({ role: text, org: text, dates: text, ...draftable }),
     )
     .min(1),
+  toolkitTitle: text,
+  toolkit: z.array(z.strictObject({ title: text, items: z.array(text).min(1) })).min(1),
+  closing: z.strictObject({ title: text }),
 });
 
 export const workSchema = z.strictObject({
@@ -189,6 +236,7 @@ export const contactSchema = z.strictObject({
     title: text,
     inquiryTypes: z.array(text).min(1),
     messagePlaceholder: text,
+    sent: z.strictObject({ title: text, body: text, again: text }),
   }),
 });
 
@@ -211,6 +259,7 @@ export const notFoundSchema = z.strictObject({
 export type SiteContent = z.infer<typeof siteSchema>;
 export type HomeContent = z.infer<typeof homeSchema>;
 export type WorkWithMeContent = z.infer<typeof workWithMeSchema>;
+export type AiContent = z.infer<typeof aiSchema>;
 export type AboutContent = z.infer<typeof aboutSchema>;
 export type WorkContent = z.infer<typeof workSchema>;
 export type ContactContent = z.infer<typeof contactSchema>;
@@ -221,6 +270,7 @@ export const siteFiles = {
   site: siteSchema,
   home: homeSchema,
   "work-with-me": workWithMeSchema,
+  ai: aiSchema,
   about: aboutSchema,
   work: workSchema,
   contact: contactSchema,
@@ -265,6 +315,7 @@ export function getHome(): HomeContent {
   };
 }
 export const getWorkWithMe = () => load("work-with-me");
+export const getAi = () => load("ai");
 export const getContact = () => load("contact");
 export const getWriting = () => load("writing");
 export const getNotFound = () => load("not-found");

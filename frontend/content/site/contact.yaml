@@ -1,4 +1,4 @@
-# Contact page. Wrap a phrase in *asterisks* for the italic serif emphasis.
+# Contact page. Wrap a phrase in *asterisks* for the green emphasis.
 
 meta:
   title: Contact
@@ -14,11 +14,16 @@ sub: >-
 bookLabel: Book a 30-minute call
 
 form:
-  title: Or send a message
+  title: Or send *a message.*
   # Keep in step with the offers on the Work with me page.
   inquiryTypes:
     - Full-time role
     - Product build
     - Rescue & stabilise
+    - AI build or review
     - Something else
   messagePlaceholder: A few sentences about the system, the timeline, and where you're stuck…
+  sent:
+    title: Message *sent.*
+    body: Thanks for reaching out. I'll get back to you within two business days.
+    again: Send another

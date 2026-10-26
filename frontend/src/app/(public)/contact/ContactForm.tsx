@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useToast } from "@/context/ToastContext";
+import Rich from "@/components/ui/Rich";
+import type { ContactContent } from "@/lib/site-content";
 
 interface FormState {
   name: string;
@@ -12,11 +13,7 @@ interface FormState {
   company: string;
 }
 
-interface ContactFormProps {
-  title: string;
-  inquiryTypes: string[];
-  messagePlaceholder: string;
-}
+type ContactFormProps = ContactContent["form"];
 
 const emptyState = (typeOfWork: string): FormState => ({
   name: "",
@@ -30,8 +27,8 @@ export default function ContactForm({
   title,
   inquiryTypes,
   messagePlaceholder,
+  sent,
 }: ContactFormProps) {
-  const { addToast } = useToast();
   const [formData, setFormData] = useState<FormState>(() => emptyState(inquiryTypes[0]));
   const [status, setStatus] = useState<
     "idle" | "submitting" | "success" | "error"
@@ -60,14 +57,13 @@ export default function ContactForm({
       setStatus("success");
       setFormData(emptyState(inquiryTypes[0]));
     } catch (err) {
-      console.error("Contact submission error:", err);
+      // Shown inline beside the button (and announced), so no toast on top of it.
       setStatus("error");
       const msg =
         err instanceof Error
           ? err.message
           : "Something went wrong. Please try again.";
       setErrorMessage(msg);
-      addToast(msg, "error");
     }
   };
 
@@ -81,16 +77,15 @@ export default function ContactForm({
   if (status === "success") {
     return (
       <div className="flex flex-col items-start gap-4 py-10">
-        <span className="w-14 h-14 rounded-full bg-[var(--tint-green)] text-[var(--accent)] flex items-center justify-center text-2xl">
+        <span className="w-14 h-14 rounded-full bg-[var(--tint)] text-[var(--accent)] flex items-center justify-center text-2xl">
           ✓
         </span>
-        <h2 className="text-[36px]">Message sent.</h2>
-        <p className="text-[16.5px] leading-[1.6] text-[var(--muted)] max-w-[340px]">
-          Thanks for reaching out — I&apos;ll get back to you within two
-          business days.
-        </p>
-        <button onClick={() => setStatus("idle")} className="btn btn-secondary">
-          Send another
+        <h2 className="text-[31px] m-0">
+          <Rich text={sent.title} />
+        </h2>
+        <p className="text-[16px] leading-[1.6] text-[var(--muted)] m-0 max-w-[340px]">{sent.body}</p>
+        <button onClick={() => setStatus("idle")} className="btn btn-outline h-12 px-6 text-[15px]">
+          {sent.again}
         </button>
       </div>
     );
@@ -100,7 +95,9 @@ export default function ContactForm({
 
   return (
     <>
-      <h2 className="text-[28px] sm:text-[32px] mb-7">{title}</h2>
+      <h2 className="text-[28px] m-0 mb-7">
+        <Rich text={title} />
+      </h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-[18px]">
         {/* Honeypot field — hidden from sighted users, catches bots that fill every input */}
         <div className="absolute left-[-9999px]" aria-hidden="true">
@@ -145,12 +142,12 @@ export default function ContactForm({
         </label>
 
         <fieldset className="flex flex-col gap-2.5">
-          <legend className="text-[14px] font-semibold mb-2.5">Inquiry type</legend>
+          <legend className="text-[14px] font-semibold mb-2.5 p-0">Inquiry type</legend>
           <div className="flex flex-wrap gap-2">
             {inquiryTypes.map((type) => (
               <label
                 key={type}
-                className="inline-flex items-center h-[42px] px-[18px] rounded-full border-[1.5px] border-[var(--foreground)] bg-[var(--card)] text-[14.5px] cursor-pointer transition-colors has-checked:bg-[var(--btn)] has-checked:border-[var(--btn)] has-checked:text-[var(--btn-fg)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[var(--accent)]"
+                className="inline-flex items-center h-[42px] px-[18px] rounded-full border border-[var(--foreground)] bg-transparent text-[14.5px] cursor-pointer transition-colors duration-200 has-checked:bg-[var(--foreground)] has-checked:text-[var(--background)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[var(--accent)]"
               >
                 <input
                   type="radio"
@@ -183,7 +180,7 @@ export default function ContactForm({
           <div
             role="status"
             aria-live="polite"
-            className="text-[15px] text-[var(--warn)] bg-[var(--gate)] px-4 py-3 rounded-[14px]"
+            className="text-[15px] text-[#8a2f12] bg-[#f6e7df] px-4 py-3 rounded-[14px]"
           >
             {errorMessage}
           </div>
@@ -191,7 +188,7 @@ export default function ContactForm({
 
         <button
           type="submit"
-          className="btn btn-primary btn-lg w-full mt-1"
+          className="btn btn-ink w-full h-14 text-[17px] mt-1"
           disabled={status === "submitting"}
         >
           {status === "submitting" ? "Sending…" : "Send message →"}

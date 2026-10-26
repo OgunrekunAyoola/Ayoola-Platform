@@ -58,22 +58,23 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <article className="max-w-[760px] mx-auto px-5 sm:px-7 pt-14 sm:pt-16 pb-24 sm:pb-[110px]">
-      <Link href="/blog" className="btn btn-ghost mb-10">
+    <article className="max-w-[808px] mx-auto px-7 pt-[clamp(48px,6vw,72px)] pb-[clamp(72px,9vw,120px)]">
+      <Link
+        href="/blog"
+        className="inline-flex items-center gap-2 text-[15px] no-underline text-[var(--foreground)] hover:text-[var(--accent)] transition-colors mb-10"
+      >
         ← All writing
       </Link>
 
-      <div className="font-mono text-[12px] tracking-[0.1em] uppercase text-[var(--accent)] mb-[18px]">
-        {post.tags?.[0] ?? "Writing"} · {post.readingTime} min read
+      <div className="font-mono text-[12px] tracking-[0.12em] uppercase text-[var(--accent)] mb-[18px]">
+        {post.tags[0] ?? "Writing"} · {post.readingTime} min read
       </div>
-      <h1 className="text-[clamp(36px,5vw,60px)] leading-[1.08] tracking-[-0.02em] mb-7">
-        {post.title}
-      </h1>
+      <h1 className="text-[clamp(31px,4.21vw,53px)] leading-[1.06] m-0 mb-7">{post.title}</h1>
 
       <div className="flex items-center gap-3.5 pb-7 mb-10 border-b border-[var(--hair)]">
         <span
           aria-hidden="true"
-          className="w-10 h-10 shrink-0 rounded-full bg-[var(--btn)] text-[var(--btn-fg)] flex items-center justify-center font-serif italic text-[18px]"
+          className="w-10 h-10 shrink-0 rounded-full bg-[var(--foreground)] text-[var(--background)] flex items-center justify-center display font-medium text-[16px]"
         >
           a
         </span>

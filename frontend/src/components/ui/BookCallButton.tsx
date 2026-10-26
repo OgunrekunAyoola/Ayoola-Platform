@@ -8,7 +8,7 @@ interface BookCallButtonProps {
 
 export default function BookCallButton({
   label = "Book a call",
-  className = "btn btn-primary btn-lg",
+  className = "btn btn-ink h-14 px-7 text-[17px]",
 }: BookCallButtonProps) {
   return (
     <Link href={bookingHref} {...bookingLinkProps} className={className}>

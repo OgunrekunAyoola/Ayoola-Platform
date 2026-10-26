@@ -1,49 +1,37 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import { MotionConfig } from "framer-motion";
 import "./globals.css";
 import { ToastProvider } from "@/context/ToastContext";
-import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import PageTransition from "@/components/motion/PageTransition";
+import RevealObserver, { revealBootScript } from "@/components/motion/RevealObserver";
 import { getSiteUrl } from "@/lib/site-url";
 import { getSite } from "@/lib/site-content";
 
-// Self-hosted (latin, variable) so builds never depend on Google Fonts.
-const hanken = localFont({
-  src: "../assets/fonts/HankenGrotesk-Variable.woff2",
-  weight: "100 900",
-  variable: "--font-hanken",
+// Self-hosted (variable) so builds never depend on Google Fonts. Geist and
+// Geist Mono are subset to Latin plus the arrows and symbols the copy uses.
+const syne = localFont({
+  src: "../assets/fonts/Syne-Variable.woff2",
+  weight: "400 800",
+  variable: "--font-syne",
   display: "swap",
-  // The subset has no arrows (→ ↓ ↗); match the design's system-ui fallback rather than Arial.
-  adjustFontFallback: false,
   fallback: ["system-ui", "sans-serif"],
 });
 
-// Source Serif 4 carries an optical-size axis; browsers apply it automatically.
-const sourceSerif = localFont({
-  src: [
-    {
-      path: "../assets/fonts/SourceSerif4-Variable.woff2",
-      weight: "200 900",
-      style: "normal",
-    },
-    {
-      path: "../assets/fonts/SourceSerif4-Italic-Variable.woff2",
-      weight: "200 900",
-      style: "italic",
-    },
-  ],
-  variable: "--font-source-serif",
+const geist = localFont({
+  src: "../assets/fonts/Geist-Variable.woff2",
+  weight: "100 900",
+  variable: "--font-geist",
   display: "swap",
-  adjustFontFallback: false,
-  fallback: ["Georgia", "serif"],
+  fallback: ["system-ui", "sans-serif"],
 });
 
-const jetbrainsMono = localFont({
-  src: "../assets/fonts/JetBrainsMono-Variable.woff2",
-  weight: "100 800",
-  variable: "--font-jetbrains-mono",
+const geistMono = localFont({
+  src: "../assets/fonts/GeistMono-Variable.woff2",
+  weight: "100 900",
+  variable: "--font-geist-mono",
   display: "swap",
-  adjustFontFallback: false,
+  // Only small labels use it, so keep it off the critical path.
+  preload: false,
   fallback: ["ui-monospace", "monospace"],
 });
 
@@ -93,10 +81,7 @@ export function generateMetadata(): Metadata {
 }
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fcfcfa" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f1920" },
-  ],
+  themeColor: "#eef1ea",
 };
 
 export default function RootLayout({
@@ -107,20 +92,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${hanken.variable} ${sourceSerif.variable} ${jetbrainsMono.variable}`}
+      className={`${syne.variable} ${geist.variable} ${geistMono.variable}`}
+      // The boot script adds the `reveal` class before React hydrates.
       suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: revealBootScript }} />
+      </head>
       <body className="font-sans antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <MotionConfig reducedMotion="user">
-            <ToastProvider>{children}</ToastProvider>
-          </MotionConfig>
-        </ThemeProvider>
+        <ToastProvider>{children}</ToastProvider>
+        <PageTransition />
+        <RevealObserver />
       </body>
     </html>
   );

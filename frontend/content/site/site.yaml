@@ -1,8 +1,12 @@
 # Identity, navigation and site-wide copy.
-# Wrap a phrase in *asterisks* for the italic serif emphasis.
+# Wrap a phrase in *asterisks* for the green emphasis.
 
 name: Ayoola Ogunrekun
 role: Software Engineer
+# Small green tag after the name in the header.
+headerTag: — engineer
+# Status line in the hero and the mobile menu card.
+availability: Available for roles & project builds
 
 # Search results and share previews.
 description: >-
@@ -25,27 +29,34 @@ keywords:
 location: Lagos, Nigeria · working with teams worldwide
 timezone: Lagos, Nigeria · WAT (UTC+1)
 
-# Ink bar above the header. Replace the whole block with `banner: null` to hide it.
-banner:
-  text: Open to full-time remote software engineering roles
-  detail: Lagos → remote worldwide
-  cta:
-    label: Work with me
-    href: /work-with-me
-
-# Header and footer navigation.
+# Header, footer and mobile menu. `desc` shows under each item in the mobile menu.
 nav:
   - label: Work
     href: /portfolio
+    desc: Case studies, in detail
   - label: Work with me
     href: /work-with-me
+    desc: Roles & project builds
+  - label: AI systems
+    href: /ai
+    desc: AI with a person in the loop
   - label: Writing
     href: /blog
+    desc: Notes from shipping
   - label: About
     href: /about
+    desc: The engineer behind it
+
+# Green card at the bottom of the mobile menu.
+menuCard:
+  title: Got something that needs to *hold up?*
 
 footer:
-  blurb: Software engineer in Lagos, building the software businesses run on.
+  cta: Let's build something that *holds up.*
+  tagline: Software engineer · working with teams worldwide
+  basedIn:
+    - Lagos, Nigeria
+    - WAT (UTC+1) · full overlap with UK & EU
 
 share:
   subline: I build the software businesses *run on*.

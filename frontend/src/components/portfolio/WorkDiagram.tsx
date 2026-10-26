@@ -8,8 +8,8 @@ interface WorkDiagramProps {
 }
 
 const markerClass = {
-  human: "bg-[var(--gate)]",
-  model: "bg-[var(--tint-blue)]",
+  human: "bg-[var(--accent)] text-[var(--on-accent)]",
+  model: "bg-[var(--tint)] text-[var(--foreground)]",
 } as const;
 
 /**
@@ -20,11 +20,9 @@ export default function WorkDiagram({ title, markers, diagram }: WorkDiagramProp
   const last = diagram.stages.length - 1;
 
   return (
-    <figure className="m-0 mb-12 rounded-[22px] bg-[var(--surface)] p-6 sm:p-8">
-      <div className="font-mono text-[12px] tracking-[0.1em] uppercase text-[var(--muted)] mb-6">
-        {title}
-      </div>
-      <ol className="flex flex-col">
+    <figure className="m-0 mb-12 rounded-[22px] border border-[var(--card-border)] bg-[var(--card)] p-6 sm:p-8">
+      <div className="label mb-6">{title}</div>
+      <ol className="list-none m-0 p-0 flex flex-col">
         {diagram.stages.map((stage, i) => (
           <li
             key={stage.label}
@@ -33,28 +31,26 @@ export default function WorkDiagram({ title, markers, diagram }: WorkDiagramProp
             {i < last && (
               <span
                 aria-hidden="true"
-                className="absolute left-[13.5px] top-8 bottom-1 w-px bg-[var(--foreground)] opacity-25"
+                className="absolute left-[13.5px] top-8 bottom-1 w-px bg-[var(--hair-strong)]"
               />
             )}
-            <span className="w-7 h-7 rounded-full border-[1.5px] border-[var(--foreground)] bg-[var(--background)] font-mono text-[11.5px] flex items-center justify-center">
+            <span className="w-7 h-7 rounded-full border border-[var(--foreground)] bg-[var(--background)] font-mono text-[11.5px] flex items-center justify-center">
               {i + 1}
             </span>
             <div className="flex flex-col gap-2.5 pt-0.5">
               <div className="flex flex-wrap items-center gap-2.5">
-                <span className="font-serif text-[19px] leading-[1.3]">{stage.label}</span>
+                <span className="display text-[19px] leading-[1.3]">{stage.label}</span>
                 {stage.marker && (
-                  <span
-                    className={`${markerClass[stage.marker]} rounded-full px-2.5 py-1 font-mono text-[11px] text-[var(--foreground)]`}
-                  >
+                  <span className={`${markerClass[stage.marker]} rounded-full px-2.5 py-1 font-mono text-[11px]`}>
                     {markers[stage.marker]}
                   </span>
                 )}
               </div>
-              <ul className="flex flex-wrap gap-2">
+              <ul className="list-none m-0 p-0 flex flex-wrap gap-2">
                 {stage.nodes.map((node) => (
                   <li
                     key={node}
-                    className="font-mono text-[12px] rounded-full bg-[var(--card)] border border-[var(--hair)] px-3 py-1.5"
+                    className="font-mono text-[11.5px] text-[var(--body)] rounded-full border border-[var(--chip-border)] px-[11px] py-1.5"
                   >
                     {node}
                   </li>
