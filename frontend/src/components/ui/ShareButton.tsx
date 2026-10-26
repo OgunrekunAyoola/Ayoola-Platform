@@ -55,7 +55,7 @@ export default function ShareButton({
   return (
     <button
       onClick={handleShare}
-      className={`btn btn-secondary !h-10 !px-[18px] !text-[14px] ${className}`}
+      className={`btn btn-outline h-10 px-[18px] text-[14px] ${className}`}
       aria-label="Share"
       title="Share"
     >

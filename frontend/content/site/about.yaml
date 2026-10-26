@@ -1,4 +1,4 @@
-# About page. Wrap a phrase in *asterisks* for the italic serif emphasis.
+# About page. Wrap a phrase in *asterisks* for the green emphasis.
 
 meta:
   title: About
@@ -10,11 +10,18 @@ meta:
 eyebrow: About
 title: The engineer *behind the systems.*
 
+# Pills over the portrait; the last one is green.
+chips:
+  - Lagos, Nigeria
+  - WAT · UTC+1
+  - Remote worldwide
+
 lead: >-
   I'm Ayoola, a software engineer in Lagos. I design, build and run the
   systems businesses depend on: accounting pipelines, payment platforms,
   compliance tools and SaaS products.
 
+storyTitle: The story so far
 story:
   - >-
     I started in 2022 as an intern at Broadcaad in Lagos, building Node.js
@@ -33,8 +40,8 @@ story:
     OpsFlow, my own order desk for Lagos vendors who sell on WhatsApp.
   - >-
     The part I enjoy most is the work nobody sees but everybody leans on:
-    schemas that refuse bad data, money logic that adds up, and systems that
-    keep running after I hand them over.
+    *schemas that refuse bad data, money logic that adds up, and systems that
+    keep running after I hand them over.*
   - >-
     I use coding agents heavily, and I'm open about it. They let one engineer
     deliver what used to take a team. The architecture, the decisions and the
@@ -62,3 +69,17 @@ experience:
   - role: Full-Stack Software Engineer
     org: Broadcaad, Lagos · intern, then full-time
     dates: Jun 2022 – Jul 2024
+
+toolkitTitle: Toolkit
+toolkit:
+  - title: Languages
+    items: [TypeScript, Python, C#, PHP, SQL]
+  - title: Frameworks
+    items: [Next.js, React, NestJS, .NET, Laravel, Expo]
+  - title: Data & payments
+    items: [PostgreSQL, Redis, MongoDB, Stripe, SeerBit]
+  - title: Cloud & AI
+    items: [AWS, CloudFormation, Docker, LangGraph, Bedrock AgentCore]
+
+closing:
+  title: Hiring, or have something *to build?*

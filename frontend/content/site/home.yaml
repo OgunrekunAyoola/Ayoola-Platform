@@ -1,62 +1,112 @@
-# Home page. Wrap a phrase in *asterisks* for the italic serif emphasis.
+# Home page. Wrap a phrase in *asterisks* for the green emphasis
+# (in body copy it renders in Syne instead).
 
 hero:
-  eyebrow: Software Engineer · Lagos → remote worldwide
+  # Each word rises in turn; the *emphasised* words are green.
   title: I build the software businesses *run on*.
   sub: >-
     Accounting pipelines, payment platforms, compliance tools and SaaS
-    products, designed, built and run end to end, often as the only engineer.
+    products, designed, built and run end to end, *often as the only
+    engineer.*
   primary:
     label: See the work
     href: /portfolio
   secondary:
     label: Work with me
     href: /work-with-me
-  footnote: "// WAT (UTC+1) · full overlap with UK & EU · mornings for US East"
 
-# Decorative log card over the portrait. Generic on purpose: no client names,
-# internal pipeline names or real figures.
-runLog:
-  file: close-run.log
-  status: live
-  caption: Illustrative
-  lines:
-    - text: run 0917 · month-end close · started
-      tone: muted
-    - text: └ bank reconciliation · 1,284 lines matched
-      tone: ok
-      indent: true
-    - text: └ 3 ACH items · carried to next period
-      tone: flag
-      indent: true
-    - text: ⏸ APPROVAL · waiting on reviewer in Slack
-      tone: gate
-    - text: ✓ approved · resumed as child run · logged
-      tone: ok
-    - text: run 0917 · workbook ready for QuickBooks
-      tone: muted
+# Big words scrolling under the hero, alternating ink and green.
+marquee:
+  - Software Engineer
+  - Accounting Pipelines
+  - Payment Platforms
+  - Compliance Tools
+  - SaaS Products
 
-proof:
+intro:
+  statement: >-
+    Full-stack products, the databases and infrastructure under them, and the
+    AI inside them where it earns its place.
+  portraitLine: Software engineer · Lagos
+  facts:
+    - value: "8"
+      label: client products as lead engineer in 2026
+    - value: 6 wks
+      label: compliance SaaS, first commit to public pilot
+    - value: UTC+1
+      label: full overlap with UK & EU
+
+services:
+  eyebrow: What I do
+  title: Engineering across *the whole stack.*
+  aside: One engineer from interface to infrastructure, so nothing falls between the gaps.
   items:
-    - Lead engineer on 8 client products in 2026
-    - Month-end close pipelines for an accounting firm
-    - Compliance SaaS to a public pilot in 6 weeks
-    - From schema to deploy to the 2am fix
-  stack:
-    - TypeScript
-    - Python
-    - C#
-    - PHP
-    - PostgreSQL
-    - NestJS
-    - Next.js
-    - .NET
-    - Laravel
-    - AWS
+    - title: Full-stack products
+      body: Web apps from database to interface, in TypeScript, Next.js, NestJS, .NET and Laravel.
+      href: /work-with-me
+    - title: Backend & data
+      body: "Postgres schemas that enforce the rules: row-level security, versioned records, audit trails."
+      href: /work-with-me
+    - title: Payments
+      body: Stripe Connect and subscriptions, SeerBit, idempotent webhooks and reconciliation.
+      href: /work-with-me
+    - title: Cloud & DevOps
+      body: AWS, CloudFormation, Docker and CI/CD pipelines that make shipping boring.
+      href: /work-with-me
+    - title: AI systems
+      body: LangGraph pipelines and agents with human approval, evals and an audit trail.
+      href: /ai
+
+work:
+  eyebrow: Selected work
+  title: The work, *in detail.*
+  action:
+    label: All work →
+    href: /portfolio
+
+# Paraphrased from real feedback, in reported speech: no direct quotes, no
+# names, nothing the person didn't actually say. Sources are tracked privately.
+feedback:
+  eyebrow: Feedback
+  title: What clients and teams *have said.*
+  note: Paraphrased from real feedback. Names withheld.
+  items:
+    - said: >-
+        Singled out my work on the tools SDK, said I'd been doing a lot of the
+        heavy lifting, and on go-live day confirmed every output from the first
+        production pipeline was in place.
+      who: Engineering lead, client team
+      where: Accounting close platform
+    - said: >-
+        Credited me with keeping the bank reconciliation pipeline moving, and
+        with building the parts nobody sees but everybody leans on.
+      who: Engineer, client team
+      where: Accounting close platform
+    - said: >-
+        Described the back office as having solid foundations, naming the
+        step-up verification on fee and KYC changes, the two-person refunds and
+        the hash-chained audit log.
+      who: Client QA review
+      where: Tipping platform
+
+# Mono names scrolling the other way.
+stack:
+  - TypeScript
+  - Python
+  - C#
+  - PHP
+  - PostgreSQL
+  - NestJS
+  - Next.js
+  - .NET
+  - Laravel
+  - AWS
+  - Docker
+  - LangGraph
 
 principles:
-  eyebrow: Principles
-  title: How I build software *people rely on*
+  eyebrow: How I work
+  title: How I build software *people rely on.*
   items:
     - title: The rules live in the system
       body: >-
@@ -79,68 +129,44 @@ principles:
         status notes that say what isn't finished. The case studies work the
         same way.
 
-work:
-  eyebrow: Selected work
-  title: The work, *in detail*
-  action:
-    label: All work →
-    href: /portfolio
-
-# Paraphrased from real feedback, in reported speech: no direct quotes, no
-# names, nothing the person didn't actually say. Sources are tracked privately.
-feedback:
-  eyebrow: Feedback
-  title: What clients and teams *have said*
-  note: Paraphrased from real feedback. Names withheld.
-  items:
-    - said: >-
-        Singled out my work on the tools SDK, said I'd been doing a lot of the
-        heavy lifting, and on go-live day confirmed every output from the first
-        production pipeline was in place.
-      who: Engineering lead, client team
-      where: Accounting close platform
-    - said: >-
-        Credited me with keeping the bank reconciliation pipeline moving, and
-        with building the parts nobody sees but everybody leans on.
-      who: Engineer, client team
-      where: Accounting close platform
-    - said: >-
-        Described the back office as having solid foundations, naming the
-        step-up verification on fee and KYC changes, the two-person refunds and
-        the hash-chained audit log.
-      who: Client QA review
-      where: Tipping platform
-
-ways:
+hire:
   eyebrow: Work with me
-  title: Two ways to *work together*
-  action: Learn more →
-  items:
-    - key: A
+  title: Two ways to *work together.*
+  body: >-
+    Lagos-based, working with teams worldwide. Clear scope, honest status,
+    production standards.
+  tabs:
+    - label: For employers
       title: Full-time remote
       body: >-
         Joining your team as a backend, full-stack or platform engineer,
         applied AI included. I'm strongest where the software handles money,
         compliance or customer data.
-      href: /work-with-me#roles
-      tint: blue
-    - key: B
+      points:
+        - Full overlap with UK & EU
+        - Production ownership from day one
+        - CV on request
+      cta:
+        label: Roles I'm open to →
+        href: /work-with-me#roles
+      tone: tint
+    - label: For clients
       title: Contract builds
       body: >-
         Fixed-scope projects: a new product built end to end, or a rescue of a
         live system that's broken or inherited.
-      href: /work-with-me#builds
-      tint: green
+      points:
+        - A written scope, agreed up front
+        - Weekly demos
+        - Docs, runbooks and a handover
+      cta:
+        label: See project builds →
+        href: /work-with-me#builds
+      tone: tint-2
 
 writing:
   eyebrow: Writing
-  title: Latest writing
+  title: Latest *writing.*
   action:
     label: All writing →
     href: /blog
-
-closing:
-  title: Building something that *has to be right?*
-  body: >-
-    Payments, compliance records, other people's data. Tell me what you're
-    building and I'll tell you honestly whether I can help.

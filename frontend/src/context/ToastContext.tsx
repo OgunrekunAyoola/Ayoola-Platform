@@ -56,7 +56,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className="pointer-events-auto flex items-start gap-3 px-5 py-4 rounded-[18px] bg-[var(--inverse)] text-[var(--inverse-fg)] shadow-[0_20px_50px_-24px_var(--shadow)] animate-fade-in"
+            className="pointer-events-auto flex items-start gap-3 px-5 py-4 rounded-[18px] bg-[var(--foreground)] text-[var(--background)] shadow-[0_20px_50px_-24px_var(--shadow)] rise-in"
           >
             <div
               className={`flex-shrink-0 mt-0.5 ${

@@ -1,0 +1,110 @@
+# AI systems page. Wrap a phrase in *asterisks* for the green emphasis.
+# Every claim here traces to a case study: approval-and-resume (month-end
+# close), payroll figures computed in code, the OpsFlow output gate.
+
+meta:
+  title: AI systems
+  description: >-
+    AI with a person in the loop: approval and resume flows, figures computed
+    in code, evals and audit trails, built on AWS.
+
+hero:
+  eyebrow: What I do / AI systems
+  title: AI kept *in its place.*
+  sub: >-
+    I build the parts around the model: approval steps, money logic computed in
+    code, evals and audit trails. The model reads, classifies and drafts.
+    People make the calls that matter.
+  points:
+    - Approve, reject and resume flows in Slack, live in production
+    - Payroll figures computed in code; the model only writes sentences
+    - Output gates that stop a bot from confirming a payment
+  primary:
+    label: AI builds ↓
+    href: "#ai-builds"
+  secondary:
+    label: Book a call
+    href: /contact
+
+principles:
+  eyebrow: Principles
+  title: Rules for AI that does *real work.*
+  items:
+    - title: The model never has the final say
+      body: >-
+        It classifies, extracts and drafts. Approving a payment, posting a
+        figure or confirming a refund stays with code and people.
+    - title: Arithmetic decides what gets flagged
+      body: >-
+        A model's confidence is text it writes, not a measurement. Anomalies
+        are found by computation, and every one reaches a person.
+    - title: Every decision leaves a record
+      body: >-
+        What ran, what it found, who approved it and when, stored where an
+        auditor can read it.
+
+practice:
+  eyebrow: In practice
+  title: Uncertainty is *routed, not hidden.*
+  body: >-
+    When a pipeline isn't sure, it stops and asks. The run pauses, a reviewer
+    decides each flagged item in Slack, and the run resumes from the decisions
+    stored in the database, not from the chat message.
+  # Decorative and labelled illustrative: no client names, internal pipeline
+  # names or real figures.
+  log:
+    file: close-run.log
+    status: live
+    lines:
+      - text: run 0917 · month-end close · started
+        tone: muted
+      - text: └ bank reconciliation · 1,284 lines matched
+        tone: ok
+        indent: true
+      - text: └ 3 ACH items · carried to next period
+        tone: flag
+        indent: true
+      - text: ⏸ APPROVAL · waiting on reviewer in Slack
+        tone: gate
+      - text: ✓ approved · resumed as child run · logged
+        tone: ok
+      - text: run 0917 · workbook ready for QuickBooks
+        tone: muted
+
+builds:
+  eyebrow: AI builds
+  title: Production AI builds
+  tagline: Built to be audited.
+  body: >-
+    For teams putting AI into finance, compliance or support, where a wrong
+    answer costs money.
+  offers:
+    - title: AI readiness review
+      body: >-
+        For an AI system that works in the demo but can't get sign-off. I
+        review it and write up where it will fail, which controls are missing
+        and what to fix first.
+      includes:
+        - A written report on where it will fail
+        - The missing controls, ranked by risk
+        - A fix-first plan your team can act on
+        - A walkthrough of the findings
+    - title: Production AI build
+      featured: true
+      body: >-
+        I design and build the system around the model: the pipeline, the
+        approval steps, the evals, the audit trail and the AWS infrastructure
+        underneath.
+      includes:
+        - Architecture and system design
+        - Human approval and resume
+        - Money and business rules computed in code
+        - Evals before every release
+        - Run tracking and an audit trail
+        - Handoff docs, runbooks and a walkthrough
+
+closing:
+  title: Your AI works in the demo. *Now it has to work in production.*
+  body: >-
+    The gap between a promising prototype and a system real teams rely on is
+    where I do my best work.
