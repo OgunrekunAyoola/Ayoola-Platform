@@ -67,7 +67,7 @@ export default function Contact() {
       </div>
 
       <div className="rounded-[26px] border border-[var(--card-border)] bg-[var(--card)] p-[clamp(28px,4vw,44px)]">
-        <ContactForm {...page.form} />
+        <ContactForm {...page.form} email={site.email} />
       </div>
     </section>
   );

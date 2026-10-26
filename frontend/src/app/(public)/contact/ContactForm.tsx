@@ -13,7 +13,10 @@ interface FormState {
   company: string;
 }
 
-type ContactFormProps = ContactContent["form"];
+type ContactFormProps = ContactContent["form"] & {
+  /** Where the email fallback goes; no fallback when empty. */
+  email: string;
+};
 
 const emptyState = (typeOfWork: string): FormState => ({
   name: "",
@@ -23,22 +26,34 @@ const emptyState = (typeOfWork: string): FormState => ({
   company: "",
 });
 
+/** mailto: link carrying the visitor's message, so a failed send loses nothing. */
+function mailtoFallback(to: string, form: FormState): string {
+  const subject = `Portfolio enquiry from ${form.name || "a visitor"} (${form.typeOfWork})`;
+  const body = `${form.message}\n\n${form.name}${form.email ? ` <${form.email}>` : ""}`;
+  return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
 export default function ContactForm({
   title,
   inquiryTypes,
   messagePlaceholder,
+  fallbackCta,
   sent,
+  email,
 }: ContactFormProps) {
   const [formData, setFormData] = useState<FormState>(() => emptyState(inquiryTypes[0]));
   const [status, setStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  // The server couldn't send (5xx or network failure), as opposed to a fixable input error.
+  const [serverFailed, setServerFailed] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("submitting");
     setErrorMessage("");
+    setServerFailed(false);
 
     try {
       const res = await fetch("/api/contact", {
@@ -49,6 +64,7 @@ export default function ContactForm({
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
+        setServerFailed(res.status >= 500);
         throw new Error(
           data.message || "Something went wrong. Please try again.",
         );
@@ -58,6 +74,7 @@ export default function ContactForm({
       setFormData(emptyState(inquiryTypes[0]));
     } catch (err) {
       // Shown inline beside the button (and announced), so no toast on top of it.
+      if (!(err instanceof Error) || err.name === "TypeError") setServerFailed(true);
       setStatus("error");
       const msg =
         err instanceof Error
@@ -184,6 +201,12 @@ export default function ContactForm({
           >
             {errorMessage}
           </div>
+        )}
+
+        {status === "error" && serverFailed && email && (
+          <a href={mailtoFallback(email, formData)} className="btn btn-outline h-12 px-6 text-[15px] self-start">
+            {fallbackCta}
+          </a>
         )}
 
         <button
