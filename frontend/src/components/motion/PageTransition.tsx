@@ -55,6 +55,8 @@ export default function PageTransition() {
       if (busy.current) return;
       busy.current = true;
       pendingHash.current = url.hash;
+      // Fetch the next page while the curtain rises, so it's ready at the swap.
+      router.prefetch(url.pathname + url.search);
       setState("in");
       swap = window.setTimeout(() => {
         router.push(url.pathname + url.search + url.hash, { scroll: false });
