@@ -3,7 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ToastProvider } from "@/context/ToastContext";
 import PageTransition from "@/components/motion/PageTransition";
-import RevealObserver, { revealBootScript } from "@/components/motion/RevealObserver";
+import RevealObserver from "@/components/motion/RevealObserver";
+import { hostCommentCleanup, revealBootScript } from "@/lib/boot-scripts";
 import { getSiteUrl } from "@/lib/site-url";
 import { getSite } from "@/lib/site-content";
 
@@ -97,7 +98,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: revealBootScript }} />
+        <script dangerouslySetInnerHTML={{ __html: hostCommentCleanup + revealBootScript }} />
       </head>
       <body className="font-sans antialiased">
         <ToastProvider>{children}</ToastProvider>
