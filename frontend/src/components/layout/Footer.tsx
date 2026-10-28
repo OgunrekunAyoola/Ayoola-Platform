@@ -33,7 +33,7 @@ export default function Footer() {
         <div className="grid gap-10 py-[52px] [grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))]">
           <div className="flex flex-col gap-3">
             <span className="label text-[11.5px] mb-1">Explore</span>
-            {site.nav.map((item) => (
+            {[...site.nav, ...site.footer.moreLinks].map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

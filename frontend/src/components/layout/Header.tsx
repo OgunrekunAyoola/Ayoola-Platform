@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Rich from "@/components/ui/Rich";
 import LagosClock from "@/components/motion/LagosClock";
-import { bookingHref, bookingLinkProps } from "@/config/site";
 import type { SiteContent } from "@/lib/site-content";
 
 interface HeaderProps {
@@ -53,7 +52,8 @@ export default function Header({ site, email, githubUrl }: HeaderProps) {
         ref={headerRef}
         className="sticky top-0 z-30 border-b border-[var(--hair)] bg-[var(--chrome)] backdrop-blur-[18px] backdrop-saturate-[1.6]"
       >
-        <div className="wrap py-3 min-h-[72px] flex items-center justify-between gap-4">
+        {/* From 900px a three-column grid centres the links on the page. Near 900px they give up a little centring to keep a 40px gap from the name. */}
+        <div className="wrap py-3 min-h-[72px] flex items-center justify-between gap-4 min-[900px]:grid min-[900px]:gap-x-10 min-[900px]:[grid-template-columns:minmax(max-content,1fr)_auto_minmax(max-content,1fr)]">
           <Link href="/" className="flex items-baseline gap-2 min-w-0 text-[var(--foreground)] no-underline">
             <span className="display text-[21px] leading-none whitespace-nowrap">{site.name}</span>
             <span className="display font-medium text-[14px] text-[var(--accent)] whitespace-nowrap">
@@ -82,12 +82,12 @@ export default function Header({ site, email, githubUrl }: HeaderProps) {
           </nav>
 
           <Link
-            href={bookingHref}
-            {...bookingLinkProps}
-            className="btn btn-ink hidden min-[900px]:inline-flex h-[46px] px-[22px] text-[15.5px]"
+            href="/work-with-me"
+            aria-current={isActive("/work-with-me") ? "page" : undefined}
+            className="btn btn-ink hidden min-[900px]:inline-flex justify-self-end h-[46px] px-[22px] text-[15.5px]"
           >
             <span aria-hidden="true" className="w-[7px] h-[7px] rounded-full bg-[var(--accent-dot)]" />
-            Book a call
+            Work with me
           </Link>
 
           <button
@@ -181,12 +181,8 @@ export default function Header({ site, email, githubUrl }: HeaderProps) {
             <Rich text={site.menuCard.title} />
           </span>
           <div className={`grid gap-[10px] ${email ? "grid-cols-2" : "grid-cols-1"}`}>
-            <Link
-              href={bookingHref}
-              {...bookingLinkProps}
-              className="btn btn-paper h-[50px] text-[16px] font-medium"
-            >
-              Book a call
+            <Link href="/work-with-me" className="btn btn-paper h-[50px] text-[16px] font-medium">
+              Work with me
             </Link>
             {email && (
               <a href={`mailto:${email}`} className="btn btn-paper-outline h-[50px] text-[16px]">

@@ -70,6 +70,8 @@ export const siteSchema = z.strictObject({
   footer: z.strictObject({
     cta: text,
     tagline: text,
+    /** Pages listed in the footer after the nav links. */
+    moreLinks: z.array(z.strictObject({ label: text, href: text })),
     basedIn: z.array(text).min(1),
   }),
   /** Share-card (Open Graph) line under the name or case-study title. */
