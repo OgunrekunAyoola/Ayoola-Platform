@@ -70,6 +70,8 @@ export const siteSchema = z.strictObject({
   footer: z.strictObject({
     cta: text,
     tagline: text,
+    /** Pages listed in the footer after the nav links. */
+    moreLinks: z.array(z.strictObject({ label: text, href: text })),
     basedIn: z.array(text).min(1),
   }),
   /** Share-card (Open Graph) line under the name or case-study title. */
@@ -96,6 +98,8 @@ export const homeSchema = z.strictObject({
     items: z.array(z.strictObject({ title: text, body: text, href: text })).min(1),
   }),
   work: heading.extend({ action: link }),
+  /** AI systems teaser; its points and run log come from ai.yaml. */
+  ai: heading.extend({ body: text, action: link }),
   /**
    * Real feedback, paraphrased in reported speech (never a fabricated quote)
    * and attributed by role only. Each item traces to a source in the claims ledger.

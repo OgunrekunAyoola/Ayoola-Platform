@@ -21,10 +21,11 @@ export default function RunLog({ log }: { log: RunLogContent }) {
           {log.status}
         </span>
       </div>
-      <ol className="list-none m-0 p-0 flex flex-col gap-2 text-[12.5px] leading-[1.45]">
+      <ol className="list-none m-0 p-0 flex flex-col gap-2 text-[11.5px] min-[480px]:text-[12.5px] leading-[1.45]">
         {log.lines.map((line) => (
           <li key={line.text} className={`${toneClass[line.tone]} ${line.indent ? "pl-[14px]" : ""}`}>
-            {line.text}
+            {/* Hanging indent: on narrow cards a wrapped line continues under its text, not under the └ or ✓. */}
+            <span className="block pl-[2ch] -indent-[2ch]">{line.text}</span>
           </li>
         ))}
       </ol>

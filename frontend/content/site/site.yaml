@@ -30,22 +30,17 @@ location: Lagos, Nigeria · working with teams worldwide
 timezone: Lagos, Nigeria · WAT (UTC+1)
 
 # Header, footer and mobile menu. `desc` shows under each item in the mobile menu.
+# "Work with me" is the header button, so it isn't listed here.
 nav:
-  - label: Work
-    href: /portfolio
-    desc: Case studies, in detail
-  - label: Work with me
-    href: /work-with-me
-    desc: Roles & project builds
-  - label: AI systems
-    href: /ai
-    desc: AI with a person in the loop
-  - label: Writing
-    href: /blog
-    desc: Notes from shipping
   - label: About
     href: /about
     desc: The engineer behind it
+  - label: Selected work
+    href: /portfolio
+    desc: Case studies, in detail
+  - label: Writing
+    href: /blog
+    desc: Notes from shipping
 
 # Green card at the bottom of the mobile menu.
 menuCard:
@@ -54,6 +49,12 @@ menuCard:
 footer:
   cta: Let's build something that *holds up.*
   tagline: Software engineer · working with teams worldwide
+  # "Explore" column: the nav links above, then these.
+  moreLinks:
+    - label: AI systems
+      href: /ai
+    - label: Work with me
+      href: /work-with-me
   basedIn:
     - Lagos, Nigeria
     - WAT (UTC+1) · full overlap with UK & EU

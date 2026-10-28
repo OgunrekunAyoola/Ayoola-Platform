@@ -64,6 +64,18 @@ work:
     label: All work →
     href: /portfolio
 
+# AI systems teaser. The ✓ points and the illustrative run log come from
+# ai.yaml, so each claim lives in one place.
+ai:
+  eyebrow: AI systems
+  title: AI kept *in its place.*
+  body: >-
+    Approval steps, money logic computed in code, evals and an audit trail
+    around the model, so AI can do real work without having the final say.
+  action:
+    label: See AI systems →
+    href: /ai
+
 # Paraphrased from real feedback, in reported speech: no direct quotes, no
 # names, nothing the person didn't actually say. Sources are tracked privately.
 feedback:
