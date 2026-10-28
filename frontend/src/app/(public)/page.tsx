@@ -2,13 +2,14 @@ import Link from "next/link";
 import HeroTitle from "@/components/home/HeroTitle";
 import HireToggle from "@/components/home/HireToggle";
 import LagosClock from "@/components/motion/LagosClock";
+import RunLog from "@/components/home/RunLog";
 import WorkCard from "@/components/portfolio/WorkCard";
 import Portrait from "@/components/ui/Portrait";
 import Rich from "@/components/ui/Rich";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { StackMarquee, WordMarquee } from "@/components/ui/Marquee";
 import { getAllWriting, getAllWork } from "@/lib/content";
-import { getHome, getSite } from "@/lib/site-content";
+import { getAi, getHome, getSite } from "@/lib/site-content";
 import { site as settings } from "@/config/site";
 import { getSiteUrl } from "@/lib/site-url";
 
@@ -17,6 +18,7 @@ const section = "wrap pt-[clamp(72px,9vw,130px)]";
 export default function Home() {
   const site = getSite();
   const home = getHome();
+  const ai = getAi();
   const writing = getAllWriting().slice(0, 3);
   const work = getAllWork().filter((w) => w.featured);
 
@@ -175,6 +177,39 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      {/* AI systems */}
+      <section
+        data-reveal
+        className={`${section} grid gap-[clamp(32px,5vw,80px)] items-center [grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))]`}
+      >
+        <div className="flex flex-col">
+          <div className="eyebrow mb-[18px]">{home.ai.eyebrow}</div>
+          <h2 className="h-section mb-5">
+            <Rich text={home.ai.title} />
+          </h2>
+          <p className="text-[17px] leading-[1.65] text-[var(--muted)] m-0 mb-7 max-w-[48ch]">{home.ai.body}</p>
+          <ul className="list-none m-0 mb-9 p-0 flex flex-col gap-2.5 text-[16px]">
+            {ai.hero.points.map((point) => (
+              <li key={point} className="flex gap-3">
+                <span aria-hidden="true" className="arrow text-[var(--accent)]">
+                  ✓
+                </span>
+                {point}
+              </li>
+            ))}
+          </ul>
+          <Link href={home.ai.action.href} className="btn btn-outline h-12 px-6 text-[15.5px] self-start">
+            {home.ai.action.label}
+          </Link>
+        </div>
+        <div className="flex flex-col gap-2.5">
+          <div className="bg-[var(--tint)] rounded-[26px] p-[clamp(20px,4vw,48px)]">
+            <RunLog log={ai.practice.log} />
+          </div>
+          <span className="self-end font-mono text-[11.5px] text-[var(--muted)]">Illustrative</span>
+        </div>
+      </section>
 
       {/* Feedback */}
       {home.feedback.items.length > 0 && (

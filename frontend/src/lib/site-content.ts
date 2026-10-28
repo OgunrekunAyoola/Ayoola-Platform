@@ -98,6 +98,8 @@ export const homeSchema = z.strictObject({
     items: z.array(z.strictObject({ title: text, body: text, href: text })).min(1),
   }),
   work: heading.extend({ action: link }),
+  /** AI systems teaser; its points and run log come from ai.yaml. */
+  ai: heading.extend({ body: text, action: link }),
   /**
    * Real feedback, paraphrased in reported speech (never a fabricated quote)
    * and attributed by role only. Each item traces to a source in the claims ledger.
