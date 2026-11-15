@@ -1,6 +1,6 @@
 /**
  * Settings: contact details and links. Page copy (name, role, descriptions,
- * banner, experience, services) lives in content/site/*.yaml.
+ * banner, story, services) lives in content/site/*.yaml.
  */
 export const site = {
   // Main inbox: contact page, footer and mobile menu "Email me", and the form's fallback.

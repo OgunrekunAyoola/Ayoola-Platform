@@ -21,7 +21,7 @@ All page copy is in `content/site/*.yaml`, validated by zod in `src/lib/site-con
 | `/` | Hero, marquee, portrait and stats, What I do, Selected work (featured case studies), AI systems, Feedback, **Rescue & security audit**, stack marquee, How I work | `home.yaml` (prices and the run log come from `services.yaml`) |
 | `/services` | Three sections on one template (eyebrow, one H2, tagline, intro → offer cards → a block under a small subhead → proof): `#rescue` (priced), `#builds`, `#ai` (with `close-run.log` beside its intro) | `services.yaml` |
 | `/portfolio`, `/portfolio/[slug]` | Case studies with honest status lines | `work.yaml`, `content/work/*.mdx` |
-| `/about` | Story, Experience (an `<ol>` with `<time>` dates), a Talk line, Toolkit (2×2) | `about.yaml` |
+| `/about` | Intro, story and Toolkit (2×2) | `about.yaml` |
 | `/contact` | Form. Nothing is selected unless `?type=rescue|build|ai|other` is in the URL; with rescue selected the message label asks "What's worrying you about the app?" | `contact.yaml` |
 | `/blog` | Writing. Unlinked, out of the sitemap and `noindex` until a post is published | `writing.yaml` |
 

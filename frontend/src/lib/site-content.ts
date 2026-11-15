@@ -43,9 +43,6 @@ const runLog = z.strictObject({
 
 const fact = z.strictObject({ value: text, label: text });
 
-/** A month as YYYY-MM, e.g. "2026-03". */
-const yearMonth = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, "use YYYY-MM");
-
 /**
  * An offer card. `featured` renders it as the green card. `price` is display
  * text only (no checkout); offers without one show the "quoted after a call" line.
@@ -189,22 +186,6 @@ export const aboutSchema = z.strictObject({
   chips: z.array(text).min(1),
   storyTitle: text,
   story: z.array(text).min(1),
-  experienceTitle: text,
-  /** Newest first. `start`/`end` are YYYY-MM; `end` may be "present". */
-  experience: z
-    .array(
-      z.strictObject({
-        role: text,
-        org: text.optional(),
-        start: yearMonth,
-        end: z.union([yearMonth, z.literal("present")]),
-        details: z.array(text).optional(),
-        ...draftable,
-      }),
-    )
-    .min(1),
-  /** One line under Experience: "Talk: <title>, <event> <year>". */
-  talk: z.strictObject({ label: text, title: text, event: text, year: z.number().int() }),
   toolkitTitle: text,
   toolkit: z.array(z.strictObject({ title: text, items: z.array(text).min(1) })).min(1),
 });
@@ -355,10 +336,7 @@ export const getContact = () => load("contact");
 export const getWriting = () => load("writing");
 export const getNotFound = () => load("not-found");
 
-export function getAbout(): AboutContent {
-  const about = load("about");
-  return { ...about, experience: about.experience.filter((e) => isPublished(e)) };
-}
+export const getAbout = () => load("about");
 
 export function getWorkPage(): WorkContent {
   const work = load("work");

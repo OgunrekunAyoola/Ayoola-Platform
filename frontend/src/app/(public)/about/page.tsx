@@ -1,4 +1,3 @@
-import ExperienceList from "@/components/about/ExperienceList";
 import Portrait from "@/components/ui/Portrait";
 import Rich from "@/components/ui/Rich";
 import { pageMetadata } from "@/lib/page-meta";
@@ -46,7 +45,7 @@ export default function About() {
 
       <section data-reveal className={row}>
         <h2 className={rowLabel}>{about.storyTitle}</h2>
-        {/* The measure is capped inside the column, so the column lines up with Experience and Toolkit. */}
+        {/* The measure is capped inside the column, so the column lines up with the Toolkit. */}
         <div className={rowBody}>
           <div className="flex flex-col gap-[22px] text-[18px] leading-[1.75] text-[var(--body)] max-w-[68ch]">
             {about.story.map((paragraph, i) => (
@@ -62,19 +61,6 @@ export default function About() {
               </p>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section data-reveal aria-labelledby="experience-title" className={row}>
-        <h2 id="experience-title" className={rowLabel}>
-          {about.experienceTitle}
-        </h2>
-        <div className={rowBody}>
-          <ExperienceList items={about.experience} />
-          <p className="m-0 mt-6 text-[15.5px] leading-[1.6] text-[var(--muted)]">
-            <span className="font-medium text-[var(--foreground)]">{about.talk.label}:</span> {about.talk.title},{" "}
-            {about.talk.event} <time dateTime={String(about.talk.year)}>{about.talk.year}</time>
-          </p>
         </div>
       </section>
 

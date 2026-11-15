@@ -113,9 +113,7 @@ describe("no employer signals", () => {
   ];
 
   it.each(allCopy)("%s has no job-seeking copy or old routes", (file, raw) => {
-    // Job titles in the About experience list are history, not a job search.
-    const copy = file === "about.yaml" ? raw.replace(/^\s+- role: .*$/gm, "") : raw;
-    for (const pattern of banned) expect(copy, `${pattern} in ${file}`).not.toMatch(pattern);
+    for (const pattern of banned) expect(raw, `${pattern} in ${file}`).not.toMatch(pattern);
   });
 
   it("keeps \"nobody sees but everybody leans on\" in the testimonial only", () => {
@@ -155,24 +153,13 @@ describe("booking button", () => {
 });
 
 describe("about", () => {
-  it("lists the four roles exactly, newest first, with the talk on its own line", () => {
+  it("shows only the intro, the story and the Toolkit (no Experience, no talk line)", () => {
     const about = getAbout();
-    expect(about.experience.map((e) => [e.role, e.org ?? null, e.start, e.end])).toEqual([
-      ["Independent engineer (freelance)", null, "2026-03", "present"],
-      ["Founder", "OpsFlow", "2026-02", "present"],
-      ["Full-Stack Software Engineer", "Talent Group Services", "2024-08", "2026-03"],
-      ["Full-Stack Software Engineer", "Broadcaad, Lagos", "2022-06", "2024-07"],
-    ]);
-    expect(about.experience[0].details).toEqual([
-      "Month-end close platform for an accounting firm, via a consultancy",
-      "Lead engineer on 8 client products, via an agency",
-    ]);
-    expect(about.talk).toEqual({
-      label: "Talk",
-      title: "Building high-performance APIs with gRPC",
-      event: "GDG Lagos DevFest",
-      year: 2024,
-    });
+    expect(Object.keys(about).sort()).toEqual(
+      ["chips", "eyebrow", "lead", "meta", "story", "storyTitle", "title", "toolkit", "toolkitTitle"].sort(),
+    );
+    expect(about.story).toHaveLength(3);
+    expect(about.toolkit.map((g) => g.title)).toEqual(["Languages", "Frameworks", "Data & payments", "Cloud & AI"]);
   });
 });
 
