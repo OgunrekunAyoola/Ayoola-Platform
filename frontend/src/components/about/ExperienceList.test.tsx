@@ -34,6 +34,12 @@ describe("ExperienceList", () => {
     ]);
   });
 
+  it("keeps the screen-reader words in the text flow (.sr-inline, not .sr-only)", () => {
+    const container = renderList();
+    expect(container.querySelectorAll(".sr-only")).toHaveLength(0);
+    expect([...container.querySelectorAll(".sr-inline")].map((el) => el.textContent)).toContain(", ");
+  });
+
   it("hides the drawn separators from screen readers, and they carry no text", () => {
     const hidden = [...renderList().querySelectorAll('[aria-hidden="true"]')];
     expect(hidden.length).toBeGreaterThan(0);

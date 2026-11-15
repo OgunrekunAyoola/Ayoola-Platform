@@ -177,6 +177,15 @@ body {
     font-size: 17px;
     gap: 12px;
   }
+  /*
+   * Words only a screen reader needs, like ", " and " to " in the About
+   * experience list. Unlike .sr-only (absolutely positioned), this stays in
+   * the text flow at zero size, so browsers don't wrap it in extra spaces or
+   * line breaks: the page text reads "Founder, OpsFlow", not "Founder , OpsFlow".
+   */
+  .sr-inline {
+    font-size: 0;
+  }
   .btn-outline {
     border-color: var(--foreground);
     color: var(--foreground);

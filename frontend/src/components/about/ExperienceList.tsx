@@ -7,8 +7,9 @@ type Item = AboutContent["experience"][number];
  * Experience, newest first.
  *
  * The "·", "–" and "└" between parts are drawn shapes, not characters, and
- * the words a listener needs (", " and " to ") are screen-reader text. So the
- * page text itself reads "Founder, OpsFlow" and "Mar 2026 to present"
+ * the words a listener needs (", " and " to ") are zero-size text in the flow
+ * (.sr-inline, not .sr-only, which browsers pad with spaces and line breaks).
+ * So the page text reads "Founder, OpsFlow" and "Mar 2026 to present"
  * everywhere: in a screen reader, a copy-paste, a reader view or a search
  * snippet. Dates are <time> elements.
  */
@@ -22,11 +23,11 @@ export default function ExperienceList({ items }: { items: Item[] }) {
               <span className="display text-[clamp(18px,1.5vw,21px)]">{item.role}</span>
               {item.org && (
                 <>
+                  <span className="sr-inline">, </span>
                   <span
                     aria-hidden="true"
                     className="inline-block w-[3px] h-[3px] mx-2 rounded-full bg-[var(--muted)] align-middle"
                   />
-                  <span className="sr-only">, </span>
                   <span className="text-[var(--muted)]">{item.org}</span>
                 </>
               )}
@@ -34,7 +35,7 @@ export default function ExperienceList({ items }: { items: Item[] }) {
             <p className="m-0 font-mono text-[12.5px] text-[var(--muted)] whitespace-nowrap">
               <time dateTime={item.start}>{formatYearMonth(item.start)}</time>
               <span aria-hidden="true" className="inline-block w-[0.6em] h-px mx-[0.5em] bg-current align-middle" />
-              <span className="sr-only"> to </span>
+              <span className="sr-inline"> to </span>
               {item.end === "present" ? "present" : <time dateTime={item.end}>{formatYearMonth(item.end)}</time>}
             </p>
           </div>
