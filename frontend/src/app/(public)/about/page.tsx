@@ -1,6 +1,6 @@
+import ExperienceList from "@/components/about/ExperienceList";
 import Portrait from "@/components/ui/Portrait";
 import Rich from "@/components/ui/Rich";
-import { formatYearMonth } from "@/lib/dates";
 import { pageMetadata } from "@/lib/page-meta";
 import { getAbout } from "@/lib/site-content";
 
@@ -70,45 +70,7 @@ export default function About() {
           {about.experienceTitle}
         </h2>
         <div className={rowBody}>
-          {/* Role and dates are separate elements, and dates are <time>s, so they aren't read as one string. */}
-          <ol className="list-none m-0 p-0 border-b border-[var(--hair)]">
-            {about.experience.map((item) => (
-              <li key={item.role + (item.org ?? "") + item.start} className="py-[18px] border-t border-[var(--hair)]">
-                <div className="flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1">
-                  <p className="m-0 text-[16.5px] leading-[1.5] min-w-0">
-                    <span className="display text-[clamp(18px,1.5vw,21px)]">{item.role}</span>
-                    {item.org && (
-                      <>
-                        <span aria-hidden="true" className="text-[var(--muted)]">
-                          {" · "}
-                        </span>
-                        <span className="sr-only">, </span>
-                        <span className="text-[var(--muted)]">{item.org}</span>
-                      </>
-                    )}
-                  </p>
-                  <p className="m-0 font-mono text-[12.5px] text-[var(--muted)] whitespace-nowrap">
-                    <time dateTime={item.start}>{formatYearMonth(item.start)}</time>
-                    <span aria-hidden="true"> – </span>
-                    <span className="sr-only"> to </span>
-                    {item.end === "present" ? "present" : <time dateTime={item.end}>{formatYearMonth(item.end)}</time>}
-                  </p>
-                </div>
-                {item.details && (
-                  <ul className="list-none m-0 mt-2.5 p-0 flex flex-col gap-1.5">
-                    {item.details.map((detail) => (
-                      <li key={detail} className="flex gap-3 text-[15.5px] leading-[1.5] text-[var(--muted)]">
-                        <span aria-hidden="true" className="font-mono text-[var(--accent)]">
-                          └
-                        </span>
-                        <span>{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
-          </ol>
+          <ExperienceList items={about.experience} />
           <p className="m-0 mt-6 text-[15.5px] leading-[1.6] text-[var(--muted)]">
             <span className="font-medium text-[var(--foreground)]">{about.talk.label}:</span> {about.talk.title},{" "}
             {about.talk.event} <time dateTime={String(about.talk.year)}>{about.talk.year}</time>

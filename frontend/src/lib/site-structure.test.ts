@@ -194,6 +194,20 @@ describe("client-first copy", () => {
     }
   });
 
+  it("names no tools or stack in Home's What I do list", () => {
+    const text = JSON.stringify(getHome().services.items);
+    for (const name of STACK) {
+      expect(text, name).not.toMatch(new RegExp(`(^|[^\\w.])${escape(name)}(?![\\w])`));
+    }
+  });
+
+  it("uses the service names in the site keywords", () => {
+    const { keywords } = getSite();
+    expect(keywords).toContain("AI systems");
+    expect(keywords).not.toContain("AI automation");
+    expect(keywords).not.toContain("Finance automation");
+  });
+
   /** Visible copy of each page, as sentences. Meta text, the run log and the site chrome are left out. */
   function sentencesOf(value: unknown, skip = new Set(["meta", "log", "href"])): string[] {
     if (typeof value === "string") {

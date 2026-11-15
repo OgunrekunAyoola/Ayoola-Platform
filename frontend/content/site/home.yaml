@@ -42,10 +42,10 @@ services:
   aside: One engineer from interface to infrastructure, so nothing falls between the gaps.
   items:
     - title: Full-stack products
-      body: Web apps from database to interface, in TypeScript, Next.js, NestJS, .NET and Laravel.
+      body: Web apps built end to end, from the database to the screens your customers use.
       href: /services#builds
     - title: Backend & data
-      body: "Postgres schemas that enforce the rules: row-level security, versioned records, audit trails."
+      body: Databases that enforce your business rules, so bad data and unauthorised access are refused, not just discouraged.
       href: /services#builds
     - title: Payments
       body: Stripe, Paystack or SeerBit, set up so nothing is charged twice and every transaction reconciles.
@@ -54,7 +54,7 @@ services:
       body: Your own cloud account, set up as code with CI/CD, so shipping is boring and your team can run it without me.
       href: /services#builds
     - title: AI systems
-      body: LangGraph pipelines and agents with human approval, evals and an audit trail.
+      body: AI that does the busywork, with a person approving anything that matters and a record of every run.
       href: /services#ai
 
 work:
