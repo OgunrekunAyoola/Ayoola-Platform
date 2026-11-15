@@ -9,7 +9,7 @@ describe("contact inquiry types", () => {
     expect(types.map((t) => t.label)).toEqual([
       "Rescue & security audit",
       "Product build",
-      "AI & finance automation",
+      "AI systems",
       "Something else",
     ]);
   });

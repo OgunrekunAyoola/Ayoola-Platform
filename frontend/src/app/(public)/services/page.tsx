@@ -149,7 +149,7 @@ export default function Services() {
         </div>
       </section>
 
-      {/* 03 AI & finance automation (was /ai): the log sits beside the intro */}
+      {/* 03 AI systems (was /ai): the log sits beside the intro; Finance automation is the first card */}
       <section id="ai" aria-labelledby="ai-title" className={`wrap ${sectionTop}`}>
         <div className={sectionRule}>
           <div className="grid gap-x-[clamp(32px,5vw,80px)] gap-y-10 items-center [grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))]">

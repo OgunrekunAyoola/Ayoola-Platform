@@ -77,7 +77,7 @@ ai:
     - Payroll figures computed in code; the model only writes sentences
     - Output gates that stop a bot from confirming a payment
   action:
-    label: See AI & finance automation →
+    label: See AI systems →
     href: /services#ai
 
 # Paraphrased from real feedback, in reported speech: no direct quotes, no

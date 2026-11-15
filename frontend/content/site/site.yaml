@@ -11,7 +11,7 @@ availability: Taking on new client projects
 # Search results and share previews.
 description: >-
   Ayoola Ogunrekun is a freelance software engineer in Lagos. Rescue & security
-  audits for apps built fast, product builds, and AI & finance automation, for
+  audits for apps built fast, product builds, and AI systems, for
   software where mistakes cost money.
 
 keywords:
@@ -38,7 +38,7 @@ timezone: Lagos, Nigeria · WAT (UTC+1)
 nav:
   - label: Services
     href: /services
-    desc: Rescue, builds and AI automation
+    desc: Rescue, builds and AI systems
   - label: Work
     href: /portfolio
     desc: Case studies, in detail
@@ -56,7 +56,7 @@ menuCard:
 
 footer:
   cta: Let's build something that *holds up.*
-  tagline: Freelance software engineer · rescues, builds and AI automation for clients worldwide
+  tagline: Freelance software engineer · rescues, builds and AI systems for clients worldwide
   # "Explore" column: the nav links above, then these.
   moreLinks:
     - label: Contact

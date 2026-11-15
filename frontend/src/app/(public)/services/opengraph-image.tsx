@@ -14,6 +14,6 @@ export default function Image() {
   return renderOgImage({
     eyebrow: page.intro.eyebrow,
     headline: <OgRich text={page.intro.title} />,
-    subline: <OgRich text={"Rescue & security audit · Product builds · AI & finance automation"} />,
+    subline: <OgRich text={"Rescue & security audit · Product builds · AI systems"} />,
   });
 }

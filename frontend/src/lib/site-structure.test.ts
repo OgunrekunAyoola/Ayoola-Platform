@@ -83,6 +83,12 @@ describe("services copy", () => {
     expect(services.rescue.proof.map((p) => p.slug)).toEqual(["live-app-recovery", "tipping-platform"]);
   });
 
+  it("names section 03 \"AI systems\", with Finance automation as its first card", () => {
+    expect([services.ai.nav, services.ai.eyebrow, services.ai.title]).toEqual(["AI systems", "03 · AI systems", "AI *systems.*"]);
+    expect(services.ai.offers[0].title).toBe("Finance automation");
+    expect(getHome().ai.eyebrow).toBe("AI systems");
+  });
+
   it("points the home Rescue section at /services#rescue and the contact preselection", () => {
     const home = getHome();
     expect(home.rescue.secondary.href).toBe("/services#rescue");

@@ -37,10 +37,10 @@ describe("ContactForm inquiry type", () => {
     expect(screen.getByLabelText("What's worrying you about the app?")).toBeRequired();
   });
 
-  it("preselects AI & finance automation from ?type=ai", () => {
+  it("preselects AI systems from ?type=ai", () => {
     search = "?type=ai";
     render(<ContactFormFromQuery {...form} email="me@example.com" />);
-    expect(screen.getByRole("radio", { name: "AI & finance automation" })).toBeChecked();
+    expect(screen.getByRole("radio", { name: "AI systems" })).toBeChecked();
     expect(checked()).toHaveLength(1);
     expect(screen.getByLabelText("What are you building?")).toBeInTheDocument();
   });

@@ -26,7 +26,7 @@ form:
     - key: build
       label: Product build
     - key: ai
-      label: AI & finance automation
+      label: AI systems
     - key: other
       label: Something else
   # Nothing is selected unless the link carries ?type=.

@@ -18,15 +18,15 @@ meta:
   title: Services
   description: >-
     Rescue & security audits for apps built fast on Supabase or Firebase
-    (quick scan $450, audit + fix from $2,500), product builds, and AI &
-    finance automation with a person signing off.
+    (quick scan $450, audit + fix from $2,500), product builds, and AI
+    systems with a person signing off.
 
 intro:
   eyebrow: Services
   title: Three ways to *work together.*
   sub: >-
     An app you built fast, made safe to run. A product built properly from the
-    start. Finance work automated, with a person signing off. I work from
+    start. AI put to work in your business, with a person signing off. I work from
     Lagos (UTC+1), so my day overlaps fully with the UK and EU.
 
 # Shared labels.
@@ -138,9 +138,9 @@ builds:
         reply, so the bot can never confirm a payment.
 
 ai:
-  nav: AI & finance automation
-  eyebrow: 03 · AI & finance automation
-  title: AI & finance *automation.*
+  nav: AI systems
+  eyebrow: 03 · AI systems
+  title: AI *systems.*
   # Replaces "AI kept in its place" (Home's AI heading). Option B for the PR:
   # "Automation your accountants *can sign off.*"
   tagline: Automate the busywork. *Keep the decisions.*

@@ -14,7 +14,7 @@ Page: `/services`. Old URLs `/work-with-me` and `/ai` redirect here (`/ai` to th
 ## Intro
 
 **Headline:** Three ways to work together.
-**Sub:** An app you built fast, made safe to run. A product built properly from the start. Finance work automated, with a person signing off. Based in Lagos (UTC+1), with a full overlap with the UK and EU.
+**Sub:** An app you built fast, made safe to run. A product built properly from the start. AI put to work in your business, with a person signing off. Based in Lagos (UTC+1), with a full overlap with the UK and EU.
 **Next steps:** "Get in touch" (opens `/contact`; it becomes "Book a call" once a booking link exists) or "Request a quick scan" (`/contact?type=rescue`).
 
 ## 01 · Rescue & security audit (`#rescue`)
@@ -41,11 +41,13 @@ For founders and teams whose product handles money, compliance records or other 
 
 **Proof:** food-safety compliance SaaS; tipping platform; OpsFlow.
 
-## 03 · AI & finance automation (`#ai`)
+## 03 · AI systems (`#ai`)
 
-**H2:** AI & finance automation. **Tagline:** Automate the busywork. Keep the decisions. (Alternative: "Automation your accountants can sign off.") Quoted after a call.
+Named to match the "AI systems" section on Home. Finance stays the lead offer, not the whole section. The contact form's `?type=ai` preselects it.
 
-**Offers:** Finance automation · Production AI build (which can start with a written review of an existing system).
+**H2:** AI systems. **Tagline:** Automate the busywork. Keep the decisions. Quoted after a call.
+
+**Offers:** Finance automation (first) · Production AI build (which can start with a written review of an existing system).
 **Rules for AI that does real work:** the model never has the final say; arithmetic decides what gets flagged; every decision leaves a record.
 **Illustration:** `close-run.log` beside the intro, labelled "Illustrative".
 
