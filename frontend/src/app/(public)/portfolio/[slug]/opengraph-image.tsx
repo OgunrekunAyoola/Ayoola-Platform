@@ -1,4 +1,4 @@
-import { OgRich, ogContentType, ogSize, renderOgImage } from "@/lib/og";
+import { ogRich, ogContentType, ogSize, renderOgImage } from "@/lib/og";
 import { getAllWork, getWorkBySlug } from "@/lib/content";
 import { getSite } from "@/lib/site-content";
 
@@ -25,6 +25,6 @@ export default async function Image({
     eyebrow: project?.client ? `Case study · ${project.client}` : "Case study",
     headline: title,
     headlineSize: title.length > 60 ? 64 : 76,
-    subline: <OgRich text={site.share.subline} />,
+    subline: ogRich(site.share.subline),
   });
 }

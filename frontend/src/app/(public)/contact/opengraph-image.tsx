@@ -1,4 +1,4 @@
-import { OgRich, ogContentType, ogSize, renderOgImage } from "@/lib/og";
+import { ogRich, ogContentType, ogSize, renderOgImage } from "@/lib/og";
 import { plainText } from "@/components/ui/Rich";
 import { getContact, getSite } from "@/lib/site-content";
 
@@ -13,7 +13,7 @@ export const contentType = ogContentType;
 export default function Image() {
   return renderOgImage({
     eyebrow: page.eyebrow,
-    headline: <OgRich text={page.title} />,
-    subline: <OgRich text={"Tell me what you’re building and *where it’s stuck.*"} />,
+    headline: ogRich(page.title),
+    subline: ogRich("Tell me what you’re building and *where it’s stuck.*"),
   });
 }

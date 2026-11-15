@@ -3,7 +3,7 @@ import path from "node:path";
 import { ImageResponse } from "next/og";
 import { ReactNode } from "react";
 import { getSite } from "@/lib/site-content";
-import { richParts } from "@/components/ui/Rich";
+import { ogWords } from "./og-words";
 
 export const ogSize = { width: 1200, height: 630 };
 export const ogContentType = "image/png";
@@ -80,11 +80,14 @@ export async function renderOgImage({
           {eyebrow}
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        {/* Satori sizes boxes to their content unless told otherwise; without
+            these widths a long line never wraps and runs off the card. */}
+        <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
           <div
             style={{
               display: "flex",
               flexWrap: "wrap",
+              width: "100%",
               fontSize: headlineSize,
               fontWeight: 700,
               lineHeight: 1.05,
@@ -95,7 +98,7 @@ export async function renderOgImage({
             {headline}
           </div>
           <div style={{ width: 120, height: 5, borderRadius: 3, background: colors.accent, margin: "40px 0 32px" }} />
-          <div style={{ display: "flex", flexWrap: "wrap", fontSize: 42, lineHeight: 1.25, letterSpacing: -1, color: colors.muted }}>
+          <div style={{ display: "flex", flexWrap: "wrap", width: "100%", fontSize: 42, lineHeight: 1.25, letterSpacing: -1, color: colors.muted }}>
             {subline}
           </div>
         </div>
@@ -122,36 +125,26 @@ export async function renderOgImage({
 
 /**
  * Content copy for an OG card: `*phrase*` becomes the green run.
- * Satori can't break a line inside a flex child and drops spaces between
- * children, so every word is its own span and carries the space after it as a
- * margin. That lets long headlines wrap, emphasis included.
+ *
+ * Returns an array of word spans, to pass straight in as `headline` or
+ * `subline`. Satori only wraps between *direct* children of a wrapping flex
+ * box: wrapped in a fragment or a component, the whole line becomes one
+ * unbreakable box and runs off the card. It also drops spaces between
+ * children, so each word carries the space after it as a margin.
  */
-export function OgRich({ text }: { text: string }) {
-  const words: { word: string; accent: boolean; spaceAfter: boolean }[] = [];
-  richParts(text).forEach((part, i) => {
-    for (const m of part.matchAll(/(\s+)|(\S+)/g)) {
-      if (m[1]) {
-        if (words.length) words[words.length - 1].spaceAfter = true;
-      } else {
-        words.push({ word: m[2], accent: i % 2 === 1, spaceAfter: false });
-      }
-    }
-  });
-  return (
-    <>
-      {words.map(({ word, accent, spaceAfter }, i) => (
-        <span
-          key={i}
-          style={{
-            color: accent ? colors.accent : undefined,
-            marginRight: spaceAfter && i < words.length - 1 ? "0.25em" : 0,
-          }}
-        >
-          {word}
-        </span>
-      ))}
-    </>
-  );
+export function ogRich(text: string): ReactNode[] {
+  const words = ogWords(text);
+  return words.map(({ word, accent, spaceAfter }, i) => (
+    <span
+      key={i}
+      style={{
+        color: accent ? colors.accent : undefined,
+        marginRight: spaceAfter && i < words.length - 1 ? "0.25em" : 0,
+      }}
+    >
+      {word}
+    </span>
+  ));
 }
 
 /**

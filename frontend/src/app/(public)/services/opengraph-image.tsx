@@ -1,4 +1,4 @@
-import { OgRich, ogContentType, ogSize, renderOgImage } from "@/lib/og";
+import { ogRich, ogContentType, ogSize, renderOgImage } from "@/lib/og";
 import { plainText } from "@/components/ui/Rich";
 import { getServices, getSite } from "@/lib/site-content";
 
@@ -13,7 +13,8 @@ export const contentType = ogContentType;
 export default function Image() {
   return renderOgImage({
     eyebrow: page.intro.eyebrow,
-    headline: <OgRich text={page.intro.title} />,
-    subline: <OgRich text={"Rescue & security audit · Product builds · AI systems"} />,
+    headline: ogRich(page.intro.title),
+    // Non-breaking space: "AI systems" never splits across lines.
+    subline: ogRich("Rescue & security audit · Product builds · AI\u00a0systems"),
   });
 }
