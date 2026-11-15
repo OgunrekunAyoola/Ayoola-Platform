@@ -2,9 +2,16 @@ import Link from "next/link";
 import { getAllWriting } from "@/lib/content";
 import { Metadata } from "next";
 import Rich from "@/components/ui/Rich";
-import { getWriting } from "@/lib/site-content";
+import { getWriting, hasPosts } from "@/lib/site-content";
+import { pageMetadata } from "@/lib/page-meta";
 
-export const generateMetadata = (): Metadata => getWriting().meta;
+export function generateMetadata(): Metadata {
+  return {
+    ...pageMetadata({ ...getWriting().meta, path: "/blog" }),
+    // Writing is unlinked until the first post; keep the empty page out of search too.
+    ...(hasPosts() ? {} : { robots: { index: false, follow: true } }),
+  };
+}
 
 export default function BlogPage() {
   const page = getWriting();

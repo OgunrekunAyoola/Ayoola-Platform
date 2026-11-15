@@ -13,11 +13,11 @@ hero:
     href: /portfolio
   secondary:
     label: Work with me
-    href: /work-with-me
+    href: /services
 
 # Big words scrolling under the hero, alternating ink and green.
 marquee:
-  - Software Engineer
+  - Security Audits
   - Accounting Pipelines
   - Payment Platforms
   - Compliance Tools
@@ -43,19 +43,19 @@ services:
   items:
     - title: Full-stack products
       body: Web apps from database to interface, in TypeScript, Next.js, NestJS, .NET and Laravel.
-      href: /work-with-me
+      href: /services#builds
     - title: Backend & data
       body: "Postgres schemas that enforce the rules: row-level security, versioned records, audit trails."
-      href: /work-with-me
+      href: /services#builds
     - title: Payments
       body: Stripe Connect and subscriptions, SeerBit, idempotent webhooks and reconciliation.
-      href: /work-with-me
+      href: /services#builds
     - title: Cloud & DevOps
       body: AWS, CloudFormation, Docker and CI/CD pipelines that make shipping boring.
-      href: /work-with-me
+      href: /services#builds
     - title: AI systems
       body: LangGraph pipelines and agents with human approval, evals and an audit trail.
-      href: /ai
+      href: /services#ai
 
 work:
   eyebrow: Selected work
@@ -64,8 +64,8 @@ work:
     label: All work →
     href: /portfolio
 
-# AI systems teaser. The ✓ points and the illustrative run log come from
-# ai.yaml, so each claim lives in one place.
+# AI systems teaser. The ✓ points and the illustrative run log come from the
+# AI section of services.yaml, so each claim lives in one place.
 ai:
   eyebrow: AI systems
   title: AI kept *in its place.*
@@ -73,8 +73,8 @@ ai:
     Approval steps, money logic computed in code, evals and an audit trail
     around the model, so AI can do real work without having the final say.
   action:
-    label: See AI systems →
-    href: /ai
+    label: See AI & finance automation →
+    href: /services#ai
 
 # Paraphrased from real feedback, in reported speech: no direct quotes, no
 # names, nothing the person didn't actually say. Sources are tracked privately.
@@ -100,6 +100,22 @@ feedback:
         the hash-chained audit log.
       who: Client QA review
       where: Tipping platform
+
+# Rescue & security audit, low on the page. The two prices come from the
+# rescue offers in services.yaml, so they live in one place.
+rescue:
+  eyebrow: Rescue & security audit
+  title: Built it fast? *Make sure it's safe.*
+  body: >-
+    For founders who shipped with Lovable, Bolt, Cursor or v0 on Supabase or
+    Firebase, and now take payments or hold personal data. I find the holes,
+    fix the serious ones and prove they're closed.
+  primary:
+    label: Request a quick scan
+    href: /contact?type=rescue
+  secondary:
+    label: How the audit works →
+    href: /services#rescue
 
 # Mono names scrolling the other way.
 stack:
@@ -141,44 +157,16 @@ principles:
         status notes that say what isn't finished. The case studies work the
         same way.
 
-hire:
-  eyebrow: Work with me
-  title: Two ways to *work together.*
-  body: >-
-    Lagos-based, working with teams worldwide. Clear scope, honest status,
-    production standards.
-  tabs:
-    - label: For employers
-      title: Full-time remote
-      body: >-
-        Joining your team as a backend, full-stack or platform engineer,
-        applied AI included. I'm strongest where the software handles money,
-        compliance or customer data.
-      points:
-        - Full overlap with UK & EU
-        - Production ownership from day one
-        - CV on request
-      cta:
-        label: Roles I'm open to →
-        href: /work-with-me#roles
-      tone: tint
-    - label: For clients
-      title: Contract builds
-      body: >-
-        Fixed-scope projects: a new product built end to end, or a rescue of a
-        live system that's broken or inherited.
-      points:
-        - A written scope, agreed up front
-        - Weekly demos
-        - Docs, runbooks and a handover
-      cta:
-        label: See project builds →
-        href: /work-with-me#builds
-      tone: tint-2
-
 writing:
   eyebrow: Writing
   title: Latest *writing.*
   action:
     label: All writing →
     href: /blog
+
+# Closing call to action, after "How I work".
+closing:
+  title: Got something that needs to *hold up?*
+  body: >-
+    Tell me what you're building and where it's stuck. I'll tell you honestly
+    whether and how I can help.

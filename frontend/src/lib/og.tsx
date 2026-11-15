@@ -122,30 +122,34 @@ export async function renderOgImage({
 
 /**
  * Content copy for an OG card: `*phrase*` becomes the green run.
- * Satori drops spaces between flex children, so the run carries its own
- * margin on whichever side had a space in the copy.
+ * Satori can't break a line inside a flex child and drops spaces between
+ * children, so every word is its own span and carries the space after it as a
+ * margin. That lets long headlines wrap, emphasis included.
  */
 export function OgRich({ text }: { text: string }) {
-  const parts = richParts(text);
+  const words: { word: string; accent: boolean; spaceAfter: boolean }[] = [];
+  richParts(text).forEach((part, i) => {
+    for (const m of part.matchAll(/(\s+)|(\S+)/g)) {
+      if (m[1]) {
+        if (words.length) words[words.length - 1].spaceAfter = true;
+      } else {
+        words.push({ word: m[2], accent: i % 2 === 1, spaceAfter: false });
+      }
+    }
+  });
   return (
     <>
-      {parts.map((part, i) => {
-        if (i % 2 === 0) return part.trim() ? <span key={i}>{part.trim()}</span> : null;
-        const before = /\s$/.test(parts[i - 1] ?? "");
-        const after = /^\s/.test(parts[i + 1] ?? "");
-        return (
-          <span
-            key={i}
-            style={{
-              color: colors.accent,
-              marginLeft: before ? "0.25em" : 0,
-              marginRight: after ? "0.25em" : 0,
-            }}
-          >
-            {part}
-          </span>
-        );
-      })}
+      {words.map(({ word, accent, spaceAfter }, i) => (
+        <span
+          key={i}
+          style={{
+            color: accent ? colors.accent : undefined,
+            marginRight: spaceAfter && i < words.length - 1 ? "0.25em" : 0,
+          }}
+        >
+          {word}
+        </span>
+      ))}
     </>
   );
 }

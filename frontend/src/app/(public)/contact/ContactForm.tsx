@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import Rich from "@/components/ui/Rich";
+import { inquiryLabel, type InquiryType } from "@/lib/inquiry";
 import type { ContactContent } from "@/lib/site-content";
 
 interface FormState {
   name: string;
   email: string;
   message: string;
+  /** Key of the chosen inquiry type; its label is what gets sent. */
   typeOfWork: string;
   /** Honeypot — real visitors never see or fill this. */
   company: string;
@@ -16,6 +18,8 @@ interface FormState {
 type ContactFormProps = ContactContent["form"] & {
   /** Where the email fallback goes; no fallback when empty. */
   email: string;
+  /** Inquiry type key selected on load (from `?type=`); defaults to the first. */
+  preselected?: string;
 };
 
 const emptyState = (typeOfWork: string): FormState => ({
@@ -27,8 +31,8 @@ const emptyState = (typeOfWork: string): FormState => ({
 });
 
 /** mailto: link carrying the visitor's message, so a failed send loses nothing. */
-function mailtoFallback(to: string, form: FormState): string {
-  const subject = `Portfolio enquiry from ${form.name || "a visitor"} (${form.typeOfWork})`;
+function mailtoFallback(to: string, form: FormState, types: readonly InquiryType[]): string {
+  const subject = `Website enquiry from ${form.name || "a visitor"} (${inquiryLabel(types, form.typeOfWork)})`;
   const body = `${form.message}\n\n${form.name}${form.email ? ` <${form.email}>` : ""}`;
   return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
@@ -40,8 +44,10 @@ export default function ContactForm({
   fallbackCta,
   sent,
   email,
+  preselected,
 }: ContactFormProps) {
-  const [formData, setFormData] = useState<FormState>(() => emptyState(inquiryTypes[0]));
+  const initialType = preselected ?? inquiryTypes[0].key;
+  const [formData, setFormData] = useState<FormState>(() => emptyState(initialType));
   const [status, setStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
@@ -59,7 +65,7 @@ export default function ContactForm({
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, typeOfWork: inquiryLabel(inquiryTypes, formData.typeOfWork) }),
       });
       const data = await res.json().catch(() => ({}));
 
@@ -71,7 +77,7 @@ export default function ContactForm({
       }
 
       setStatus("success");
-      setFormData(emptyState(inquiryTypes[0]));
+      setFormData(emptyState(initialType));
     } catch (err) {
       // Shown inline beside the button (and announced), so no toast on top of it.
       if (!(err instanceof Error) || err.name === "TypeError") setServerFailed(true);
@@ -163,18 +169,18 @@ export default function ContactForm({
           <div className="flex flex-wrap gap-2">
             {inquiryTypes.map((type) => (
               <label
-                key={type}
+                key={type.key}
                 className="inline-flex items-center h-[42px] px-[18px] rounded-full border border-[var(--foreground)] bg-transparent text-[14.5px] cursor-pointer transition-colors duration-200 has-checked:bg-[var(--foreground)] has-checked:text-[var(--background)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[var(--accent)]"
               >
                 <input
                   type="radio"
                   name="typeOfWork"
-                  value={type}
-                  checked={formData.typeOfWork === type}
+                  value={type.key}
+                  checked={formData.typeOfWork === type.key}
                   onChange={handleChange}
                   className="sr-only"
                 />
-                {type}
+                {type.label}
               </label>
             ))}
           </div>
@@ -204,7 +210,7 @@ export default function ContactForm({
         )}
 
         {status === "error" && serverFailed && email && (
-          <a href={mailtoFallback(email, formData)} className="btn btn-outline h-12 px-6 text-[15px] self-start">
+          <a href={mailtoFallback(email, formData, inquiryTypes)} className="btn btn-outline h-12 px-6 text-[15px] self-start">
             {fallbackCta}
           </a>
         )}

@@ -1,56 +1,50 @@
+# Services page content
 
-# Services Page Content
+The live copy is `frontend/content/site/services.yaml`; this file is a readable summary of it. If the two disagree, the YAML wins. Update both together.
 
-## Hero Section
-**Headline:** Work With Me
-**Subheadline:** I build AI-enhanced web systems that automate operations and help small businesses grow.
-**Meta Line:** Lagos-based, serving global clients. 2–4 week typical delivery.
-**Primary CTA:** Schedule Discovery Call (Link to Calendly/Cal.com)
-**Secondary CTA:** View Case Studies (Link to /portfolio)
+Page: `/services`. Old URLs `/work-with-me` and `/ai` redirect here (`/ai` to the AI section).
 
-## Service Tiers
+## Intro
 
-### 1. Custom Web Platforms
-**Investment:** From $1,500
-**Timeline:** 2-4 Weeks
-**Best For:** Small businesses drowning in admin work or founders needing an MVP.
-**Includes:**
-*   Full-stack Next.js application
-*   Custom Admin Dashboard
-*   Database design & setup
-*   Secure Authentication
-*   Mobile-responsive design
-*   Deployment & Hosting setup
+**Headline:** Three ways to work together.
+**Sub:** Make an app you built fast safe to run, build a product properly from the start, or put AI to work in finance with a person in the loop. Based in Lagos (UTC+1), with full overlap with the UK and EU.
+**Next steps:** Book a call (opens `/contact` until a booking link exists) or Request a quick scan (`/contact?type=rescue`).
 
-### 2. AI-Assisted Features
-**Investment:** From $800
-**Timeline:** 1-2 Weeks
-**Best For:** Existing platforms needing intelligence (search, chatbots, auto-summaries).
-**Includes:**
-*   LLM Integration (OpenAI/Gemini)
-*   RAG (Retrieval Augmented Generation) pipelines
-*   Custom AI Agents
-*   Vector Database setup
-*   Prompt Engineering
+## 01 · Rescue & security audit (`#rescue`)
 
-### 3. Technical Writing & Documentation
-**Investment:** From $300 / piece
-**Timeline:** 3-5 Days
-**Best For:** Tech companies needing clear developer guides or case studies.
-**Includes:**
-*   In-depth technical tutorials
-*   API Documentation
-*   Engineering Case Studies
-*   Architecture Diagrams
+For founders who shipped with Lovable, Bolt, Cursor or v0 on Supabase or Firebase, and now take payments or hold personal data.
 
-## How We Work (Process)
+| Offer | Price | What's included |
+|---|---|---|
+| Quick scan | **$450, fixed** | Written report of the top 10 risks, a 30-minute call, delivered in 2 days. The $450 is credited if they move to audit + fix within 14 days |
+| Audit + fix | **From $2,500**, scope agreed in writing first | Critical and high issues fixed, a test for each fix proving the hole is closed, a written report, 5 to 7 days |
+| Stabilise retainer | Quoted after the audit | |
 
-1.  **Discovery (Day 0):** A 30-min call to understand your bottleneck. No tech jargon, just business problems.
-2.  **Proposal (Day 2):** I send a fixed-price quote with clear deliverables and a timeline. No hourly billing surprises.
-3.  **Build (Weeks 1-3):** Weekly check-ins. You get a live link to see progress from Day 7.
-4.  **Launch & Handoff:** I deploy the system, record training videos, and hand over all source code. You own everything.
+**What I check:** row-level security off or without policies, open Firebase rules, service keys in the browser bundle, public storage buckets, unsigned payment webhooks, account flows that let one user act as another.
 
-## Availability
-**Status:** Available for 1 new project in November.
-**Response Time:** Within 24 hours.
-**Email:** hello@ayoola.io
+**Proof:** live-app recovery; tipping platform money controls.
+
+## 02 · Product builds (`#builds`)
+
+For founders and teams whose product handles money, compliance records or other people's data. Quoted after a call.
+
+**Included:** architecture and data model, business rules enforced in the database, payments and webhooks that reconcile, integration tests against the running app, CI/CD and infrastructure as code, handoff docs and runbooks.
+
+**How it works:** Discovery (a 30-minute call) → Scope (written, agreed before work starts) → Build (weekly demos) → Handoff (docs, runbooks, walkthrough).
+
+**Proof:** food-safety compliance SaaS; tipping platform; OpsFlow.
+
+## 03 · AI & finance automation (`#ai`)
+
+"AI kept in its place." The model reads, classifies and drafts; code computes the figures and people approve what matters. Quoted after a call.
+
+**Offers:** Finance automation · Production AI build · AI readiness review.
+**Principles:** the model never has the final say; arithmetic decides what gets flagged; every decision leaves a record.
+**Illustration:** `close-run.log`, labelled "Illustrative".
+
+**Proof:** month-end close platform; OpsFlow output gates.
+
+## Rules
+
+- These are the only two public prices. Everything else is "Quoted after a call". There's no checkout: payment is by invoice or a payment link sent by email.
+- No client or agency names; every claim traces to a case study.

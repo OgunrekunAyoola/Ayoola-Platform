@@ -56,15 +56,11 @@ export function generateMetadata(): Metadata {
       icon: [{ url: "/icon", type: "image/png", sizes: "64x64" }],
       apple: "/apple-touch-icon.png",
     },
-    alternates: {
-      types: {
-        "application/rss+xml": "/feed.xml",
-      },
-    },
+    // No site-wide canonical: it would be inherited by every page. Each page
+    // sets its own through pageMetadata() (src/lib/page-meta.ts).
     openGraph: {
       type: "website",
       locale: "en_US",
-      url: "/",
       siteName: site.name,
       title: site.name,
       description: site.description,

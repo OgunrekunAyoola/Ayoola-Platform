@@ -3,9 +3,9 @@
 meta:
   title: About
   description: >-
-    Ayoola Ogunrekun is a software engineer in Lagos who builds and runs
-    accounting pipelines, payment platforms, compliance tools and SaaS
-    products, usually as the owning engineer.
+    Ayoola Ogunrekun is a freelance software engineer in Lagos who builds,
+    rescues and runs accounting pipelines, payment platforms, compliance tools
+    and SaaS products.
 
 eyebrow: About
 title: The engineer *behind the systems.*
@@ -34,60 +34,40 @@ story:
     Along the way I found two ways accounts could be taken over. Both were
     closed within days.
   - >-
-    Four years earlier, my first public code was a set of CSS exercises. That
-    year I joined Broadcaad in Lagos as an intern writing Node.js APIs, and I
-    was full-time within six months. Then I spent a year and a half as the
-    only engineer at a services company, running its booking platform. When
-    every outage is yours, you stop building things that only work in the
-    demo.
+    The rest of my work is just as varied. On an AI platform that runs the
+    month-end close for an accounting firm, I built the step where a person
+    approves what the AI flags, and wrote a payroll pipeline where every
+    figure comes from code and the model only writes the sentences. For an
+    agency, I took a food-safety compliance product from first commit to a
+    public pilot in six weeks, directing a team of coding agents. And I'm
+    building OpsFlow, my own order desk for Lagos vendors who sell on
+    WhatsApp.
   - >-
-    These days I work in three very different places at once.
-  - >-
-    On an AI platform that runs the month-end close for an accounting firm, I
-    built the step where a person approves what the AI flags. Then I watched a
-    model say it was 95% sure about a transaction it had got wrong. So in the
-    payroll pipeline I wrote, the model's confidence decides nothing. Every
-    figure comes from code, every anomaly reaches a person, and the model only
-    writes the sentences.
-  - >-
-    For an agency, I took a food-safety compliance product from first commit
-    to a public pilot in six weeks, running a team of coding agents. They
-    wrote most of the code. I set the direction, wrote the brief their
-    reviewers followed, merged every change and ran every deploy. Nothing in
-    it can be quietly deleted: the database itself refuses, because an
-    inspector has to be able to trust every record.
-  - >-
-    And I'm building OpsFlow, my own order desk for Lagos vendors who sell on
-    WhatsApp. When Meta launched its own WhatsApp AI, I tried it as a customer
-    of a real Lagos vendor. It couldn't tell me the price of a product in the
-    vendor's own ad. Answering is the easy part. Getting a chat to a confirmed
-    order is the job.
-  - >-
-    Three different worlds, one thread: the work nobody sees but everybody
+    One thread runs through all of it: the work nobody sees but everybody
     leans on. *Schemas that refuse bad data, money logic that adds up, systems
     that keep running after I've handed them over.* If you're building
     something that has to be right, I'd like to hear about it.
 
 experienceTitle: Experience
-# Client and agency names stay out until naming is cleared.
+# One line per role. Client and agency names stay out until naming is cleared.
 experience:
   - role: Software Engineer (AI Systems)
-    org: Digital agency · agentic month-end-close platform for an accounting firm
+    org: Month-end close platform, accounting firm
     dates: Mar 2026 – present
   - role: Full-Stack Software Engineer, Contract
-    org: Software agency · lead engineer across client products
+    org: Lead engineer, agency clients
     dates: Mar 2026 – present
   - role: Founder & Engineer
-    org: OpsFlow, a WhatsApp order desk for Lagos vendors · plus client sites
+    org: OpsFlow
     dates: Feb 2026 – present
   - role: Full-Stack Software Engineer
-    org: Talent Group Services · sole engineer on a booking platform
+    org: Talent Group Services
     dates: Aug 2024 – Mar 2026
-  - role: Speaker, GDG Lagos DevFest
-    org: Building high-performance APIs with gRPC
+  - role: Speaker
+    org: GDG Lagos DevFest
     dates: "2024"
   - role: Full-Stack Software Engineer
-    org: Broadcaad, Lagos · intern, then full-time
+    org: Broadcaad, Lagos
     dates: Jun 2022 – Jul 2024
 
 toolkitTitle: Toolkit
@@ -102,4 +82,4 @@ toolkit:
     items: [AWS, CloudFormation, Docker, LangGraph, Bedrock AgentCore]
 
 closing:
-  title: Hiring, or have something *to build?*
+  title: Have something *to build?*

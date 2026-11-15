@@ -1,11 +1,13 @@
 import Link from "next/link";
+import BookCallButton from "@/components/ui/BookCallButton";
 import Portrait from "@/components/ui/Portrait";
 import Rich from "@/components/ui/Rich";
-import { site } from "@/config/site";
+import { pageMetadata } from "@/lib/page-meta";
 import { getAbout } from "@/lib/site-content";
-import { hasCv } from "@/lib/cv";
 
-export const generateMetadata = () => getAbout().meta;
+export function generateMetadata() {
+  return pageMetadata({ ...getAbout().meta, path: "/about" });
+}
 
 const row = "wrap pt-[clamp(64px,9vw,110px)] flex flex-wrap gap-x-[clamp(40px,5vw,96px)] gap-y-6 items-start";
 const rowLabel = "label m-0 pt-2 flex-[1_1_240px]";
@@ -67,11 +69,13 @@ export default function About() {
           {about.experience.map((item) => (
             <li
               key={item.role + item.org}
-              className="grid [grid-template-columns:minmax(0,1fr)_auto] gap-x-5 gap-y-1.5 py-[26px] border-t border-[var(--hair)]"
+              className="flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1 py-[18px] border-t border-[var(--hair)]"
             >
-              <span className="display text-[clamp(19px,1.64vw,23px)] leading-[1.2]">{item.role}</span>
-              <span className="font-mono text-[12.5px] text-[var(--muted)] pt-2">{item.dates}</span>
-              <span className="text-[16px] leading-[1.5] text-[var(--muted)]">{item.org}</span>
+              <span className="text-[16.5px] leading-[1.5] min-w-0">
+                <span className="display text-[clamp(18px,1.5vw,21px)]">{item.role}</span>
+                <span className="text-[var(--muted)]"> · {item.org}</span>
+              </span>
+              <span className="font-mono text-[12.5px] text-[var(--muted)] whitespace-nowrap">{item.dates}</span>
             </li>
           ))}
         </ol>
@@ -97,20 +101,13 @@ export default function About() {
 
       <section className="wrap pt-[clamp(64px,9vw,110px)] pb-[clamp(72px,9vw,110px)]">
         <div className="border-t border-[var(--foreground)] pt-[clamp(28px,4vw,44px)] flex flex-wrap items-center justify-between gap-7">
-          <h3 className="text-[clamp(25px,2.81vw,39px)] leading-[1.08] m-0 max-w-[20ch]">
+          <h2 className="text-[clamp(25px,2.81vw,39px)] leading-[1.08] m-0 max-w-[20ch]">
             <Rich text={about.closing.title} />
-          </h3>
+          </h2>
           <div className="flex flex-wrap gap-4 items-center">
-            {hasCv && (
-              <a href={site.cvPath} download className="btn btn-ink h-14 px-7 text-[16.5px]">
-                Download CV ↓
-              </a>
-            )}
-            <Link
-              href="/work-with-me"
-              className={hasCv ? "link-u text-[16px] font-medium" : "btn btn-ink h-14 px-7 text-[16.5px]"}
-            >
-              Work with me
+            <BookCallButton className="btn btn-ink h-14 px-7 text-[16.5px]" />
+            <Link href="/services" className="link-u text-[16px] font-medium">
+              See services
             </Link>
           </div>
         </div>

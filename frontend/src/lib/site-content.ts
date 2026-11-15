@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { parse } from "yaml";
 import { z } from "zod";
-import { isPublished } from "./content";
+import { getAllWriting, isPublished } from "./content";
 
 /**
  * Page copy lives in `content/site/*.yaml`, one file per page. Every file is
@@ -28,7 +28,7 @@ const meta = z.strictObject({ title: text, description: text });
 /** List items that can be hidden from production with `draft: true`. */
 const draftable = { draft: z.boolean().optional() };
 
-/** Decorative run-log card: shown on the AI page. */
+/** Decorative run-log card: shown in the AI section of Services and on the home page. */
 const runLog = z.strictObject({
   file: text,
   status: text,
@@ -45,12 +45,24 @@ const runLog = z.strictObject({
 
 const fact = z.strictObject({ value: text, label: text });
 
-/** An offer card. `featured` renders it as the green card. */
+/**
+ * An offer card. `featured` renders it as the green card. `price` is display
+ * text only (no checkout); offers without one show the "quoted after a call" line.
+ */
 const offer = z.strictObject({
   title: text,
   body: text,
   includes: z.array(text).optional(),
   featured: z.boolean().optional(),
+  price: text.optional(),
+  priceNote: text.optional(),
+});
+
+/** A case study cited as proof, by slug; the page shows its title and honest status. */
+const proof = z.array(z.strictObject({ slug: text, note: text })).min(1);
+
+const principles = heading.extend({
+  items: z.array(z.strictObject({ title: text, body: text })).min(1),
 });
 
 export const siteSchema = z.strictObject({
@@ -65,7 +77,17 @@ export const siteSchema = z.strictObject({
   location: text,
   timezone: text,
   /** Header, footer and mobile-menu navigation; `desc` shows in the mobile menu. */
-  nav: z.array(z.strictObject({ label: text, href: text, desc: text })).min(1),
+  nav: z
+    .array(
+      z.strictObject({
+        label: text,
+        href: text,
+        desc: text,
+        /** Hidden until at least one post is published (Writing). */
+        onlyWithPosts: z.boolean().optional(),
+      }),
+    )
+    .min(1),
   menuCard: z.strictObject({ title: text }),
   footer: z.strictObject({
     cta: text,
@@ -98,7 +120,7 @@ export const homeSchema = z.strictObject({
     items: z.array(z.strictObject({ title: text, body: text, href: text })).min(1),
   }),
   work: heading.extend({ action: link }),
-  /** AI systems teaser; its points and run log come from ai.yaml. */
+  /** AI systems teaser; its points and run log come from the AI section of services.yaml. */
   ai: heading.extend({ body: text, action: link }),
   /**
    * Real feedback, paraphrased in reported speech (never a fabricated quote)
@@ -112,71 +134,50 @@ export const homeSchema = z.strictObject({
   }),
   /** Mono tech names scrolling the other way. */
   stack: z.array(text).min(2),
-  principles: heading.extend({
-    items: z.array(z.strictObject({ title: text, body: text })).min(1),
-  }),
-  /** "Two ways to work together": a two-tab toggle. */
-  hire: heading.extend({
-    body: text,
-    tabs: z
-      .array(
-        z.strictObject({
-          label: text,
-          title: text,
-          body: text,
-          points: z.array(text).min(1),
-          cta: link,
-          tone: z.enum(["tint", "tint-2"]),
-        }),
-      )
-      .length(2),
-  }),
+  /** Rescue & security audit, low on the page; its prices come from services.yaml. */
+  rescue: heading.extend({ body: text, primary: link, secondary: link }),
+  principles,
   writing: heading.extend({ action: link }),
-});
-
-export const workWithMeSchema = z.strictObject({
-  meta,
-  intro: z.strictObject({ eyebrow: text, title: text, sub: text }),
-  anchors: z.strictObject({ roles: text, builds: text }),
-  roles: z.strictObject({
-    title: text,
-    body: text,
-    bringTitle: text,
-    bring: z.array(text).min(1),
-  }),
-  builds: z.strictObject({
-    title: text,
-    tagline: text,
-    body: text,
-    offers: z.array(offer).min(1),
-    /** Green card linking to the AI page. */
-    specialism: z.strictObject({ title: text, badge: text, body: text, cta: link }),
-  }),
-  process: z.strictObject({
-    title: text,
-    steps: z.array(z.strictObject({ title: text, body: text })).min(1),
-  }),
   closing,
 });
 
-export const aiSchema = z.strictObject({
+/** One of the three sections on /services. `nav` is its on-page link label. */
+const serviceSection = z.strictObject({ nav: text, eyebrow: text, title: text });
+
+export const servicesSchema = z.strictObject({
   meta,
-  hero: z.strictObject({
-    eyebrow: text,
-    title: text,
-    sub: text,
-    points: z.array(text).min(1),
-    primary: link,
-    secondary: link,
-  }),
-  principles: heading.extend({
-    items: z.array(z.strictObject({ title: text, body: text })).min(1),
-  }),
-  practice: heading.extend({ body: text, log: runLog }),
-  builds: heading.extend({
+  intro: z.strictObject({ eyebrow: text, title: text, sub: text }),
+  proofTitle: text,
+  /** Price line for offers that don't show a price. */
+  quoted: text,
+  rescue: serviceSection.extend({
     tagline: text,
     body: text,
+    /** The only priced offers on the site. */
+    offers: z.array(offer.required({ price: true })).min(1),
+    retainer: text,
+    checks: z.strictObject({ title: text, items: z.array(text).min(1) }),
+    proof,
+    cta: text,
+  }),
+  builds: serviceSection.extend({
+    tagline: text,
+    body: text,
+    offer,
+    strengths: z.strictObject({ title: text, items: z.array(text).min(1) }),
+    process: z.strictObject({
+      title: text,
+      steps: z.array(z.strictObject({ title: text, body: text })).min(1),
+    }),
+    proof,
+  }),
+  ai: serviceSection.extend({
+    sub: text,
+    points: z.array(text).min(1),
+    principles,
+    practice: heading.extend({ body: text, log: runLog }),
     offers: z.array(offer).min(1),
+    proof,
   }),
   closing,
 });
@@ -238,7 +239,13 @@ export const contactSchema = z.strictObject({
   bookLabel: text,
   form: z.strictObject({
     title: text,
-    inquiryTypes: z.array(text).min(1),
+    /** `key` is what `/contact?type=<key>` preselects. */
+    inquiryTypes: z
+      .array(z.strictObject({ key: z.string().regex(/^[a-z-]+$/), label: text }))
+      .min(1)
+      .refine((types) => new Set(types.map((t) => t.key)).size === types.length, {
+        message: "inquiry type keys must be unique",
+      }),
     messagePlaceholder: text,
     /** Shown when the server can't send: opens the visitor's mail app, prefilled. */
     fallbackCta: text,
@@ -264,8 +271,8 @@ export const notFoundSchema = z.strictObject({
 
 export type SiteContent = z.infer<typeof siteSchema>;
 export type HomeContent = z.infer<typeof homeSchema>;
-export type WorkWithMeContent = z.infer<typeof workWithMeSchema>;
-export type AiContent = z.infer<typeof aiSchema>;
+export type ServicesContent = z.infer<typeof servicesSchema>;
+export type Offer = z.infer<typeof offer>;
 export type AboutContent = z.infer<typeof aboutSchema>;
 export type WorkContent = z.infer<typeof workSchema>;
 export type ContactContent = z.infer<typeof contactSchema>;
@@ -275,8 +282,7 @@ export type WritingContent = z.infer<typeof writingSchema>;
 export const siteFiles = {
   site: siteSchema,
   home: homeSchema,
-  "work-with-me": workWithMeSchema,
-  ai: aiSchema,
+  services: servicesSchema,
   about: aboutSchema,
   work: workSchema,
   contact: contactSchema,
@@ -308,7 +314,15 @@ function load<K extends keyof typeof siteFiles>(
   return parseSiteFile(name, siteFiles[name], raw) as z.infer<(typeof siteFiles)[K]>;
 }
 
-export const getSite = () => load("site");
+/** True once at least one post is published (drafts don't count outside development). */
+export const hasPosts = () => getAllWriting().length > 0;
+
+/** Site copy, with Writing left out of the nav until there's a post to read. */
+export function getSite(): SiteContent {
+  const site = load("site");
+  const posts = hasPosts();
+  return { ...site, nav: site.nav.filter((item) => posts || !item.onlyWithPosts) };
+}
 
 export function getHome(): HomeContent {
   const home = load("home");
@@ -320,8 +334,7 @@ export function getHome(): HomeContent {
     },
   };
 }
-export const getWorkWithMe = () => load("work-with-me");
-export const getAi = () => load("ai");
+export const getServices = () => load("services");
 export const getContact = () => load("contact");
 export const getWriting = () => load("writing");
 export const getNotFound = () => load("not-found");

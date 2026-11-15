@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Rich from "@/components/ui/Rich";
-import { getSite } from "@/lib/site-content";
+import { getSite, hasPosts } from "@/lib/site-content";
 import { site as settings, bookingHref, bookingLinkProps } from "@/config/site";
 
 export default function Footer() {
@@ -56,12 +56,15 @@ export default function Footer() {
                 {l.label}
               </a>
             ))}
-            <a
-              href="/feed.xml"
-              className="self-start text-[16px] no-underline text-[var(--foreground)] hover:text-[var(--accent)] transition-colors"
-            >
-              RSS
-            </a>
+            {/* The feed is empty until the first post, so it's hidden with Writing. */}
+            {hasPosts() && (
+              <a
+                href="/feed.xml"
+                className="self-start text-[16px] no-underline text-[var(--foreground)] hover:text-[var(--accent)] transition-colors"
+              >
+                RSS
+              </a>
+            )}
           </div>
           <div className="flex flex-col gap-3">
             <span className="label text-[11.5px] mb-1">Based in</span>

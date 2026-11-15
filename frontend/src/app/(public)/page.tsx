@@ -1,24 +1,30 @@
 import Link from "next/link";
 import HeroTitle from "@/components/home/HeroTitle";
-import HireToggle from "@/components/home/HireToggle";
 import LagosClock from "@/components/motion/LagosClock";
 import RunLog from "@/components/home/RunLog";
 import WorkCard from "@/components/portfolio/WorkCard";
+import ClosingRow from "@/components/ui/ClosingRow";
 import Portrait from "@/components/ui/Portrait";
 import Rich from "@/components/ui/Rich";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { StackMarquee, WordMarquee } from "@/components/ui/Marquee";
 import { getAllWriting, getAllWork } from "@/lib/content";
-import { getAi, getHome, getSite } from "@/lib/site-content";
+import { getHome, getServices, getSite } from "@/lib/site-content";
+import { pageMetadata } from "@/lib/page-meta";
 import { site as settings } from "@/config/site";
 import { getSiteUrl } from "@/lib/site-url";
 
 const section = "wrap pt-[clamp(72px,9vw,130px)]";
 
+export function generateMetadata() {
+  return pageMetadata({ description: getSite().description, path: "/" });
+}
+
 export default function Home() {
   const site = getSite();
   const home = getHome();
-  const ai = getAi();
+  const services = getServices();
+  const ai = services.ai;
   const writing = getAllWriting().slice(0, 3);
   const work = getAllWork().filter((w) => w.featured);
 
@@ -190,7 +196,7 @@ export default function Home() {
           </h2>
           <p className="text-[17px] leading-[1.65] text-[var(--muted)] m-0 mb-7 max-w-[48ch]">{home.ai.body}</p>
           <ul className="list-none m-0 mb-9 p-0 flex flex-col gap-2.5 text-[16px]">
-            {ai.hero.points.map((point) => (
+            {ai.points.map((point) => (
               <li key={point} className="flex gap-3">
                 <span aria-hidden="true" className="arrow text-[var(--accent)]">
                   ✓
@@ -235,6 +241,55 @@ export default function Home() {
         </section>
       )}
 
+      {/* Rescue & security audit: prices come from services.yaml */}
+      <section
+        data-reveal
+        aria-labelledby="rescue-title"
+        className={`${section} grid gap-[clamp(32px,5vw,80px)] items-center [grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))]`}
+      >
+        <div className="flex flex-col">
+          <div className="eyebrow mb-[18px]">{home.rescue.eyebrow}</div>
+          <h2 id="rescue-title" className="h-section mb-5 max-w-[18ch]">
+            <Rich text={home.rescue.title} />
+          </h2>
+          <p className="text-[17px] leading-[1.65] text-[var(--muted)] m-0 mb-8 max-w-[50ch]">{home.rescue.body}</p>
+          <div className="flex flex-wrap gap-4 items-center">
+            <Link href={home.rescue.primary.href} className="btn btn-ink h-14 px-7 text-[16.5px]">
+              {home.rescue.primary.label} <span aria-hidden="true">→</span>
+            </Link>
+            <Link href={home.rescue.secondary.href} className="link-u text-[16px] font-medium">
+              {home.rescue.secondary.label}
+            </Link>
+          </div>
+        </div>
+        <ul className="list-none m-0 p-0 flex flex-col gap-3">
+          {services.rescue.offers.map((offer) => (
+            <li
+              key={offer.title}
+              className={`rounded-[22px] px-[clamp(22px,2.6vw,34px)] py-[clamp(20px,2.2vw,28px)] flex flex-wrap items-center justify-between gap-x-6 gap-y-3 ${
+                offer.featured
+                  ? "bg-[var(--accent)] text-[var(--on-accent)]"
+                  : "border border-[var(--card-border)] bg-[var(--card)]"
+              }`}
+            >
+              <span className="flex flex-col gap-1.5">
+                <span className="display text-[clamp(19px,1.6vw,22px)]">{offer.title}</span>
+                {offer.priceNote && (
+                  <span
+                    className={`font-mono text-[12px] tracking-[0.08em] uppercase ${
+                      offer.featured ? "text-[var(--on-accent-muted)]" : "text-[var(--muted)]"
+                    }`}
+                  >
+                    {offer.priceNote}
+                  </span>
+                )}
+              </span>
+              <span className="display text-[clamp(30px,3vw,44px)] leading-none whitespace-nowrap">{offer.price}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
       <div className="mt-[clamp(72px,9vw,130px)]">
         <StackMarquee items={home.stack} />
       </div>
@@ -257,8 +312,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-      <HireToggle hire={home.hire} />
 
       {/* Writing — only when posts exist */}
       {writing.length > 0 && (
@@ -296,7 +349,13 @@ export default function Home() {
         </section>
       )}
 
-      <div className="pb-[clamp(88px,10vw,140px)]" />
+      <div className="wrap">
+        <ClosingRow
+          title={home.closing.title}
+          body={home.closing.body}
+          className="mt-[clamp(72px,9vw,130px)] mb-[clamp(88px,10vw,140px)]"
+        />
+      </div>
     </div>
   );
 }

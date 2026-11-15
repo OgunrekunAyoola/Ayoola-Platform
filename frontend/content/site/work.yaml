@@ -32,7 +32,10 @@ alsoBuilt:
         commit. Policy is versioned data and every decision lands in an
         append-only audit trail. Phases 0–11 of 16 are done.
       year: 2026
-      # The repo is private. Add `href:` once it's public.
+      # Hidden until the public launch (December 2026). Before un-drafting,
+      # update the body (all build phases are now done) and add `href:` to the
+      # public repo.
+      draft: true
     - title: Subscription outage on a course platform
       descriptor: Laravel · PHP · SeerBit
       body: >-

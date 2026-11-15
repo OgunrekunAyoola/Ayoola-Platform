@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import Rich from "@/components/ui/Rich";
 import LagosClock from "@/components/motion/LagosClock";
 import type { SiteContent } from "@/lib/site-content";
+import { bookingHref, bookingLinkProps } from "@/config/site";
 
 interface HeaderProps {
   site: Pick<SiteContent, "name" | "headerTag" | "nav" | "availability" | "menuCard">;
@@ -82,12 +83,13 @@ export default function Header({ site, email, githubUrl }: HeaderProps) {
           </nav>
 
           <Link
-            href="/work-with-me"
-            aria-current={isActive("/work-with-me") ? "page" : undefined}
+            href={bookingHref}
+            {...bookingLinkProps}
+            aria-current={isActive(bookingHref) ? "page" : undefined}
             className="btn btn-ink hidden min-[900px]:inline-flex justify-self-end h-[46px] px-[22px] text-[15.5px]"
           >
             <span aria-hidden="true" className="w-[7px] h-[7px] rounded-full bg-[var(--accent-dot)]" />
-            Work with me
+            Book a call
           </Link>
 
           <button
@@ -181,8 +183,8 @@ export default function Header({ site, email, githubUrl }: HeaderProps) {
             <Rich text={site.menuCard.title} />
           </span>
           <div className={`grid gap-[10px] ${email ? "grid-cols-2" : "grid-cols-1"}`}>
-            <Link href="/work-with-me" className="btn btn-paper h-[50px] text-[16px] font-medium">
-              Work with me
+            <Link href={bookingHref} {...bookingLinkProps} className="btn btn-paper h-[50px] text-[16px] font-medium">
+              Book a call
             </Link>
             {email && (
               <a href={`mailto:${email}`} className="btn btn-paper-outline h-[50px] text-[16px]">

@@ -1,0 +1,19 @@
+import { OgRich, ogContentType, ogSize, renderOgImage } from "@/lib/og";
+import { plainText } from "@/components/ui/Rich";
+import { getAbout, getSite } from "@/lib/site-content";
+
+const site = getSite();
+const page = getAbout();
+
+export const alt = `${site.name}: ${plainText(page.title)}`;
+export const size = ogSize;
+export const contentType = ogContentType;
+
+/** Share card in the brand kit's link-preview style. */
+export default function Image() {
+  return renderOgImage({
+    eyebrow: page.eyebrow,
+    headline: <OgRich text={page.title} />,
+    subline: <OgRich text={site.share.subline} />,
+  });
+}

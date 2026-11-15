@@ -1,14 +1,13 @@
 /**
  * Settings: contact details and links. Page copy (name, role, descriptions,
- * banner, experience, offers) lives in content/site/*.yaml.
+ * banner, experience, services) lives in content/site/*.yaml.
  */
 export const site = {
   // Main inbox: contact page, footer and mobile menu "Email me", and the form's fallback.
   email: "oreofeogunrekun@gmail.com",
-  // TODO: add a booking link (Calendly/Cal.com). "Book a call" falls back to /contact while empty.
+  // PLACEHOLDER (open item): add a booking link (e.g. Cal.com). Until then every
+  // "Book a call" (header, footer, closing rows, contact page) opens /contact.
   bookingUrl: "",
-  // TODO: drop the CV at frontend/public/ayoola-ogunrekun-cv.pdf. Download buttons hide until it exists.
-  cvPath: "/ayoola-ogunrekun-cv.pdf",
   githubUrl: "https://github.com/OgunrekunAyoola",
   linkedinUrl: "https://www.linkedin.com/in/ayoolaogunrekun",
 } as const;
