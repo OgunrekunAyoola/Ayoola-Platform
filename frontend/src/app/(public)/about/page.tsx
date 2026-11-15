@@ -1,7 +1,6 @@
-import Link from "next/link";
-import BookCallButton from "@/components/ui/BookCallButton";
 import Portrait from "@/components/ui/Portrait";
 import Rich from "@/components/ui/Rich";
+import { formatYearMonth } from "@/lib/dates";
 import { pageMetadata } from "@/lib/page-meta";
 import { getAbout } from "@/lib/site-content";
 
@@ -47,43 +46,80 @@ export default function About() {
 
       <section data-reveal className={row}>
         <h2 className={rowLabel}>{about.storyTitle}</h2>
-        <div className={`${rowBody} flex flex-col gap-[22px] text-[18px] leading-[1.75] text-[var(--body)] max-w-[68ch]`}>
-          {about.story.map((paragraph, i) => (
-            <p
-              key={paragraph}
-              className={
-                i === 0
-                  ? "display m-0 text-[clamp(22px,2.1vw,30px)] leading-[1.25] text-[var(--foreground)]"
-                  : "em-display m-0"
-              }
-            >
-              <Rich text={paragraph} />
-            </p>
-          ))}
+        {/* The measure is capped inside the column, so the column lines up with Experience and Toolkit. */}
+        <div className={rowBody}>
+          <div className="flex flex-col gap-[22px] text-[18px] leading-[1.75] text-[var(--body)] max-w-[68ch]">
+            {about.story.map((paragraph, i) => (
+              <p
+                key={paragraph}
+                className={
+                  i === 0
+                    ? "display m-0 text-[clamp(22px,2.1vw,30px)] leading-[1.25] text-[var(--foreground)]"
+                    : "em-display m-0"
+                }
+              >
+                <Rich text={paragraph} />
+              </p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section data-reveal aria-labelledby="experience-title" className={row}>
+        <h2 id="experience-title" className={rowLabel}>
+          {about.experienceTitle}
+        </h2>
+        <div className={rowBody}>
+          {/* Role and dates are separate elements, and dates are <time>s, so they aren't read as one string. */}
+          <ol className="list-none m-0 p-0 border-b border-[var(--hair)]">
+            {about.experience.map((item) => (
+              <li key={item.role + (item.org ?? "") + item.start} className="py-[18px] border-t border-[var(--hair)]">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1">
+                  <p className="m-0 text-[16.5px] leading-[1.5] min-w-0">
+                    <span className="display text-[clamp(18px,1.5vw,21px)]">{item.role}</span>
+                    {item.org && (
+                      <>
+                        <span aria-hidden="true" className="text-[var(--muted)]">
+                          {" · "}
+                        </span>
+                        <span className="sr-only">, </span>
+                        <span className="text-[var(--muted)]">{item.org}</span>
+                      </>
+                    )}
+                  </p>
+                  <p className="m-0 font-mono text-[12.5px] text-[var(--muted)] whitespace-nowrap">
+                    <time dateTime={item.start}>{formatYearMonth(item.start)}</time>
+                    <span aria-hidden="true"> – </span>
+                    <span className="sr-only"> to </span>
+                    {item.end === "present" ? "present" : <time dateTime={item.end}>{formatYearMonth(item.end)}</time>}
+                  </p>
+                </div>
+                {item.details && (
+                  <ul className="list-none m-0 mt-2.5 p-0 flex flex-col gap-1.5">
+                    {item.details.map((detail) => (
+                      <li key={detail} className="flex gap-3 text-[15.5px] leading-[1.5] text-[var(--muted)]">
+                        <span aria-hidden="true" className="font-mono text-[var(--accent)]">
+                          └
+                        </span>
+                        <span>{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ol>
+          <p className="m-0 mt-6 text-[15.5px] leading-[1.6] text-[var(--muted)]">
+            <span className="font-medium text-[var(--foreground)]">{about.talk.label}:</span> {about.talk.title},{" "}
+            {about.talk.event} <time dateTime={String(about.talk.year)}>{about.talk.year}</time>
+          </p>
         </div>
       </section>
 
       <section data-reveal className={row}>
-        <h2 className={rowLabel}>{about.experienceTitle}</h2>
-        <ol className={`${rowBody} list-none m-0 p-0 border-b border-[var(--hair)]`}>
-          {about.experience.map((item) => (
-            <li
-              key={item.role + item.org}
-              className="flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1 py-[18px] border-t border-[var(--hair)]"
-            >
-              <span className="text-[16.5px] leading-[1.5] min-w-0">
-                <span className="display text-[clamp(18px,1.5vw,21px)]">{item.role}</span>
-                <span className="text-[var(--muted)]"> · {item.org}</span>
-              </span>
-              <span className="font-mono text-[12.5px] text-[var(--muted)] whitespace-nowrap">{item.dates}</span>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section data-reveal className={row}>
         <h2 className={rowLabel}>{about.toolkitTitle}</h2>
-        <div className={`${rowBody} grid gap-x-10 gap-y-8 [grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))]`}>
+        {/* Four groups, two by two (one column on phones), so none sits alone on a row. */}
+        <div className={`${rowBody} grid gap-x-10 gap-y-8 grid-cols-1 min-[560px]:grid-cols-2`}>
           {about.toolkit.map((group) => (
             <div key={group.title} className="border-t border-[var(--foreground)] pt-[18px] flex flex-col gap-[14px]">
               <span className="display text-[20px]">{group.title}</span>
@@ -99,19 +135,8 @@ export default function About() {
         </div>
       </section>
 
-      <section className="wrap pt-[clamp(64px,9vw,110px)] pb-[clamp(72px,9vw,110px)]">
-        <div className="border-t border-[var(--foreground)] pt-[clamp(28px,4vw,44px)] flex flex-wrap items-center justify-between gap-7">
-          <h2 className="text-[clamp(25px,2.81vw,39px)] leading-[1.08] m-0 max-w-[20ch]">
-            <Rich text={about.closing.title} />
-          </h2>
-          <div className="flex flex-wrap gap-4 items-center">
-            <BookCallButton className="btn btn-ink h-14 px-7 text-[16.5px]" />
-            <Link href="/services" className="link-u text-[16px] font-medium">
-              See services
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* No closing row: the footer's call to action closes every page. */}
+      <div className="pb-[clamp(72px,9vw,110px)]" />
     </div>
   );
 }

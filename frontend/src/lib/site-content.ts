@@ -21,14 +21,12 @@ const link = z.strictObject({ label: text, href: text });
 
 const heading = z.strictObject({ eyebrow: text, title: text });
 
-const closing = z.strictObject({ title: text, body: text.optional() });
-
 const meta = z.strictObject({ title: text, description: text });
 
 /** List items that can be hidden from production with `draft: true`. */
 const draftable = { draft: z.boolean().optional() };
 
-/** Decorative run-log card: shown in the AI section of Services and on the home page. */
+/** Decorative run-log card: shown beside the AI intro on Services and in the AI section on Home. */
 const runLog = z.strictObject({
   file: text,
   status: text,
@@ -44,6 +42,9 @@ const runLog = z.strictObject({
 });
 
 const fact = z.strictObject({ value: text, label: text });
+
+/** A month as YYYY-MM, e.g. "2026-03". */
+const yearMonth = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, "use YYYY-MM");
 
 /**
  * An offer card. `featured` renders it as the green card. `price` is display
@@ -120,8 +121,8 @@ export const homeSchema = z.strictObject({
     items: z.array(z.strictObject({ title: text, body: text, href: text })).min(1),
   }),
   work: heading.extend({ action: link }),
-  /** AI systems teaser; its points and run log come from the AI section of services.yaml. */
-  ai: heading.extend({ body: text, action: link }),
+  /** AI systems teaser; the run log comes from the AI section of services.yaml. */
+  ai: heading.extend({ body: text, points: z.array(text).min(1), action: link }),
   /**
    * Real feedback, paraphrased in reported speech (never a fabricated quote)
    * and attributed by role only. Each item traces to a source in the claims ledger.
@@ -138,11 +139,13 @@ export const homeSchema = z.strictObject({
   rescue: heading.extend({ body: text, primary: link, secondary: link }),
   principles,
   writing: heading.extend({ action: link }),
-  closing,
 });
 
 /** One of the three sections on /services. `nav` is its on-page link label. */
-const serviceSection = z.strictObject({ nav: text, eyebrow: text, title: text });
+const serviceSection = z.strictObject({ nav: text, eyebrow: text, title: text, tagline: text, body: text });
+
+/** A small titled list (rendered as a mono subhead over the items). */
+const titledList = z.strictObject({ title: text, items: z.array(text).min(1) });
 
 export const servicesSchema = z.strictObject({
   meta,
@@ -151,20 +154,15 @@ export const servicesSchema = z.strictObject({
   /** Price line for offers that don't show a price. */
   quoted: text,
   rescue: serviceSection.extend({
-    tagline: text,
-    body: text,
     /** The only priced offers on the site. */
     offers: z.array(offer.required({ price: true })).min(1),
     retainer: text,
-    checks: z.strictObject({ title: text, items: z.array(text).min(1) }),
+    checks: titledList,
     proof,
     cta: text,
   }),
   builds: serviceSection.extend({
-    tagline: text,
-    body: text,
     offer,
-    strengths: z.strictObject({ title: text, items: z.array(text).min(1) }),
     process: z.strictObject({
       title: text,
       steps: z.array(z.strictObject({ title: text, body: text })).min(1),
@@ -172,14 +170,14 @@ export const servicesSchema = z.strictObject({
     proof,
   }),
   ai: serviceSection.extend({
-    sub: text,
-    points: z.array(text).min(1),
-    principles,
-    practice: heading.extend({ body: text, log: runLog }),
+    log: runLog,
     offers: z.array(offer).min(1),
+    principles: z.strictObject({
+      title: text,
+      items: z.array(z.strictObject({ title: text, body: text })).min(1),
+    }),
     proof,
   }),
-  closing,
 });
 
 export const aboutSchema = z.strictObject({
@@ -192,14 +190,23 @@ export const aboutSchema = z.strictObject({
   storyTitle: text,
   story: z.array(text).min(1),
   experienceTitle: text,
+  /** Newest first. `start`/`end` are YYYY-MM; `end` may be "present". */
   experience: z
     .array(
-      z.strictObject({ role: text, org: text, dates: text, ...draftable }),
+      z.strictObject({
+        role: text,
+        org: text.optional(),
+        start: yearMonth,
+        end: z.union([yearMonth, z.literal("present")]),
+        details: z.array(text).optional(),
+        ...draftable,
+      }),
     )
     .min(1),
+  /** One line under Experience: "Talk: <title>, <event> <year>". */
+  talk: z.strictObject({ label: text, title: text, event: text, year: z.number().int() }),
   toolkitTitle: text,
   toolkit: z.array(z.strictObject({ title: text, items: z.array(text).min(1) })).min(1),
-  closing: z.strictObject({ title: text }),
 });
 
 export const workSchema = z.strictObject({
@@ -227,7 +234,6 @@ export const workSchema = z.strictObject({
     diagramTitle: text,
     /** Badges on diagram stages marked `human` or `model`. */
     markers: z.strictObject({ human: text, model: text }),
-    closing,
   }),
 });
 
@@ -239,13 +245,23 @@ export const contactSchema = z.strictObject({
   bookLabel: text,
   form: z.strictObject({
     title: text,
-    /** `key` is what `/contact?type=<key>` preselects. */
+    /**
+     * `key` is what `/contact?type=<key>` preselects; nothing is selected
+     * without it. `messageLabel` replaces the message label while selected.
+     */
     inquiryTypes: z
-      .array(z.strictObject({ key: z.string().regex(/^[a-z-]+$/), label: text }))
+      .array(
+        z.strictObject({
+          key: z.string().regex(/^[a-z-]+$/),
+          label: text,
+          messageLabel: text.optional(),
+        }),
+      )
       .min(1)
       .refine((types) => new Set(types.map((t) => t.key)).size === types.length, {
         message: "inquiry type keys must be unique",
       }),
+    messageLabel: text,
     messagePlaceholder: text,
     /** Shown when the server can't send: opens the visitor's mail app, prefilled. */
     fallbackCta: text,

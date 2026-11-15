@@ -1,6 +1,6 @@
 import type { ServicesContent } from "@/lib/site-content";
 
-type RunLogContent = ServicesContent["ai"]["practice"]["log"];
+type RunLogContent = ServicesContent["ai"]["log"];
 type Tone = RunLogContent["lines"][number]["tone"];
 
 const toneClass: Record<Tone, string> = {

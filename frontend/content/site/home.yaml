@@ -12,7 +12,7 @@ hero:
     label: See the work
     href: /portfolio
   secondary:
-    label: Work with me
+    label: See services
     href: /services
 
 # Big words scrolling under the hero, alternating ink and green.
@@ -48,10 +48,10 @@ services:
       body: "Postgres schemas that enforce the rules: row-level security, versioned records, audit trails."
       href: /services#builds
     - title: Payments
-      body: Stripe Connect and subscriptions, SeerBit, idempotent webhooks and reconciliation.
+      body: Stripe, Paystack or SeerBit, set up so nothing is charged twice and every transaction reconciles.
       href: /services#builds
     - title: Cloud & DevOps
-      body: AWS, CloudFormation, Docker and CI/CD pipelines that make shipping boring.
+      body: Your own cloud account, set up as code with CI/CD, so shipping is boring and your team can run it without me.
       href: /services#builds
     - title: AI systems
       body: LangGraph pipelines and agents with human approval, evals and an audit trail.
@@ -64,14 +64,18 @@ work:
     label: All work →
     href: /portfolio
 
-# AI systems teaser. The ✓ points and the illustrative run log come from the
-# AI section of services.yaml, so each claim lives in one place.
+# AI systems teaser. The illustrative run log comes from the AI section of
+# services.yaml; these ✓ points are Home's own (Services doesn't repeat them).
 ai:
   eyebrow: AI systems
   title: AI kept *in its place.*
   body: >-
     Approval steps, money logic computed in code, evals and an audit trail
     around the model, so AI can do real work without having the final say.
+  points:
+    - Approve, reject and resume flows in Slack, live in production
+    - Payroll figures computed in code; the model only writes sentences
+    - Output gates that stop a bot from confirming a payment
   action:
     label: See AI & finance automation →
     href: /services#ai
@@ -163,10 +167,3 @@ writing:
   action:
     label: All writing →
     href: /blog
-
-# Closing call to action, after "How I work".
-closing:
-  title: Got something that needs to *hold up?*
-  body: >-
-    Tell me what you're building and where it's stuck. I'll tell you honestly
-    whether and how I can help.

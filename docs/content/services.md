@@ -4,31 +4,38 @@ The live copy is `frontend/content/site/services.yaml`; this file is a readable 
 
 Page: `/services`. Old URLs `/work-with-me` and `/ai` redirect here (`/ai` to the AI section).
 
+## Copy rules
+
+- Every line answers "what does the client get?"
+- No tool or stack names (those live in the About toolkit and the case-study chips). Platforms the client already uses, like Supabase or Stripe, are fine where they say who an offer is for.
+- No sentence appears word for word on another page, except the prices.
+- Each section has one H2, then a tagline, a short intro, the offer cards, one block under a small subhead, and proof.
+
 ## Intro
 
 **Headline:** Three ways to work together.
-**Sub:** Make an app you built fast safe to run, build a product properly from the start, or put AI to work in finance with a person in the loop. Based in Lagos (UTC+1), with full overlap with the UK and EU.
-**Next steps:** Book a call (opens `/contact` until a booking link exists) or Request a quick scan (`/contact?type=rescue`).
+**Sub:** An app you built fast, made safe to run. A product built properly from the start. Finance work automated, with a person signing off. Based in Lagos (UTC+1), with a full overlap with the UK and EU.
+**Next steps:** "Get in touch" (opens `/contact`; it becomes "Book a call" once a booking link exists) or "Request a quick scan" (`/contact?type=rescue`).
 
 ## 01 · Rescue & security audit (`#rescue`)
 
-For founders who shipped with Lovable, Bolt, Cursor or v0 on Supabase or Firebase, and now take payments or hold personal data.
+**Tagline:** Find the holes before someone else does.
+For apps built fast with Lovable, Bolt, Cursor or v0 on Supabase or Firebase that now take payments or hold personal data.
 
 | Offer | Price | What's included |
 |---|---|---|
 | Quick scan | **$450, fixed** | Written report of the top 10 risks, a 30-minute call, delivered in 2 days. The $450 is credited if they move to audit + fix within 14 days |
-| Audit + fix | **From $2,500**, scope agreed in writing first | Critical and high issues fixed, a test for each fix proving the hole is closed, a written report, 5 to 7 days |
+| Audit + fix | **From $2,500**, scope agreed in writing first | Every critical and high issue fixed, a test for each fix proving the hole is closed, a written report, 5 to 7 days |
 | Stabilise retainer | Quoted after the audit | |
 
-**What I check:** row-level security off or without policies, open Firebase rules, service keys in the browser bundle, public storage buckets, unsigned payment webhooks, account flows that let one user act as another.
+**What I look for:** customers who can see each other's data, database rules open to anyone, secret keys shipped in the app, files anyone can open, payment notifications that could be faked, account takeover.
 
 **Proof:** live-app recovery; tipping platform money controls.
 
 ## 02 · Product builds (`#builds`)
 
-For founders and teams whose product handles money, compliance records or other people's data. Quoted after a call.
-
-**Included:** architecture and data model, business rules enforced in the database, payments and webhooks that reconcile, integration tests against the running app, CI/CD and infrastructure as code, handoff docs and runbooks.
+**Tagline:** Built properly, then handed over. Quoted after a call.
+For founders and teams whose product handles money, compliance records or other people's data. They own the code, the cloud account and the docs at the end.
 
 **How it works:** Discovery (a 30-minute call) → Scope (written, agreed before work starts) → Build (weekly demos) → Handoff (docs, runbooks, walkthrough).
 
@@ -36,13 +43,13 @@ For founders and teams whose product handles money, compliance records or other 
 
 ## 03 · AI & finance automation (`#ai`)
 
-"AI kept in its place." The model reads, classifies and drafts; code computes the figures and people approve what matters. Quoted after a call.
+**H2:** AI & finance automation. **Tagline:** Automate the busywork. Keep the decisions. (Alternative: "Automation your accountants can sign off.") Quoted after a call.
 
-**Offers:** Finance automation · Production AI build · AI readiness review.
-**Principles:** the model never has the final say; arithmetic decides what gets flagged; every decision leaves a record.
-**Illustration:** `close-run.log`, labelled "Illustrative".
+**Offers:** Finance automation · Production AI build (which can start with a written review of an existing system).
+**Rules for AI that does real work:** the model never has the final say; arithmetic decides what gets flagged; every decision leaves a record.
+**Illustration:** `close-run.log` beside the intro, labelled "Illustrative".
 
-**Proof:** month-end close platform; OpsFlow output gates.
+**Proof:** month-end close platform; OpsFlow.
 
 ## Rules
 

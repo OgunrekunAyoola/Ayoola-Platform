@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import Rich from "@/components/ui/Rich";
-import { inquiryLabel, type InquiryType } from "@/lib/inquiry";
+import { inquiryLabel, messageLabelFor, type InquiryType } from "@/lib/inquiry";
 import type { ContactContent } from "@/lib/site-content";
 
 interface FormState {
   name: string;
   email: string;
   message: string;
-  /** Key of the chosen inquiry type; its label is what gets sent. */
+  /** Key of the chosen inquiry type ("" for none); its label is what gets sent. */
   typeOfWork: string;
   /** Honeypot — real visitors never see or fill this. */
   company: string;
@@ -18,8 +18,8 @@ interface FormState {
 type ContactFormProps = ContactContent["form"] & {
   /** Where the email fallback goes; no fallback when empty. */
   email: string;
-  /** Inquiry type key selected on load (from `?type=`); defaults to the first. */
-  preselected?: string;
+  /** Inquiry type key selected on load (from `?type=`); nothing is selected without one. */
+  preselected?: string | null;
 };
 
 const emptyState = (typeOfWork: string): FormState => ({
@@ -40,13 +40,14 @@ function mailtoFallback(to: string, form: FormState, types: readonly InquiryType
 export default function ContactForm({
   title,
   inquiryTypes,
+  messageLabel,
   messagePlaceholder,
   fallbackCta,
   sent,
   email,
   preselected,
 }: ContactFormProps) {
-  const initialType = preselected ?? inquiryTypes[0].key;
+  const initialType = preselected ?? "";
   const [formData, setFormData] = useState<FormState>(() => emptyState(initialType));
   const [status, setStatus] = useState<
     "idle" | "submitting" | "success" | "error"
@@ -118,7 +119,7 @@ export default function ContactForm({
 
   return (
     <>
-      <h2 className="text-[28px] m-0 mb-7">
+      <h2 className="text-[28px] leading-[1.1] m-0 mb-7">
         <Rich text={title} />
       </h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-[18px]">
@@ -164,8 +165,9 @@ export default function ContactForm({
           />
         </label>
 
-        <fieldset className="flex flex-col gap-2.5">
-          <legend className="text-[14px] font-semibold mb-2.5 p-0">Inquiry type</legend>
+        {/* Block layout, not flex: browsers lay out a flex <fieldset>/<legend> differently, which threw the spacing off. */}
+        <fieldset className="m-0 p-0 border-0 min-w-0">
+          <legend className="text-[14px] font-semibold p-0 mb-2">Inquiry type</legend>
           <div className="flex flex-wrap gap-2">
             {inquiryTypes.map((type) => (
               <label
@@ -187,7 +189,7 @@ export default function ContactForm({
         </fieldset>
 
         <label className={label}>
-          What are you building?
+          {messageLabelFor(inquiryTypes, formData.typeOfWork, messageLabel)}
           <textarea
             className="field font-normal resize-y"
             name="message"
@@ -217,10 +219,19 @@ export default function ContactForm({
 
         <button
           type="submit"
-          className="btn btn-ink w-full h-14 text-[17px] mt-1"
+          className="btn btn-ink btn-cta w-full"
           disabled={status === "submitting"}
         >
-          {status === "submitting" ? "Sending…" : "Send message →"}
+          {status === "submitting" ? (
+            "Sending…"
+          ) : (
+            <>
+              Send message
+              <span aria-hidden="true" className="arrow">
+                →
+              </span>
+            </>
+          )}
         </button>
       </form>
     </>

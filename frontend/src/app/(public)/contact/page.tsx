@@ -56,9 +56,9 @@ export default function Contact() {
         </h1>
         <p className="text-[18px] leading-[1.6] text-[var(--muted)] m-0 mb-9">{page.sub}</p>
 
-        {/* Only with a real booking link: without one, "Book a call" would just reload this page. */}
+        {/* Only with a real booking link: without one, the button would just reload this page. */}
         {site.bookingUrl && (
-          <BookCallButton label={page.bookLabel} className="btn btn-ink h-14 px-7 text-[17px] mb-12" />
+          <BookCallButton label={page.bookLabel} className="mb-12" />
         )}
 
         <dl className="m-0 flex flex-col border-b border-[var(--hair)]">

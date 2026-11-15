@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
 import ShareButton from "@/components/ui/ShareButton";
-import ClosingRow from "@/components/ui/ClosingRow";
 import WorkDiagram from "@/components/portfolio/WorkDiagram";
 import { getWorkPage } from "@/lib/site-content";
 import { pageMetadata } from "@/lib/page-meta";
@@ -135,8 +134,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           )}
         </Fragment>
       ))}
-
-      <ClosingRow title={labels.closing.title} body={labels.closing.body} className="mt-16" />
     </article>
   );
 }

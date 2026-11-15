@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Rich from "@/components/ui/Rich";
 import { getSite, hasPosts } from "@/lib/site-content";
-import { site as settings, bookingHref, bookingLinkProps } from "@/config/site";
+import BookCallButton from "@/components/ui/BookCallButton";
+import { site as settings } from "@/config/site";
 
 export default function Footer() {
   const site = getSite();
@@ -19,11 +20,9 @@ export default function Footer() {
             <Rich text={site.footer.cta} />
           </h2>
           <div className="flex flex-wrap gap-3">
-            <Link href={bookingHref} {...bookingLinkProps} className="btn btn-green h-14 px-[30px] text-[16.5px]">
-              Book a call →
-            </Link>
+            <BookCallButton />
             {settings.email && (
-              <a href={`mailto:${settings.email}`} className="btn btn-outline h-14 px-[30px] text-[16.5px]">
+              <a href={`mailto:${settings.email}`} className="btn btn-outline h-[58px] px-[30px] text-[17px]">
                 Email me
               </a>
             )}

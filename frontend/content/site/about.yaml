@@ -34,7 +34,7 @@ story:
     Along the way I found two ways accounts could be taken over. Both were
     closed within days.
   - >-
-    The rest of my work is just as varied. On an AI platform that runs the
+    That job is typical of what I take on. On an AI platform that runs the
     month-end close for an accounting firm, I built the step where a person
     approves what the AI flags, and wrote a payroll pipeline where every
     figure comes from code and the model only writes the sentences. For an
@@ -43,32 +43,40 @@ story:
     building OpsFlow, my own order desk for Lagos vendors who sell on
     WhatsApp.
   - >-
-    One thread runs through all of it: the work nobody sees but everybody
-    leans on. *Schemas that refuse bad data, money logic that adds up, systems
+    What ties it together: the parts that have to be right. *Schemas that
+    refuse bad data, money logic that adds up, systems
     that keep running after I've handed them over.* If you're building
     something that has to be right, I'd like to hear about it.
 
 experienceTitle: Experience
-# One line per role. Client and agency names stay out until naming is cleared.
+# Newest first. Dates are YYYY-MM (rendered as "Mar 2026" in a <time>); `end`
+# can be "present". No client names: describe work by domain.
 experience:
-  - role: Software Engineer (AI Systems)
-    org: Month-end close platform, accounting firm
-    dates: Mar 2026 – present
-  - role: Full-Stack Software Engineer, Contract
-    org: Lead engineer, agency clients
-    dates: Mar 2026 – present
-  - role: Founder & Engineer
+  - role: Independent engineer (freelance)
+    start: "2026-03"
+    end: present
+    details:
+      - Month-end close platform for an accounting firm, via a consultancy
+      - Lead engineer on 8 client products, via an agency
+  - role: Founder
     org: OpsFlow
-    dates: Feb 2026 – present
+    start: "2026-02"
+    end: present
   - role: Full-Stack Software Engineer
     org: Talent Group Services
-    dates: Aug 2024 – Mar 2026
-  - role: Speaker
-    org: GDG Lagos DevFest
-    dates: "2024"
+    start: "2024-08"
+    end: "2026-03"
   - role: Full-Stack Software Engineer
     org: Broadcaad, Lagos
-    dates: Jun 2022 – Jul 2024
+    start: "2022-06"
+    end: "2024-07"
+
+# Shown on its own line under Experience.
+talk:
+  label: Talk
+  title: Building high-performance APIs with gRPC
+  event: GDG Lagos DevFest
+  year: 2024
 
 toolkitTitle: Toolkit
 toolkit:
@@ -80,6 +88,3 @@ toolkit:
     items: [PostgreSQL, Redis, MongoDB, Stripe, SeerBit]
   - title: Cloud & AI
     items: [AWS, CloudFormation, Docker, LangGraph, Bedrock AgentCore]
-
-closing:
-  title: Have something *to build?*

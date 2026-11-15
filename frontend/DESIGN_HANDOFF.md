@@ -1,6 +1,6 @@
 # Design handoff
 
-**Project:** Ayoola Ogunrekun's freelance site: one audience (clients), one next step (book a call, or request a quick scan).
+**Project:** Ayoola Ogunrekun's freelance site: one audience (clients), one next step (get in touch, or request a quick scan).
 **Updated:** 15 November 2026, for the services restructure.
 **Brand reference:** Brand kit v2.0 (October 2026). Colours are in `03_Colour` (CSS and JSON tokens), fonts in `04_Typography` (Syne, Geist, Geist Mono), logos and favicons in `02_Logo`, link previews in `07_Marketing/02_Link-Previews`. The kit was made from this site, so its tokens match `globals.css` exactly.
 
@@ -18,11 +18,11 @@ All page copy is in `content/site/*.yaml`, validated by zod in `src/lib/site-con
 
 | Route | Page | Copy |
 |---|---|---|
-| `/` | Hero, marquee, portrait and stats, What I do, Selected work (featured case studies), AI systems, Feedback, **Rescue & security audit**, stack marquee, How I work, closing row | `home.yaml` (prices and AI points come from `services.yaml`) |
-| `/services` | Three offers: `#rescue` (priced), `#builds`, `#ai`; each with proof from the case studies | `services.yaml` |
+| `/` | Hero, marquee, portrait and stats, What I do, Selected work (featured case studies), AI systems, Feedback, **Rescue & security audit**, stack marquee, How I work | `home.yaml` (prices and the run log come from `services.yaml`) |
+| `/services` | Three sections on one template (eyebrow, one H2, tagline, intro → offer cards → a block under a small subhead → proof): `#rescue` (priced), `#builds`, `#ai` (with `close-run.log` beside its intro) | `services.yaml` |
 | `/portfolio`, `/portfolio/[slug]` | Case studies with honest status lines | `work.yaml`, `content/work/*.mdx` |
-| `/about` | Story, one-line Experience list, Toolkit | `about.yaml` |
-| `/contact` | Form (`?type=rescue|build|ai|other` preselects the inquiry type) | `contact.yaml` |
+| `/about` | Story, Experience (an `<ol>` with `<time>` dates), a Talk line, Toolkit (2×2) | `about.yaml` |
+| `/contact` | Form. Nothing is selected unless `?type=rescue|build|ai|other` is in the URL; with rescue selected the message label asks "What's worrying you about the app?" | `contact.yaml` |
 | `/blog` | Writing. Unlinked, out of the sitemap and `noindex` until a post is published | `writing.yaml` |
 
 Old URLs: `/work-with-me` → `/services` and `/ai` → `/services#ai` (308s in `next.config.ts`).
@@ -51,23 +51,29 @@ Never green text on ink (2.6:1) or mint text on sage (1.2:1). Every text pair in
 
 ## 4. Components (reuse these)
 
-- `Header` / `Footer` (`src/components/layout`): nav is **Services · Work · About** (Writing joins automatically once a post exists); the header button is **Book a call**.
-- `OfferCard` (`src/components/ui`): `featured` makes it the green card. `price` and `priceNote` are display text only (no checkout). Offers without a price show "Quoted after a call".
+- `Header` / `Footer` (`src/components/layout`): nav is **Services · Work · About** (Writing joins automatically once a post exists). The footer's call to action is the only closing call to action on every page: pages don't add their own closing rows.
+- `PrimaryCta` (`src/components/ui`): **the one primary button style**, everywhere: ink pill, 58px, 17px, label plus a Syne →, via the `.btn-cta` class. The header uses the same ink pill at the kit's compact size, with the status dot.
+- `BookCallButton`: the booking call to action in that style. Its label comes from `bookingCta()` in `src/config/site.ts`: **"Get in touch"** (opening `/contact`) while `bookingUrl` is empty, **"Book a call"** (opening the link) once it's set. Never hard-code "Book a call"; a test checks.
+- `OfferCard` (`src/components/ui`): `featured` makes it the green card; `wide` lays a lone offer across the row. `price` and `priceNote` are display text only (no checkout). Offers without a price show "Quoted after a call".
 - `ProofList` (`src/components/services`): case studies cited by slug, showing title, honest status and a one-line note. `stacked` for a half-width column.
-- `ClosingRow`, `BookCallButton`, `SectionHeading`, `Rich`, `RunLog`, `WorkCard`, `WorkDiagram`, `Marquee`, `Portrait`.
+- `SectionHeading`, `Rich`, `RunLog`, `WorkCard`, `WorkDiagram`, `Marquee`, `Portrait`.
 - `pageMetadata()` (`src/lib/page-meta.ts`): canonical URL plus Open Graph and Twitter text for a page. Every page calls it.
 - Share images: `renderOgImage()` (`src/lib/og.tsx`) draws the kit's link-preview card (ink ground, mint eyebrow with dot, Syne headline with mint emphasis, 120×5 accent rule, mono footer). Each route has an `opengraph-image.tsx` and a `twitter-image.tsx`.
 
 ## 5. Rules for copy (they affect layout too)
 
+- Every line on Home and Services answers "what does the client get?"
+- Tool and stack names belong in the About toolkit and the case-study chips, not in Services copy. (Platforms the client already uses, like Supabase or Stripe, are fine where they say who an offer is for.) A test checks Services.
+- No sentence appears word for word on two pages, except the prices. A test checks every page, case studies included.
+
 - Only two public prices, both on the rescue offer: **Quick scan $450 fixed** (credited if they upgrade within 14 days) and **Audit + fix from $2,500**. Everything else is "Quoted after a call". A test fails if any other dollar figure appears in `content/site`.
 - No client, agency or colleague names. Case studies keep their honest status lines. Testimonials stay paraphrased ("Paraphrased from real feedback. Names withheld.").
-- No job-seeking copy (roles, CV, "for employers"). A test checks the YAML for it.
-- Buttons say what happens: "Book a call", "Request a quick scan", "See services". One ink pill per view; pair it with a text link.
+- No job-seeking copy, and nothing from the old full-time pitch under a new heading. A test checks the YAML for it.
+- Buttons say what happens: "Get in touch", "Request a quick scan", "See services". A button never promises a call and opens a form. One ink pill per view; pair it with a text link.
 
 ## 6. Placeholders
 
-- `bookingUrl` in `src/config/site.ts` is empty, so every "Book a call" opens `/contact`, and the contact page hides its own booking button.
+- `bookingUrl` in `src/config/site.ts` is empty, so every booking button reads "Get in touch" and opens `/contact`, and the contact page hides its own booking button. Set the link and they all switch to "Book a call".
 - `public/ayoola-portrait.jpg` doesn't exist yet; `Portrait` shows the hatch until it does.
 
 ## 7. Verify

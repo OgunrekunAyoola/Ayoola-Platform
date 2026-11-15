@@ -10,7 +10,8 @@ meta:
     status for each.
 
 eyebrow: Work
-title: The work, *in detail.*
+# Home's Selected work heading is "The work, in detail."; this page has its own.
+title: Case studies, *start to finish.*
 sub: >-
   Each case study covers the problem, the decisions I made, the hardest part
   and where the system stands today. Client names are withheld where I don't
@@ -75,5 +76,3 @@ caseStudy:
   markers:
     human: A person approves
     model: The model works here
-  closing:
-    title: Building something similar?

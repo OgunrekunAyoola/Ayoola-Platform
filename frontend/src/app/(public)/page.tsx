@@ -3,8 +3,8 @@ import HeroTitle from "@/components/home/HeroTitle";
 import LagosClock from "@/components/motion/LagosClock";
 import RunLog from "@/components/home/RunLog";
 import WorkCard from "@/components/portfolio/WorkCard";
-import ClosingRow from "@/components/ui/ClosingRow";
 import Portrait from "@/components/ui/Portrait";
+import PrimaryCta from "@/components/ui/PrimaryCta";
 import Rich from "@/components/ui/Rich";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { StackMarquee, WordMarquee } from "@/components/ui/Marquee";
@@ -24,7 +24,6 @@ export default function Home() {
   const site = getSite();
   const home = getHome();
   const services = getServices();
-  const ai = services.ai;
   const writing = getAllWriting().slice(0, 3);
   const work = getAllWork().filter((w) => w.featured);
 
@@ -64,12 +63,7 @@ export default function Home() {
 
         <div className="rise-in-late flex flex-wrap items-center gap-[clamp(22px,4vw,56px)]">
           <div className="flex flex-wrap gap-3">
-            <Link href={home.hero.primary.href} className="btn btn-ink h-[58px] px-[30px] text-[17px] gap-3">
-              {home.hero.primary.label}{" "}
-              <span aria-hidden="true" className="arrow text-[16px]">
-                →
-              </span>
-            </Link>
+            <PrimaryCta href={home.hero.primary.href} label={home.hero.primary.label} />
             <Link href={home.hero.secondary.href} className="link-u h-[58px] px-1.5 text-[17px]">
               {home.hero.secondary.label}
             </Link>
@@ -196,7 +190,7 @@ export default function Home() {
           </h2>
           <p className="text-[17px] leading-[1.65] text-[var(--muted)] m-0 mb-7 max-w-[48ch]">{home.ai.body}</p>
           <ul className="list-none m-0 mb-9 p-0 flex flex-col gap-2.5 text-[16px]">
-            {ai.points.map((point) => (
+            {home.ai.points.map((point) => (
               <li key={point} className="flex gap-3">
                 <span aria-hidden="true" className="arrow text-[var(--accent)]">
                   ✓
@@ -211,7 +205,7 @@ export default function Home() {
         </div>
         <div className="flex flex-col gap-2.5">
           <div className="bg-[var(--tint)] rounded-[26px] p-[clamp(20px,4vw,48px)]">
-            <RunLog log={ai.practice.log} />
+            <RunLog log={services.ai.log} />
           </div>
           <span className="self-end font-mono text-[11.5px] text-[var(--muted)]">Illustrative</span>
         </div>
@@ -254,9 +248,7 @@ export default function Home() {
           </h2>
           <p className="text-[17px] leading-[1.65] text-[var(--muted)] m-0 mb-8 max-w-[50ch]">{home.rescue.body}</p>
           <div className="flex flex-wrap gap-4 items-center">
-            <Link href={home.rescue.primary.href} className="btn btn-ink h-14 px-7 text-[16.5px]">
-              {home.rescue.primary.label} <span aria-hidden="true">→</span>
-            </Link>
+            <PrimaryCta href={home.rescue.primary.href} label={home.rescue.primary.label} />
             <Link href={home.rescue.secondary.href} className="link-u text-[16px] font-medium">
               {home.rescue.secondary.label}
             </Link>
@@ -349,13 +341,8 @@ export default function Home() {
         </section>
       )}
 
-      <div className="wrap">
-        <ClosingRow
-          title={home.closing.title}
-          body={home.closing.body}
-          className="mt-[clamp(72px,9vw,130px)] mb-[clamp(88px,10vw,140px)]"
-        />
-      </div>
+      {/* No closing row: the footer's call to action closes every page. */}
+      <div className="pb-[clamp(88px,10vw,140px)]" />
     </div>
   );
 }
