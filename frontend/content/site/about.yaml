@@ -25,28 +25,19 @@ storyTitle: The story so far
 # The first paragraph is set large, as the lead line.
 story:
   - >-
-    On one job, the first thing I had to do was find a live app's source
-    code. There was no repository, no schema and no way into the database.
+    I was always a fan of new technology, just from the outside. About ten
+    years ago, a random conversation with friends who were coding pulled me
+    in. Who knew something that would shape my whole future could start like
+    that?
   - >-
-    It was a salon-booking marketplace with real bookings going through it. I
-    pulled the code back out of the hosting platform, proved it matched what
-    was running, and rebuilt the database schema from the queries in the code.
-    Along the way I found two ways accounts could be taken over. Both were
-    closed within days.
+    It's been a rewarding ride. I've been the only engineer on platforms whole
+    businesses ran on, and that teaches you quickly to build things that still
+    work long after the demo.
   - >-
-    That job is typical of what I take on. On an AI platform that runs the
-    month-end close for an accounting firm, I built the step where a person
-    approves what the AI flags, and wrote a payroll pipeline where every
-    figure comes from code and the model only writes the sentences. For an
-    agency, I took a food-safety compliance product from first commit to a
-    public pilot in six weeks, directing a team of coding agents. And I'm
-    building OpsFlow, my own order desk for Lagos vendors who sell on
-    WhatsApp.
-  - >-
-    What ties it together: the parts that have to be right. *Schemas that
-    refuse bad data, money logic that adds up, systems
-    that keep running after I've handed them over.* If you're building
-    something that has to be right, I'd like to hear about it.
+    These days I keep it simple: work on the things that matter most, like
+    software that handles money, compliance and people's data, do it properly,
+    and have fun doing it. I'm in Lagos, working with teams anywhere. Tell me
+    what you're building.
 
 experienceTitle: Experience
 # Newest first. Dates are YYYY-MM (rendered as "Mar 2026" in a <time>); `end`
