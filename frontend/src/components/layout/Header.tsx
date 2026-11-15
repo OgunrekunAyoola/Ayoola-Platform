@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import Rich from "@/components/ui/Rich";
 import LagosClock from "@/components/motion/LagosClock";
 import type { SiteContent } from "@/lib/site-content";
+import BookCallButton from "@/components/ui/BookCallButton";
+import { bookingHref, bookingLabel, bookingLinkProps } from "@/config/site";
 
 interface HeaderProps {
   site: Pick<SiteContent, "name" | "headerTag" | "nav" | "availability" | "menuCard">;
@@ -82,12 +84,13 @@ export default function Header({ site, email, githubUrl }: HeaderProps) {
           </nav>
 
           <Link
-            href="/work-with-me"
-            aria-current={isActive("/work-with-me") ? "page" : undefined}
+            href={bookingHref}
+            {...bookingLinkProps}
+            aria-current={isActive(bookingHref) ? "page" : undefined}
             className="btn btn-ink hidden min-[900px]:inline-flex justify-self-end h-[46px] px-[22px] text-[15.5px]"
           >
             <span aria-hidden="true" className="w-[7px] h-[7px] rounded-full bg-[var(--accent-dot)]" />
-            Work with me
+            {bookingLabel}
           </Link>
 
           <button
@@ -180,12 +183,11 @@ export default function Header({ site, email, githubUrl }: HeaderProps) {
           <span className="display text-[25px] leading-[1.1] [&_em]:not-italic [&_em]:text-inherit">
             <Rich text={site.menuCard.title} />
           </span>
-          <div className={`grid gap-[10px] ${email ? "grid-cols-2" : "grid-cols-1"}`}>
-            <Link href="/work-with-me" className="btn btn-paper h-[50px] text-[16px] font-medium">
-              Work with me
-            </Link>
+          <div className="grid grid-cols-1 gap-[10px]">
+            {/* The primary button is the same ink pill as everywhere else; on the green card its hover stays visible. */}
+            <BookCallButton className="w-full hover:bg-[var(--accent-hover)]" />
             {email && (
-              <a href={`mailto:${email}`} className="btn btn-paper-outline h-[50px] text-[16px]">
+              <a href={`mailto:${email}`} className="btn btn-paper-outline h-[58px] text-[17px]">
                 Email me
               </a>
             )}

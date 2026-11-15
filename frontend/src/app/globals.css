@@ -166,6 +166,17 @@ body {
     background: var(--accent);
     color: #fff;
   }
+  /*
+   * The one primary call-to-action style (ink pill + Syne arrow), used for
+   * every primary button on every page via <PrimaryCta>. The header button is
+   * the same pill at the brand kit's compact size.
+   */
+  .btn-cta {
+    height: 58px;
+    padding-inline: 30px;
+    font-size: 17px;
+    gap: 12px;
+  }
   .btn-outline {
     border-color: var(--foreground);
     color: var(--foreground);
@@ -196,7 +207,7 @@ body {
     cursor: default;
   }
 
-  /* Underlined text link: "Work with me", "Get in touch", anchors. */
+  /* Underlined text link: "See services", "Book a call", on-page anchors. */
   .link-u {
     display: inline-flex;
     align-items: center;

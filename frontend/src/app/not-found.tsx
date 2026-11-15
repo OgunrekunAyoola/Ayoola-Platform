@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import PrimaryCta from "@/components/ui/PrimaryCta";
 import Rich from "@/components/ui/Rich";
 import { getNotFound, getSite } from "@/lib/site-content";
 import { site as settings } from "@/config/site";
@@ -19,9 +20,7 @@ export default function NotFound() {
         </h1>
         <p className="text-[18px] leading-[1.6] text-[var(--muted)] m-0 mb-10">{page.body}</p>
         <div className="flex flex-wrap gap-4 items-center">
-          <Link href={page.primary.href} className="btn btn-ink h-14 px-7 text-[17px]">
-            {page.primary.label}
-          </Link>
+          <PrimaryCta href={page.primary.href} label={page.primary.label} />
           <Link href={page.secondary.href} className="link-u text-[16px] font-medium">
             {page.secondary.label}
           </Link>

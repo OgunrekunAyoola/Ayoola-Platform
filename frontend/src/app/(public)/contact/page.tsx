@@ -1,10 +1,15 @@
+import { Suspense } from "react";
 import { site } from "@/config/site";
 import BookCallButton from "@/components/ui/BookCallButton";
 import Rich from "@/components/ui/Rich";
+import { pageMetadata } from "@/lib/page-meta";
 import { getContact, getSite } from "@/lib/site-content";
 import ContactForm from "./ContactForm";
+import ContactFormFromQuery from "./ContactFormFromQuery";
 
-export const generateMetadata = () => getContact().meta;
+export function generateMetadata() {
+  return pageMetadata({ ...getContact().meta, path: "/contact" });
+}
 
 export default function Contact() {
   const page = getContact();
@@ -51,7 +56,10 @@ export default function Contact() {
         </h1>
         <p className="text-[18px] leading-[1.6] text-[var(--muted)] m-0 mb-9">{page.sub}</p>
 
-        <BookCallButton label={page.bookLabel} className="btn btn-ink h-14 px-7 text-[17px] mb-12" />
+        {/* Only with a real booking link: without one, the button would just reload this page. */}
+        {site.bookingUrl && (
+          <BookCallButton label={page.bookLabel} className="mb-12" />
+        )}
 
         <dl className="m-0 flex flex-col border-b border-[var(--hair)]">
           {rows.map((row) => (
@@ -67,7 +75,9 @@ export default function Contact() {
       </div>
 
       <div className="rounded-[26px] border border-[var(--card-border)] bg-[var(--card)] p-[clamp(28px,4vw,44px)]">
-        <ContactForm {...page.form} email={site.email} />
+        <Suspense fallback={<ContactForm {...page.form} email={site.email} />}>
+          <ContactFormFromQuery {...page.form} email={site.email} />
+        </Suspense>
       </div>
     </section>
   );

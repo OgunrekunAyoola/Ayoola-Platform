@@ -1,6 +1,6 @@
-import type { AiContent } from "@/lib/site-content";
+import type { ServicesContent } from "@/lib/site-content";
 
-type RunLogContent = AiContent["practice"]["log"];
+type RunLogContent = ServicesContent["ai"]["log"];
 type Tone = RunLogContent["lines"][number]["tone"];
 
 const toneClass: Record<Tone, string> = {

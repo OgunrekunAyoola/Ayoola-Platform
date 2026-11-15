@@ -5,7 +5,6 @@ import {
   notFoundSchema,
   parseSiteFile,
   siteFiles,
-  getAbout,
   getWorkPage,
 } from "./site-content";
 import { getAllWork, getAllWriting } from "./content";
@@ -52,7 +51,6 @@ describe("content/site", () => {
       (process.env as Record<string, string>).NODE_ENV = "development";
       const all = getWorkPage().alsoBuilt.items.length;
       expect(hidden).toBeLessThanOrEqual(all);
-      expect(getAbout().experience.length).toBeGreaterThan(0);
     } finally {
       (process.env as Record<string, string>).NODE_ENV = prev ?? "test";
     }

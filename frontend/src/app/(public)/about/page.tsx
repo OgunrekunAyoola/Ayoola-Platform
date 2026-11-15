@@ -1,11 +1,11 @@
-import Link from "next/link";
 import Portrait from "@/components/ui/Portrait";
 import Rich from "@/components/ui/Rich";
-import { site } from "@/config/site";
+import { pageMetadata } from "@/lib/page-meta";
 import { getAbout } from "@/lib/site-content";
-import { hasCv } from "@/lib/cv";
 
-export const generateMetadata = () => getAbout().meta;
+export function generateMetadata() {
+  return pageMetadata({ ...getAbout().meta, path: "/about" });
+}
 
 const row = "wrap pt-[clamp(64px,9vw,110px)] flex flex-wrap gap-x-[clamp(40px,5vw,96px)] gap-y-6 items-start";
 const rowLabel = "label m-0 pt-2 flex-[1_1_240px]";
@@ -45,41 +45,29 @@ export default function About() {
 
       <section data-reveal className={row}>
         <h2 className={rowLabel}>{about.storyTitle}</h2>
-        <div className={`${rowBody} flex flex-col gap-[22px] text-[18px] leading-[1.75] text-[var(--body)] max-w-[68ch]`}>
-          {about.story.map((paragraph, i) => (
-            <p
-              key={paragraph}
-              className={
-                i === 0
-                  ? "display m-0 text-[clamp(22px,2.1vw,30px)] leading-[1.25] text-[var(--foreground)]"
-                  : "em-display m-0"
-              }
-            >
-              <Rich text={paragraph} />
-            </p>
-          ))}
+        {/* The measure is capped inside the column, so the column lines up with the Toolkit. */}
+        <div className={rowBody}>
+          <div className="flex flex-col gap-[22px] text-[18px] leading-[1.75] text-[var(--body)] max-w-[68ch]">
+            {about.story.map((paragraph, i) => (
+              <p
+                key={paragraph}
+                className={
+                  i === 0
+                    ? "display m-0 text-[clamp(22px,2.1vw,30px)] leading-[1.25] text-[var(--foreground)]"
+                    : "em-display m-0"
+                }
+              >
+                <Rich text={paragraph} />
+              </p>
+            ))}
+          </div>
         </div>
       </section>
 
       <section data-reveal className={row}>
-        <h2 className={rowLabel}>{about.experienceTitle}</h2>
-        <ol className={`${rowBody} list-none m-0 p-0 border-b border-[var(--hair)]`}>
-          {about.experience.map((item) => (
-            <li
-              key={item.role + item.org}
-              className="grid [grid-template-columns:minmax(0,1fr)_auto] gap-x-5 gap-y-1.5 py-[26px] border-t border-[var(--hair)]"
-            >
-              <span className="display text-[clamp(19px,1.64vw,23px)] leading-[1.2]">{item.role}</span>
-              <span className="font-mono text-[12.5px] text-[var(--muted)] pt-2">{item.dates}</span>
-              <span className="text-[16px] leading-[1.5] text-[var(--muted)]">{item.org}</span>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section data-reveal className={row}>
         <h2 className={rowLabel}>{about.toolkitTitle}</h2>
-        <div className={`${rowBody} grid gap-x-10 gap-y-8 [grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))]`}>
+        {/* Four groups, two by two (one column on phones), so none sits alone on a row. */}
+        <div className={`${rowBody} grid gap-x-10 gap-y-8 grid-cols-1 min-[560px]:grid-cols-2`}>
           {about.toolkit.map((group) => (
             <div key={group.title} className="border-t border-[var(--foreground)] pt-[18px] flex flex-col gap-[14px]">
               <span className="display text-[20px]">{group.title}</span>
@@ -95,26 +83,8 @@ export default function About() {
         </div>
       </section>
 
-      <section className="wrap pt-[clamp(64px,9vw,110px)] pb-[clamp(72px,9vw,110px)]">
-        <div className="border-t border-[var(--foreground)] pt-[clamp(28px,4vw,44px)] flex flex-wrap items-center justify-between gap-7">
-          <h3 className="text-[clamp(25px,2.81vw,39px)] leading-[1.08] m-0 max-w-[20ch]">
-            <Rich text={about.closing.title} />
-          </h3>
-          <div className="flex flex-wrap gap-4 items-center">
-            {hasCv && (
-              <a href={site.cvPath} download className="btn btn-ink h-14 px-7 text-[16.5px]">
-                Download CV ↓
-              </a>
-            )}
-            <Link
-              href="/work-with-me"
-              className={hasCv ? "link-u text-[16px] font-medium" : "btn btn-ink h-14 px-7 text-[16.5px]"}
-            >
-              Work with me
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* No closing row: the footer's call to action closes every page. */}
+      <div className="pb-[clamp(72px,9vw,110px)]" />
     </div>
   );
 }

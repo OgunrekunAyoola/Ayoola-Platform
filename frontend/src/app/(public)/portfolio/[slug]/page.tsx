@@ -5,9 +5,9 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
 import ShareButton from "@/components/ui/ShareButton";
-import ClosingRow from "@/components/ui/ClosingRow";
 import WorkDiagram from "@/components/portfolio/WorkDiagram";
 import { getWorkPage } from "@/lib/site-content";
+import { pageMetadata } from "@/lib/page-meta";
 
 interface ProjectPageProps {
   params: Promise<{
@@ -32,10 +32,7 @@ export async function generateMetadata({
   if (!project) {
     return { title: "Case study not found" };
   }
-  return {
-    title: project.title,
-    description: project.summary,
-  };
+  return pageMetadata({ title: project.title, description: project.summary, path: `/portfolio/${slug}` });
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
@@ -137,8 +134,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           )}
         </Fragment>
       ))}
-
-      <ClosingRow title={labels.closing.title} body={labels.closing.body} className="mt-16" />
     </article>
   );
 }

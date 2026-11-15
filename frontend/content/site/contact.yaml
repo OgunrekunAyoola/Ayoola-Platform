@@ -3,8 +3,8 @@
 meta:
   title: Contact
   description: >-
-    Tell me what you're building and where it's stuck. Book a 30-minute call
-    or send a message.
+    Tell me what you're building and where it's stuck. Send a message and
+    I'll reply within two business days.
 
 eyebrow: Contact
 title: Let's talk about *what you're building.*
@@ -14,14 +14,23 @@ sub: >-
 bookLabel: Book a 30-minute call
 
 form:
-  title: Or send *a message.*
-  # Keep in step with the offers on the Work with me page.
+  title: Send me *a message.*
+  # Keep in step with the three offers on the Services page. `key` is what
+  # /contact?type=<key> preselects (e.g. /contact?type=rescue); `label` is
+  # shown in the form and in the email subject.
   inquiryTypes:
-    - Full-time role
-    - Product build
-    - Rescue & stabilise
-    - AI build or review
-    - Something else
+    - key: rescue
+      label: Rescue & security audit
+      # Replaces the message label while this type is selected.
+      messageLabel: What's worrying you about the app?
+    - key: build
+      label: Product build
+    - key: ai
+      label: AI systems
+    - key: other
+      label: Something else
+  # Nothing is selected unless the link carries ?type=.
+  messageLabel: What are you building?
   messagePlaceholder: A few sentences about the system, the timeline, and where you're stuck…
   # If the form can't send (not configured, provider down), this button opens the
   # visitor's mail app with their message already written, so nothing is lost.

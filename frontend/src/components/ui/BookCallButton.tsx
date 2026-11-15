@@ -1,18 +1,16 @@
-import Link from "next/link";
-import { bookingHref, bookingLinkProps } from "@/config/site";
+import PrimaryCta from "@/components/ui/PrimaryCta";
+import { bookingHref, bookingLabel, bookingLinkProps } from "@/config/site";
 
 interface BookCallButtonProps {
+  /** Overrides the label, e.g. "Book a 30-minute call" (only shown with a booking link). */
   label?: string;
   className?: string;
 }
 
-export default function BookCallButton({
-  label = "Book a call",
-  className = "btn btn-ink h-14 px-7 text-[17px]",
-}: BookCallButtonProps) {
-  return (
-    <Link href={bookingHref} {...bookingLinkProps} className={className}>
-      {label} <span aria-hidden="true">→</span>
-    </Link>
-  );
+/**
+ * The booking call to action in the primary style. Reads "Get in touch" and
+ * opens /contact until a booking link is configured (see bookingCta).
+ */
+export default function BookCallButton({ label = bookingLabel, className = "" }: BookCallButtonProps) {
+  return <PrimaryCta href={bookingHref} label={label} className={className} linkProps={bookingLinkProps} />;
 }

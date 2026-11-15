@@ -2,8 +2,11 @@ import { getAllWork } from "@/lib/content";
 import { getWorkPage } from "@/lib/site-content";
 import WorkCard from "@/components/portfolio/WorkCard";
 import Rich from "@/components/ui/Rich";
+import { pageMetadata } from "@/lib/page-meta";
 
-export const generateMetadata = () => getWorkPage().meta;
+export function generateMetadata() {
+  return pageMetadata({ ...getWorkPage().meta, path: "/portfolio" });
+}
 
 export default function PortfolioPage() {
   const page = getWorkPage();

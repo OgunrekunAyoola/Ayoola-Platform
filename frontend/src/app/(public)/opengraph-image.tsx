@@ -1,4 +1,4 @@
-import { OgRich, ogContentType, ogSize, renderOgImage } from "@/lib/og";
+import { ogRich, ogContentType, ogSize, renderOgImage } from "@/lib/og";
 import { plainText } from "@/components/ui/Rich";
 import { getSite } from "@/lib/site-content";
 
@@ -12,6 +12,6 @@ export default function Image() {
   return renderOgImage({
     eyebrow: site.role,
     headline: site.name,
-    subline: <OgRich text={site.share.subline} />,
+    subline: ogRich(site.share.subline),
   });
 }

@@ -1,0 +1,220 @@
+# Services page: three offers on one page. Wrap a phrase in *asterisks* for
+# the green emphasis.
+#
+# Copy rules (see the PR #7 review):
+# - Every line answers "what does the client get?"
+# - No tool or stack names here (they live in the About toolkit and the
+#   case-study chips). Platforms the client already uses (Supabase, Stripe…)
+#   are fine where they say who an offer is for.
+# - No sentence repeats one on another page, except the prices.
+#
+# Prices: only two are public, both on the rescue offer (Quick scan $450 fixed,
+# Audit + fix from $2,500). Everything else says "Quoted after a call". Prices
+# are display text only: there's no checkout; payment is by invoice.
+#
+# Proof items point at case studies by slug; every claim here traces to one.
+
+meta:
+  title: Services
+  description: >-
+    Rescue & security audits for apps built fast on Supabase or Firebase
+    (quick scan $450, audit + fix from $2,500), product builds, and AI
+    systems with a person signing off.
+
+intro:
+  eyebrow: Services
+  title: Three ways to *work together.*
+  sub: >-
+    An app you built fast, made safe to run. A product built properly from the
+    start. AI put to work in your business, with a person signing off. I work from
+    Lagos (UTC+1), so my day overlaps fully with the UK and EU.
+
+# Shared labels.
+proofTitle: Proof
+quoted: Quoted after a call
+
+rescue:
+  nav: Rescue & security audit
+  eyebrow: 01 · Rescue & security audit
+  title: Rescue & *security audit.*
+  tagline: Find the holes *before someone else does.*
+  body: >-
+    For apps built fast with Lovable, Bolt, Cursor or v0 on Supabase or
+    Firebase that now take payments or hold personal data. Start with a quick
+    scan to see where you stand, or go straight to a full audit with the fixes
+    included.
+  offers:
+    - title: Quick scan
+      price: $450
+      priceNote: Fixed price
+      body: >-
+        A written look at where your app is exposed, before you commit to
+        anything bigger.
+      includes:
+        - A written report of your top 10 risks
+        - A 30-minute call to walk through it
+        - Delivered in 2 days
+        - The $450 is credited if you move to audit + fix within 14 days
+    - title: Audit + fix
+      featured: true
+      price: From $2,500
+      priceNote: Scope agreed in writing first
+      body: >-
+        The full audit, then the fixes, so the serious holes are closed, not
+        just listed.
+      includes:
+        - Every critical and high issue fixed
+        - A test for each fix, proving the hole is closed
+        - A written report of everything I found
+        - Done in 5 to 7 days
+  retainer: >-
+    Want someone keeping it stable after the fixes? A monthly stabilise
+    retainer is available, quoted after the audit.
+  checks:
+    title: What I look for
+    items:
+      - Customers who can see or change each other's data
+      - Database rules that let anyone read or write
+      - Secret keys shipped inside the app, where anyone can find them
+      - Files and uploads anyone with the link can open
+      - Payment notifications that could be faked
+      - Login flows that let one user take over another's account
+  proof:
+    - slug: live-app-recovery
+      note: >-
+        A live app with no source repository, recovered and secured in 20
+        days: two account-takeover paths closed, and 51 access rules checked by
+        47 attack tests.
+    - slug: tipping-platform
+      note: >-
+        Refunds that need two people, a second check before sensitive changes,
+        and an audit log that shows if anyone tampers with it.
+  cta: Request a quick scan
+
+builds:
+  nav: Product builds
+  eyebrow: 02 · Product builds
+  title: Product *builds.*
+  tagline: Built properly, *then handed over.*
+  body: >-
+    For founders and teams whose product handles money, compliance records or
+    other people's data. You own everything at the end: the code, the cloud
+    account and the docs.
+  offer:
+    title: Product build
+    body: >-
+      Your product designed, built and deployed end to end, then handed over so
+      your team can run it.
+    includes:
+      - A written plan for what it stores and who can see what
+      - Business rules the database enforces, so a bug on one screen can't break them
+      - Payments that reconcile with your provider's records
+      - Tests against the running app before every release
+      - Automated deploys to infrastructure you own
+      - Guides your team can follow to run it after launch
+  process:
+    title: How it works
+    steps:
+      - title: Discovery
+        body: A 30-minute call about the problem, not a sales pitch.
+      - title: Scope
+        body: A written scope we both agree on before any work starts.
+      - title: Build
+        body: Weekly demos, so you see progress as it happens.
+      - title: Handoff
+        body: Documentation, runbooks and a walkthrough for your team.
+  proof:
+    - slug: food-safety-compliance
+      note: >-
+        A compliance product taken from first commit to public pilot in six
+        weeks, with records the database won't let anyone delete.
+    - slug: tipping-platform
+      note: >-
+        Tips go straight to workers through Stripe Connect, so the platform
+        never holds the money, and nightly checks confirm the books match.
+    - slug: opsflow
+      note: >-
+        My own product: a WhatsApp order desk where fixed code checks every
+        reply, so the bot can never confirm a payment.
+
+ai:
+  nav: AI systems
+  eyebrow: 03 · AI systems
+  title: AI *systems.*
+  # Replaces "AI kept in its place" (Home's AI heading). Option B for the PR:
+  # "Automation your accountants *can sign off.*"
+  tagline: Automate the busywork. *Keep the decisions.*
+  body: >-
+    For finance, compliance and support teams, where a wrong answer costs
+    money. The model reads and drafts, code does the arithmetic, and nothing
+    important happens without a person's approval. When a pipeline isn't
+    sure, it stops and asks.
+  # Shown beside the intro here, and in the AI section on Home. Decorative and
+  # labelled illustrative: no client names, internal pipeline names or real
+  # figures.
+  log:
+    file: close-run.log
+    status: live
+    lines:
+      - text: run 0917 · month-end close · started
+        tone: muted
+      - text: └ bank reconciliation · 1,284 lines matched
+        tone: ok
+        indent: true
+      - text: └ 3 ACH items · carried to next period
+        tone: flag
+        indent: true
+      - text: ⏸ APPROVAL · waiting on reviewer in Slack
+        tone: gate
+      - text: ✓ approved · resumed as child run · logged
+        tone: ok
+      - text: run 0917 · workbook ready for QuickBooks
+        tone: muted
+  offers:
+    - title: Finance automation
+      body: >-
+        For accounting and finance teams: reconciliation, month-end close steps
+        and payroll checks, done by software and reviewed by your people.
+      includes:
+        - Every figure computed by rules, not guessed by a model
+        - Anything unusual flagged for a person to decide
+        - A review workbook and import file for your accountants
+        - A record of each run and who approved what
+    - title: Production AI build
+      featured: true
+      body: >-
+        The system around the model, built for real use: the pipeline, the
+        approval steps, the checks before each release and a record of every
+        run. If yours works in the demo but can't get sign-off, I can start
+        with a written review of where it will fail and what to fix first.
+      includes:
+        - Approval steps wherever a person has to decide
+        - Money and business rules kept out of the model
+        - Tests on realistic cases before every release
+        - Runs that pause for a reviewer and pick up where they stopped
+        - Docs and a walkthrough, so your team can run it
+  principles:
+    title: Rules for AI that does real work
+    items:
+      - title: The model never has the final say
+        body: >-
+          It classifies, extracts and drafts. Approving a payment, posting a
+          figure or confirming a refund stays with code and people.
+      - title: Arithmetic decides what gets flagged
+        body: >-
+          A model's confidence is text it writes, not a measurement. Anomalies
+          are found by computation, and every one reaches a person.
+      - title: Every decision leaves a record
+        body: >-
+          What ran, what it found, who approved it and when, stored where an
+          auditor can read it.
+  proof:
+    - slug: month-end-close
+      note: >-
+        For an accounting firm: runs that pause for a person's approval and
+        resume from their decisions, and a payroll pipeline where code computes
+        every figure.
+    - slug: opsflow
+      note: >-
+        The AI answers customers, but anything about payments or money
+        commitments waits for the vendor to review.
