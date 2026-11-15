@@ -207,7 +207,7 @@ body {
     cursor: default;
   }
 
-  /* Underlined text link: "See services", "Get in touch", on-page anchors. */
+  /* Underlined text link: "See services", "Book a call", on-page anchors. */
   .link-u {
     display: inline-flex;
     align-items: center;

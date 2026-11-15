@@ -5,10 +5,10 @@
 export const site = {
   // Main inbox: contact page, footer and mobile menu "Email me", and the form's fallback.
   email: "oreofeogunrekun@gmail.com",
-  // PLACEHOLDER (open item): add a booking link (e.g. Cal.com). While empty,
-  // every booking button reads "Get in touch" and opens /contact; once set,
-  // they read "Book a call" and open the link.
-  bookingUrl: "",
+  // Cal.com "Discovery call" (30 min, Google Meet). Every booking button reads
+  // "Book a call" and opens this in a new tab; empty it and they all go back to
+  // "Get in touch" → /contact.
+  bookingUrl: "https://cal.com/ayoola-ogunrekun/call",
   githubUrl: "https://github.com/OgunrekunAyoola",
   linkedinUrl: "https://www.linkedin.com/in/ayoolaogunrekun",
 } as const;

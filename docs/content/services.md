@@ -15,7 +15,7 @@ Page: `/services`. Old URLs `/work-with-me` and `/ai` redirect here (`/ai` to th
 
 **Headline:** Three ways to work together.
 **Sub:** An app you built fast, made safe to run. A product built properly from the start. AI put to work in your business, with a person signing off. Based in Lagos (UTC+1), with a full overlap with the UK and EU.
-**Next steps:** "Get in touch" (opens `/contact`; it becomes "Book a call" once a booking link exists) or "Request a quick scan" (`/contact?type=rescue`).
+**Next steps:** "Book a call" (the Cal.com discovery call, 30 min) or "Request a quick scan" (`/contact?type=rescue`).
 
 ## 01 · Rescue & security audit (`#rescue`)
 

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { describe, it, expect, afterEach } from "vitest";
-import { bookingCta } from "@/config/site";
+import { bookingCta, bookingHref, bookingLabel, site } from "@/config/site";
 import { getAllWork } from "./content";
 import { getAbout, getHome, getServices, getSite, servicesSchema } from "./site-content";
 
@@ -140,6 +140,15 @@ describe("booking button", () => {
       label: "Book a call",
       linkProps: { target: "_blank", rel: "noopener noreferrer" },
     });
+  });
+
+  it("is set to the Cal.com discovery call, so the site's buttons say Book a call", () => {
+    expect(bookingCta(site.bookingUrl)).toEqual({
+      href: "https://cal.com/ayoola-ogunrekun/call",
+      label: "Book a call",
+      linkProps: { target: "_blank", rel: "noopener noreferrer" },
+    });
+    expect([bookingHref, bookingLabel]).toEqual(["https://cal.com/ayoola-ogunrekun/call", "Book a call"]);
   });
 
   it("never hard-codes \"Book a call\" in a component or page", () => {

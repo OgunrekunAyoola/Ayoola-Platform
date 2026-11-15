@@ -1,6 +1,6 @@
 # Design handoff
 
-**Project:** Ayoola Ogunrekun's freelance site: one audience (clients), one next step (get in touch, or request a quick scan).
+**Project:** Ayoola Ogunrekun's freelance site: one audience (clients), one next step (book a call, or request a quick scan).
 **Updated:** 15 November 2026, for the services restructure.
 **Brand reference:** Brand kit v2.0 (October 2026). Colours are in `03_Colour` (CSS and JSON tokens), fonts in `04_Typography` (Syne, Geist, Geist Mono), logos and favicons in `02_Logo`, link previews in `07_Marketing/02_Link-Previews`. The kit was made from this site, so its tokens match `globals.css` exactly.
 
@@ -69,11 +69,11 @@ Never green text on ink (2.6:1) or mint text on sage (1.2:1). Every text pair in
 - Only two public prices, both on the rescue offer: **Quick scan $450 fixed** (credited if they upgrade within 14 days) and **Audit + fix from $2,500**. Everything else is "Quoted after a call". A test fails if any other dollar figure appears in `content/site`.
 - No client, agency or colleague names. Case studies keep their honest status lines. Testimonials stay paraphrased ("Paraphrased from real feedback. Names withheld.").
 - No job-seeking copy, and nothing from the old full-time pitch under a new heading. A test checks the YAML for it.
-- Buttons say what happens: "Get in touch", "Request a quick scan", "See services". A button never promises a call and opens a form. One ink pill per view; pair it with a text link.
+- Buttons say what happens: "Book a call", "Request a quick scan", "See services". A button never promises a call and opens a form. One ink pill per view; pair it with a text link.
 
 ## 6. Placeholders
 
-- `bookingUrl` in `src/config/site.ts` is empty, so every booking button reads "Get in touch" and opens `/contact`, and the contact page hides its own booking button. Set the link and they all switch to "Book a call".
+- `bookingUrl` in `src/config/site.ts` is the Cal.com discovery call (30 min), so every booking button reads "Book a call" and opens it in a new tab, and the contact page shows "Book a 30-minute call". Empty it and they all fall back to "Get in touch" → `/contact` (and the contact page hides its own booking button).
 - `public/ayoola-portrait.jpg` doesn't exist yet; `Portrait` shows the hatch until it does.
 
 ## 7. Verify
