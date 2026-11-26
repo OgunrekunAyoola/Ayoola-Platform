@@ -5,7 +5,7 @@ summary: "On an agentic close platform for an accounting firm, I built the human
 client: Accounting firm, via a consultancy
 role: Contract engineer
 year: 2026
-status: 3 pipelines live; payroll in staging
+status: 19 pipelines enabled in production; approvals live on bank
 stack:
   - Python
   - LangGraph
@@ -111,6 +111,6 @@ A separate checker I wrote recomputes every figure from the raw files, independe
 
 ## Where it stands
 
-Bank reconciliation has run in production since August 2026, and two more pipelines have followed it. Approval-and-resume is live on the bank pipeline. The client specified four review patterns, and only the "decide" pattern is built so far. I documented the gaps against the requirements so they're tracked, not forgotten.
+Bank reconciliation has run in production since August 2026. By mid-November 2026, 19 close pipelines had their runtimes enabled in production, out of 26 agents registered with the orchestrator. Approval-and-resume is live on the bank pipeline only. The client specified four review patterns, and only the "decide" pattern is built so far. I documented the gaps against the requirements so they're tracked, not forgotten.
 
-Payroll was switched on in staging in October 2026 and isn't enabled in production yet. Two known gaps block go-live, some fixes are waiting for review, and it hasn't run on real client data.
+Payroll was switched on in staging in October 2026 and enabled in production on 3 November. Two known gaps are still open: a pay run that hasn't been processed by the close isn't accrued yet, and that scenario raises false anomalies on early closes. Several of the fixes behind the 67 of 67 result are still waiting for review, and payroll can't yet resume a run from a reviewer's decisions.
