@@ -5,7 +5,7 @@ summary: "On an agentic close platform for an accounting firm, I built the human
 client: Accounting firm, via a consultancy
 role: Contract engineer
 year: 2026
-status: 19 pipelines enabled in production; approvals live on bank
+status: 19 pipelines in production; 26 agents on the platform
 stack:
   - Python
   - LangGraph
@@ -111,6 +111,8 @@ A separate checker I wrote recomputes every figure from the raw files, independe
 
 ## Where it stands
 
-Bank reconciliation has run in production since August 2026. By mid-November 2026, 19 close pipelines had their runtimes enabled in production, out of 26 agents registered with the orchestrator. Approval-and-resume is live on the bank pipeline only. The client specified four review patterns, and only the "decide" pattern is built so far. I documented the gaps against the requirements so they're tracked, not forgotten.
+The platform has grown from one pipeline in production in August 2026 to 19 by mid-November: bank, payables, receivables, credit cards, payroll, expenses, accruals, revenue, fixed assets, debt, equity, tax and reconciliation. Twenty-six agents are registered on the orchestrator in all. Every run still ends with an accountant deciding what reaches the ledger.
 
-Payroll was switched on in staging in October 2026 and enabled in production on 3 November. Two known gaps are still open: a pay run that hasn't been processed by the close isn't accrued yet, and that scenario raises false anomalies on early closes. Several of the fixes behind the 67 of 67 result are still waiting for review, and payroll can't yet resume a run from a reviewer's decisions.
+The approval-and-resume system I built runs the bank pipeline's reviews today. The other pipelines flag items for a person to check in Slack but don't yet pause and resume on their decisions. Of the four review patterns the client specified, only "decide" is built so far; I documented the gaps against the requirements so they're tracked, not forgotten.
+
+Payroll went to production on 3 November 2026. What's left on it: accruing wages for a pay run that lands after the close, which also trips false anomaly flags on early closes, and letting it resume from a reviewer's decisions the way bank does. Several of the fixes behind the 67 of 67 result are still in review.
